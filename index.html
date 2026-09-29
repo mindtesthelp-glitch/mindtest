@@ -30,8 +30,8 @@
     border-bottom: 1px solid #f0e8fb;
   }
   .header-inner {
-    max-width: 1200px; margin: 0 auto;
-    padding: 14px 24px;
+    max-width: 1600px; margin: 0 auto;
+    padding: 14px 40px;
     display: flex; align-items: center; gap: 20px;
   }
   .logo {
@@ -95,11 +95,11 @@
     overflow: hidden;
   }
   .hero-inner {
-    max-width: 1200px; margin: 0 auto;
+    max-width: 1600px; margin: 0 auto;
     text-align: center;
   }
   .hero h1 {
-    font-size: clamp(32px, 5vw, 56px);
+    font-size: clamp(32px, 5vw, 64px);
     font-weight: 900; line-height: 1.1;
     letter-spacing: -1.5px; color: #2e1a4d;
     margin-bottom: 14px;
@@ -112,12 +112,12 @@
     -webkit-text-fill-color: transparent;
   }
   .hero-subtitle {
-    font-size: clamp(15px, 2vw, 18px);
-    color: #7e6b94; max-width: 620px;
+    font-size: clamp(15px, 2vw, 19px);
+    color: #7e6b94; max-width: 680px;
     margin: 0 auto 32px;
   }
   .hero-image-wrap {
-    max-width: 1000px; margin: 0 auto 32px;
+    max-width: 1300px; margin: 0 auto 32px;
   }
   .hero-image-wrap img {
     width: 100%; height: auto; display: block;
@@ -136,15 +136,15 @@
 
   /* ===== СЕКЦИИ ===== */
   .section { padding: 72px 24px; }
-  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-inner { max-width: 1400px; margin: 0 auto; }
   .section-title {
-    font-size: clamp(26px, 3.5vw, 38px);
+    font-size: clamp(26px, 3.5vw, 42px);
     font-weight: 800; letter-spacing: -0.8px;
     text-align: center; margin-bottom: 12px; color: #2e1a4d;
   }
   .section-subtitle {
     text-align: center; color: #7e6b94;
-    font-size: 16px; max-width: 580px;
+    font-size: 16px; max-width: 620px;
     margin: 0 auto 48px;
   }
 
@@ -152,12 +152,12 @@
   .features-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    max-width: 860px;
+    gap: 22px;
+    max-width: 1100px;
     margin: 0 auto;
   }
   .feature-card {
-    padding: 28px 24px;
+    padding: 32px 28px;
     background: #fff;
     border: 2px solid #f0e8fb;
     border-radius: 20px;
@@ -177,16 +177,16 @@
   }
   .feature-icon svg { width: 26px; height: 26px; }
   .feature-card h3 {
-    font-size: 17px; font-weight: 700; margin-bottom: 8px; color: #2e1a4d;
+    font-size: 18px; font-weight: 700; margin-bottom: 8px; color: #2e1a4d;
   }
-  .feature-card p { font-size: 14px; color: #7e6b94; }
+  .feature-card p { font-size: 15px; color: #7e6b94; }
 
   /* ===== ЗАЧЕМ ПРОХОДИТЬ ===== */
   .benefits-section { background: #faf7ff; }
   .benefits-list {
-    max-width: 860px; margin: 0 auto;
+    max-width: 1100px; margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
   }
   .benefit-item {
@@ -209,12 +209,12 @@
   /* ===== КАТАЛОГ ===== */
   .catalog-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    max-width: 860px; margin: 0 auto;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    max-width: 1100px; margin: 0 auto;
   }
   .catalog-card {
-    padding: 28px;
+    padding: 30px;
     background: #fff;
     border-radius: 18px;
     border: 2px solid #f0e8fb;
@@ -226,15 +226,15 @@
     transform: translateY(-4px);
     box-shadow: 0 16px 32px rgba(124, 47, 212, 0.14);
   }
-  .catalog-emoji { font-size: 34px; margin-bottom: 12px; display: block; }
-  .catalog-card h3 { font-size: 17px; font-weight: 700; color: #2e1a4d; margin-bottom: 4px; }
+  .catalog-emoji { font-size: 36px; margin-bottom: 12px; display: block; }
+  .catalog-card h3 { font-size: 18px; font-weight: 700; color: #2e1a4d; margin-bottom: 4px; }
   .catalog-card p { font-size: 14px; color: #7e6b94; }
 
   /* ===== О ПЛАТФОРМЕ ===== */
   .about-text {
-    max-width: 780px; margin: 0 auto;
+    max-width: 900px; margin: 0 auto;
     text-align: center;
-    font-size: 17px; line-height: 1.7;
+    font-size: 17px; line-height: 1.75;
     color: #4b3b63;
   }
   .about-text p + p { margin-top: 16px; }
@@ -283,13 +283,13 @@
 
   .premium-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 18px;
-    max-width: 1000px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1200px;
     margin: 0 auto 36px;
   }
   .premium-card {
-    padding: 26px 22px;
+    padding: 28px 24px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 18px;
@@ -308,7 +308,7 @@
   }
   .premium-card-icon svg { width: 22px; height: 22px; color: #fff; }
   .premium-card h3 {
-    font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #fff;
+    font-size: 17px; font-weight: 700; margin-bottom: 8px; color: #fff;
   }
   .premium-card p { font-size: 14px; color: #c4a9e8; line-height: 1.55; }
 
@@ -328,13 +328,13 @@
   /* ===== ОТЗЫВЫ ===== */
   .reviews-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    max-width: 1000px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    max-width: 1200px;
     margin: 0 auto;
   }
   .review-card {
-    padding: 26px 24px;
+    padding: 28px 26px;
     background: #fff;
     border: 2px solid #f0e8fb;
     border-radius: 18px;
@@ -349,21 +349,21 @@
     margin-bottom: 14px;
   }
   .review-avatar {
-    width: 42px; height: 42px;
+    width: 44px; height: 44px;
     border-radius: 50%;
     background: linear-gradient(135deg, #7c2fd4, #a855f7);
-    color: #fff; font-weight: 800; font-size: 16px;
+    color: #fff; font-weight: 800; font-size: 17px;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
   .review-name {
-    font-size: 14px; font-weight: 700; color: #2e1a4d;
+    font-size: 15px; font-weight: 700; color: #2e1a4d;
   }
   .review-meta {
     font-size: 12px; color: #a898c2;
   }
   .review-text {
-    font-size: 14px; color: #4b3b63; line-height: 1.6;
+    font-size: 14px; color: #4b3b63; line-height: 1.65;
   }
   .review-stars {
     display: flex; gap: 2px; margin-top: 12px; color: #fbbf24;
@@ -373,7 +373,7 @@
   /* ===== FAQ ===== */
   .faq-section { background: #faf7ff; }
   .faq-list {
-    max-width: 760px; margin: 0 auto;
+    max-width: 900px; margin: 0 auto;
     display: flex; flex-direction: column; gap: 12px;
   }
   .faq-item {
@@ -384,7 +384,7 @@
   }
   .faq-item[open] { border-color: #d9c7f2; }
   .faq-item summary {
-    padding: 20px 24px;
+    padding: 22px 26px;
     font-size: 16px; font-weight: 600; color: #2e1a4d;
     cursor: pointer; list-style: none;
     display: flex; align-items: center; justify-content: space-between; gap: 16px;
@@ -392,31 +392,31 @@
   .faq-item summary::-webkit-details-marker { display: none; }
   .faq-item summary::after {
     content: '+';
-    font-size: 24px; font-weight: 400;
+    font-size: 26px; font-weight: 400;
     color: #a855f7;
     transition: transform 0.3s ease;
     flex-shrink: 0;
   }
   .faq-item[open] summary::after { transform: rotate(45deg); }
   .faq-item .faq-answer {
-    padding: 0 24px 20px;
-    font-size: 15px; color: #7e6b94; line-height: 1.65;
+    padding: 0 26px 22px;
+    font-size: 15px; color: #7e6b94; line-height: 1.7;
   }
 
   /* ===== ПОДДЕРЖКА ===== */
   .support-card {
-    max-width: 720px; margin: 0 auto;
-    padding: 40px 32px;
+    max-width: 900px; margin: 0 auto;
+    padding: 48px 36px;
     background: linear-gradient(135deg, #f5efff 0%, #ece3fa 100%);
     border-radius: 24px;
     text-align: center;
   }
   .support-card h3 {
-    font-size: 22px; font-weight: 800; margin-bottom: 10px; color: #2e1a4d;
+    font-size: 24px; font-weight: 800; margin-bottom: 10px; color: #2e1a4d;
   }
   .support-card p {
     font-size: 15px; color: #6b5b82; margin-bottom: 24px;
-    max-width: 460px; margin-left: auto; margin-right: auto;
+    max-width: 520px; margin-left: auto; margin-right: auto;
   }
   .support-email {
     display: inline-flex; align-items: center; gap: 10px;
@@ -537,6 +537,15 @@
   .support-close:hover { background: #a855f7; color: #fff; }
 
   /* ===== АДАПТИВ ===== */
+  @media (max-width: 1000px) {
+    .features-grid,
+    .catalog-grid,
+    .benefits-list,
+    .premium-grid,
+    .reviews-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
   @media (max-width: 720px) {
     .main-nav {
       display: none;
@@ -549,7 +558,7 @@
       box-shadow: 0 12px 24px rgba(93, 43, 158, 0.08);
     }
     .main-nav.open { display: flex; }
-    .header-inner { position: relative; padding: 12px 18px; gap: 12px; }
+    .header-inner { position: relative; padding: 12px 18px; gap: 12px; max-width: 100%; }
     .btn { padding: 9px 14px; font-size: 13px; }
     .btn-premium span { display: none; }
     .btn-premium { padding: 9px 12px; }
@@ -567,9 +576,11 @@
     }
     .burger svg { width: 22px; height: 22px; }
     .header-actions { margin-left: 0; }
-    .catalog-grid { grid-template-columns: 1fr; }
+    .catalog-grid,
     .features-grid,
-    .benefits-list { grid-template-columns: 1fr; }
+    .benefits-list,
+    .premium-grid,
+    .reviews-grid { grid-template-columns: 1fr; }
     .support-fab { right: 18px; bottom: 18px; width: 52px; height: 52px; }
     .support-popup { right: 18px; bottom: 84px; }
   }
@@ -977,7 +988,6 @@
 </div>
 
 <script>
-  // ===== Бургер-меню =====
   const burger = document.getElementById('burger');
   const nav = document.getElementById('mainNav');
   burger.addEventListener('click', () => nav.classList.toggle('open'));
@@ -985,7 +995,6 @@
     a.addEventListener('click', () => nav.classList.remove('open'));
   });
 
-  // ===== Плавающая кнопка поддержки =====
   const fab = document.getElementById('supportFab');
   const popup = document.getElementById('supportPopup');
   const closeBtn = document.getElementById('supportClose');
