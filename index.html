@@ -30,8 +30,8 @@
     border-bottom: 1px solid #f0e8fb;
   }
   .header-inner {
-    max-width: 1600px; margin: 0 auto;
-    padding: 14px 40px;
+    max-width: 100%; margin: 0 auto;
+    padding: 14px 48px;
     display: flex; align-items: center; gap: 20px;
   }
   .logo {
@@ -91,18 +91,18 @@
   /* ===== HERO ===== */
   .hero {
     background: linear-gradient(180deg, #faf7ff 0%, #ffffff 100%);
-    padding: 60px 24px 60px;
+    padding: 60px 48px 60px;
     overflow: hidden;
   }
   .hero-inner {
-    max-width: 1600px; margin: 0 auto;
+    max-width: 100%; margin: 0 auto;
     text-align: center;
   }
   .hero h1 {
-    font-size: clamp(32px, 5vw, 64px);
+    font-size: clamp(36px, 5.5vw, 76px);
     font-weight: 900; line-height: 1.1;
-    letter-spacing: -1.5px; color: #2e1a4d;
-    margin-bottom: 14px;
+    letter-spacing: -2px; color: #2e1a4d;
+    margin-bottom: 16px;
   }
   .hero h1 em {
     font-style: normal;
@@ -112,12 +112,12 @@
     -webkit-text-fill-color: transparent;
   }
   .hero-subtitle {
-    font-size: clamp(15px, 2vw, 19px);
-    color: #7e6b94; max-width: 680px;
-    margin: 0 auto 32px;
+    font-size: clamp(16px, 2vw, 20px);
+    color: #7e6b94; max-width: 720px;
+    margin: 0 auto 36px;
   }
   .hero-image-wrap {
-    max-width: 1300px; margin: 0 auto 32px;
+    max-width: 1500px; margin: 0 auto 36px;
   }
   .hero-image-wrap img {
     width: 100%; height: auto; display: block;
@@ -135,32 +135,32 @@
   .btn-primary svg { width: 20px; height: 20px; }
 
   /* ===== СЕКЦИИ ===== */
-  .section { padding: 72px 24px; }
-  .section-inner { max-width: 1400px; margin: 0 auto; }
+  .section { padding: 80px 48px; }
+  .section-inner { max-width: 100%; margin: 0 auto; }
   .section-title {
-    font-size: clamp(26px, 3.5vw, 42px);
-    font-weight: 800; letter-spacing: -0.8px;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 800; letter-spacing: -1px;
     text-align: center; margin-bottom: 12px; color: #2e1a4d;
   }
   .section-subtitle {
     text-align: center; color: #7e6b94;
-    font-size: 16px; max-width: 620px;
-    margin: 0 auto 48px;
+    font-size: 17px; max-width: 640px;
+    margin: 0 auto 52px;
   }
 
   /* ===== ПРЕИМУЩЕСТВА ===== */
   .features-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 22px;
-    max-width: 1100px;
+    gap: 24px;
+    max-width: 1300px;
     margin: 0 auto;
   }
   .feature-card {
-    padding: 32px 28px;
+    padding: 36px 32px;
     background: #fff;
     border: 2px solid #f0e8fb;
-    border-radius: 20px;
+    border-radius: 22px;
     transition: all 0.25s ease;
   }
   .feature-card:hover {
@@ -169,54 +169,54 @@
     box-shadow: 0 20px 40px rgba(124, 47, 212, 0.1);
   }
   .feature-icon {
-    width: 52px; height: 52px;
-    border-radius: 14px;
+    width: 56px; height: 56px;
+    border-radius: 16px;
     background: linear-gradient(135deg, #f5efff, #ece3fa);
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 18px; color: #7c2fd4;
+    margin-bottom: 20px; color: #7c2fd4;
   }
-  .feature-icon svg { width: 26px; height: 26px; }
+  .feature-icon svg { width: 28px; height: 28px; }
   .feature-card h3 {
-    font-size: 18px; font-weight: 700; margin-bottom: 8px; color: #2e1a4d;
+    font-size: 19px; font-weight: 700; margin-bottom: 10px; color: #2e1a4d;
   }
-  .feature-card p { font-size: 15px; color: #7e6b94; }
+  .feature-card p { font-size: 15px; color: #7e6b94; line-height: 1.6; }
 
   /* ===== ЗАЧЕМ ПРОХОДИТЬ ===== */
   .benefits-section { background: #faf7ff; }
   .benefits-list {
-    max-width: 1100px; margin: 0 auto;
+    max-width: 1300px; margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    gap: 20px;
   }
   .benefit-item {
-    padding: 22px 24px;
+    padding: 26px 28px;
     background: #fff;
-    border-radius: 16px;
-    display: flex; align-items: flex-start; gap: 14px;
+    border-radius: 18px;
+    display: flex; align-items: flex-start; gap: 16px;
     border: 2px solid #f0e8fb;
   }
   .benefit-check {
-    width: 26px; height: 26px; flex-shrink: 0;
-    border-radius: 8px;
+    width: 28px; height: 28px; flex-shrink: 0;
+    border-radius: 9px;
     background: linear-gradient(135deg, #7c2fd4, #a855f7);
     display: flex; align-items: center; justify-content: center;
     color: #fff;
   }
-  .benefit-check svg { width: 16px; height: 16px; }
+  .benefit-check svg { width: 17px; height: 17px; }
   .benefit-item p { font-size: 15px; color: #4b3b63; font-weight: 500; }
 
   /* ===== КАТАЛОГ ===== */
   .catalog-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-    max-width: 1100px; margin: 0 auto;
+    gap: 24px;
+    max-width: 1300px; margin: 0 auto;
   }
   .catalog-card {
-    padding: 30px;
+    padding: 34px;
     background: #fff;
-    border-radius: 18px;
+    border-radius: 20px;
     border: 2px solid #f0e8fb;
     transition: all 0.25s ease;
     cursor: pointer;
@@ -226,27 +226,27 @@
     transform: translateY(-4px);
     box-shadow: 0 16px 32px rgba(124, 47, 212, 0.14);
   }
-  .catalog-emoji { font-size: 36px; margin-bottom: 12px; display: block; }
-  .catalog-card h3 { font-size: 18px; font-weight: 700; color: #2e1a4d; margin-bottom: 4px; }
-  .catalog-card p { font-size: 14px; color: #7e6b94; }
+  .catalog-emoji { font-size: 40px; margin-bottom: 14px; display: block; }
+  .catalog-card h3 { font-size: 19px; font-weight: 700; color: #2e1a4d; margin-bottom: 6px; }
+  .catalog-card p { font-size: 15px; color: #7e6b94; }
 
   /* ===== О ПЛАТФОРМЕ ===== */
   .about-text {
-    max-width: 900px; margin: 0 auto;
+    max-width: 1100px; margin: 0 auto;
     text-align: center;
-    font-size: 17px; line-height: 1.75;
+    font-size: 18px; line-height: 1.8;
     color: #4b3b63;
   }
-  .about-text p + p { margin-top: 16px; }
+  .about-text p + p { margin-top: 18px; }
   .about-highlight {
     display: inline-block;
-    margin-top: 28px;
-    padding: 18px 26px;
+    margin-top: 32px;
+    padding: 20px 30px;
     background: #f5efff;
     border-left: 4px solid #a855f7;
-    border-radius: 12px;
+    border-radius: 14px;
     text-align: left;
-    font-size: 15px;
+    font-size: 16px;
     color: #5d2b9e;
     font-weight: 500;
   }
@@ -262,7 +262,7 @@
     content: '';
     position: absolute;
     top: -50%; right: -20%;
-    width: 600px; height: 600px;
+    width: 700px; height: 700px;
     background: radial-gradient(circle, rgba(168, 85, 247, 0.4), transparent 70%);
     border-radius: 50%;
     pointer-events: none;
@@ -284,15 +284,15 @@
   .premium-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto 36px;
+    gap: 22px;
+    max-width: 1300px;
+    margin: 0 auto 40px;
   }
   .premium-card {
-    padding: 28px 24px;
+    padding: 30px 26px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 18px;
+    border-radius: 20px;
     transition: all 0.25s ease;
   }
   .premium-card:hover {
@@ -300,17 +300,17 @@
     transform: translateY(-3px);
   }
   .premium-card-icon {
-    width: 44px; height: 44px;
-    border-radius: 12px;
+    width: 46px; height: 46px;
+    border-radius: 13px;
     background: linear-gradient(135deg, #a855f7, #7c2fd4);
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
   }
-  .premium-card-icon svg { width: 22px; height: 22px; color: #fff; }
+  .premium-card-icon svg { width: 23px; height: 23px; color: #fff; }
   .premium-card h3 {
     font-size: 17px; font-weight: 700; margin-bottom: 8px; color: #fff;
   }
-  .premium-card p { font-size: 14px; color: #c4a9e8; line-height: 1.55; }
+  .premium-card p { font-size: 14px; color: #c4a9e8; line-height: 1.6; }
 
   .premium-cta {
     text-align: center;
@@ -329,15 +329,15 @@
   .reviews-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-    max-width: 1200px;
+    gap: 24px;
+    max-width: 1300px;
     margin: 0 auto;
   }
   .review-card {
-    padding: 28px 26px;
+    padding: 30px 28px;
     background: #fff;
     border: 2px solid #f0e8fb;
-    border-radius: 18px;
+    border-radius: 20px;
     transition: all 0.25s ease;
   }
   .review-card:hover {
@@ -346,13 +346,13 @@
   }
   .review-header {
     display: flex; align-items: center; gap: 12px;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
   .review-avatar {
-    width: 44px; height: 44px;
+    width: 46px; height: 46px;
     border-radius: 50%;
     background: linear-gradient(135deg, #7c2fd4, #a855f7);
-    color: #fff; font-weight: 800; font-size: 17px;
+    color: #fff; font-weight: 800; font-size: 18px;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
@@ -360,20 +360,20 @@
     font-size: 15px; font-weight: 700; color: #2e1a4d;
   }
   .review-meta {
-    font-size: 12px; color: #a898c2;
+    font-size: 13px; color: #a898c2;
   }
   .review-text {
-    font-size: 14px; color: #4b3b63; line-height: 1.65;
+    font-size: 15px; color: #4b3b63; line-height: 1.65;
   }
   .review-stars {
-    display: flex; gap: 2px; margin-top: 12px; color: #fbbf24;
+    display: flex; gap: 2px; margin-top: 14px; color: #fbbf24;
   }
-  .review-stars svg { width: 14px; height: 14px; }
+  .review-stars svg { width: 15px; height: 15px; }
 
   /* ===== FAQ ===== */
   .faq-section { background: #faf7ff; }
   .faq-list {
-    max-width: 900px; margin: 0 auto;
+    max-width: 1000px; margin: 0 auto;
     display: flex; flex-direction: column; gap: 12px;
   }
   .faq-item {
@@ -384,8 +384,8 @@
   }
   .faq-item[open] { border-color: #d9c7f2; }
   .faq-item summary {
-    padding: 22px 26px;
-    font-size: 16px; font-weight: 600; color: #2e1a4d;
+    padding: 24px 28px;
+    font-size: 17px; font-weight: 600; color: #2e1a4d;
     cursor: pointer; list-style: none;
     display: flex; align-items: center; justify-content: space-between; gap: 16px;
   }
@@ -399,30 +399,30 @@
   }
   .faq-item[open] summary::after { transform: rotate(45deg); }
   .faq-item .faq-answer {
-    padding: 0 26px 22px;
+    padding: 0 28px 24px;
     font-size: 15px; color: #7e6b94; line-height: 1.7;
   }
 
   /* ===== ПОДДЕРЖКА ===== */
   .support-card {
-    max-width: 900px; margin: 0 auto;
-    padding: 48px 36px;
+    max-width: 1000px; margin: 0 auto;
+    padding: 52px 40px;
     background: linear-gradient(135deg, #f5efff 0%, #ece3fa 100%);
-    border-radius: 24px;
+    border-radius: 26px;
     text-align: center;
   }
   .support-card h3 {
-    font-size: 24px; font-weight: 800; margin-bottom: 10px; color: #2e1a4d;
+    font-size: 26px; font-weight: 800; margin-bottom: 12px; color: #2e1a4d;
   }
   .support-card p {
-    font-size: 15px; color: #6b5b82; margin-bottom: 24px;
-    max-width: 520px; margin-left: auto; margin-right: auto;
+    font-size: 16px; color: #6b5b82; margin-bottom: 26px;
+    max-width: 560px; margin-left: auto; margin-right: auto;
   }
   .support-email {
     display: inline-flex; align-items: center; gap: 10px;
-    padding: 14px 26px;
+    padding: 15px 28px;
     background: #fff; border-radius: 14px;
-    font-size: 15px; font-weight: 700; color: #5d2b9e;
+    font-size: 16px; font-weight: 700; color: #5d2b9e;
     border: 2px solid #fff;
     transition: all 0.2s ease;
     box-shadow: 0 6px 20px rgba(124, 47, 212, 0.12);
@@ -436,7 +436,7 @@
 
   /* ===== ФУТЕР ===== */
   .site-footer {
-    padding: 32px 24px;
+    padding: 36px 24px;
     background: #fff;
     border-top: 1px solid #f0e8fb;
     text-align: center;
