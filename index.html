@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindTest — Вход</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif; }
+
+  .mt-auth-overlay{min-height:100vh;background:linear-gradient(135deg,#f5efff 0%,#ece3fa 100%);display:flex;align-items:center;justify-content:center;padding:20px}
+  .mt-auth-modal{width:100%;max-width:440px;background:#fff;border-radius:24px;padding:40px 36px 28px;box-shadow:0 25px 70px rgba(93,43,158,.25),0 0 0 1px rgba(147,91,217,.08);position:relative;animation:mt-slide-up .5s cubic-bezier(.16,1,.3,1)}
+  @keyframes mt-slide-up{from{opacity:0;transform:translateY(30px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+  .mt-auth-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border:none;background:#f5efff;border-radius:50%;font-size:22px;color:#5d2b9e;cursor:pointer;line-height:1;transition:all .2s;display:flex;align-items:center;justify-content:center;font-family:inherit;padding:0;z-index:2}
+  .mt-auth-close:hover{background:#a855f7;color:#fff}
+  .mt-auth-header{text-align:center;margin-bottom:28px}
+  .mt-auth-logo{font-size:28px;font-weight:800;letter-spacing:-.5px;color:#5d2b9e;margin-bottom:8px}
+  .mt-auth-logo span{color:#a855f7}
+  .mt-auth-subtitle{font-size:14px;color:#7e6b94;margin:0;line-height:1.4}
+  .mt-auth-tabs{display:flex;position:relative;background:#f5efff;border-radius:14px;padding:5px;margin-bottom:26px}
+  .mt-tab{flex:1;position:relative;z-index:2;background:transparent;border:none;padding:12px 10px;font-size:15px;font-weight:600;color:#8b7aa6;cursor:pointer;border-radius:10px;transition:color .3s ease;font-family:inherit}
+  .mt-tab.active{color:#5d2b9e}
+  .mt-tab-indicator{position:absolute;top:5px;left:5px;width:calc(50% - 5px);height:calc(100% - 10px);background:#fff;border-radius:10px;box-shadow:0 4px 12px rgba(93,43,158,.12);transition:transform .35s cubic-bezier(.4,0,.2,1);z-index:1}
+  .mt-auth-tabs[data-active="register"] .mt-tab-indicator{transform:translateX(100%)}
+  .mt-form{display:none;flex-direction:column;gap:16px;animation:mt-form-in .35s ease}
+  .mt-form.active{display:flex}
+  @keyframes mt-form-in{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+  .mt-field{display:flex;flex-direction:column;gap:7px}
+  .mt-field label{font-size:13px;font-weight:600;color:#4b3b63;padding-left:4px}
+  .mt-field input{width:100%;padding:14px 16px;border:2px solid #ece3fa;background:#faf7ff;border-radius:12px;font-size:15px;color:#2e1a4d;outline:none;transition:all .25s ease;font-family:inherit}
+  .mt-field input::placeholder{color:#b3a4c9}
+  .mt-field input:focus{border-color:#a855f7;background:#fff;box-shadow:0 0 0 4px rgba(168,85,247,.12)}
+  .mt-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:-4px}
+  .mt-checkbox{display:flex;align-items:center;gap:9px;font-size:13px;color:#6b5b82;cursor:pointer;user-select:none;line-height:1.4}
+  .mt-checkbox input{display:none}
+  .mt-checkbox span{width:18px;height:18px;min-width:18px;border:2px solid #d9c7f2;border-radius:6px;background:#faf7ff;position:relative;transition:all .2s ease}
+  .mt-checkbox input:checked + span{background:linear-gradient(135deg,#8b3ddb,#a855f7);border-color:#a855f7}
+  .mt-checkbox input:checked + span::after{content:'';position:absolute;left:4.5px;top:1px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+  .mt-checkbox a{color:#8b3ddb;text-decoration:none;font-weight:600}
+  .mt-terms{margin-top:2px;align-items:flex-start}
+  .mt-forgot{font-size:13px;color:#8b3ddb;text-decoration:none;font-weight:600;white-space:nowrap;transition:color .2s;cursor:pointer}
+  .mt-forgot:hover{color:#5d2b9e;text-decoration:underline}
+  .mt-submit{display:block;width:100%;padding:15px;margin-top:6px;border:none;border-radius:12px;background:linear-gradient(135deg,#7c2fd4 0%,#a855f7 100%);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.2px;box-shadow:0 8px 20px rgba(124,47,212,.35);transition:transform .2s ease,box-shadow .2s ease;text-align:center;text-decoration:none}
+  .mt-submit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 26px rgba(124,47,212,.45)}
+  .mt-submit:disabled{opacity:.6;cursor:not-allowed}
+  .mt-divider{position:relative;text-align:center;margin:14px 0}
+  .mt-divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:#ece3fa}
+  .mt-divider span{position:relative;background:#fff;padding:0 14px;font-size:12px;color:#a898c2;text-transform:uppercase;letter-spacing:.5px}
+  .mt-guest-block{margin-top:6px}
+  .mt-guest-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;border:2px solid #ece3fa;background:#faf7ff;border-radius:12px;font-size:15px;font-weight:600;color:#5d2b9e;cursor:pointer;font-family:inherit;transition:all .2s ease}
+  .mt-guest-btn:hover{border-color:#c9a9f0;background:#f5efff;transform:translateY(-1px)}
+  .mt-guest-hint{margin:8px 0 0;text-align:center;font-size:12px;color:#a898c2;line-height:1.4}
+  .mt-login-message{font-size:13px;text-align:center;font-weight:600;line-height:1.4;min-height:0}
+  .mt-login-message.error{color:#e0395a;background:#fff2f5;padding:10px 14px;border-radius:10px}
+  .mt-login-message.success{color:#1ab86a;background:#f0fbf5;padding:10px 14px;border-radius:10px}
+  .mt-login-message:empty{display:none}
+  .mt-code-header{text-align:center;margin-bottom:6px}
+  .mt-code-icon{width:60px;height:60px;margin:0 auto 14px;border-radius:50%;background:#f5efff;display:flex;align-items:center;justify-content:center}
+  .mt-code-title{font-size:18px;font-weight:700;color:#2e1a4d;margin:0 0 8px}
+  .mt-code-text{font-size:13px;color:#7e6b94;line-height:1.5;margin:0}
+  .mt-code-text b{color:#5d2b9e}
+  .mt-code-inputs{display:flex;gap:8px;justify-content:center;margin:8px 0 4px}
+  .mt-code-inputs input{width:48px;height:56px;text-align:center;font-size:22px;font-weight:700;color:#2e1a4d;border:2px solid #ece3fa;background:#faf7ff;border-radius:12px;outline:none;transition:all .2s ease;font-family:inherit;padding:0}
+  .mt-code-inputs input:focus{border-color:#a855f7;background:#fff;box-shadow:0 0 0 4px rgba(168,85,247,.12)}
+  .mt-code-inputs input.filled{border-color:#c9a9f0;background:#fff}
+  .mt-code-status{min-height:18px;font-size:13px;text-align:center;font-weight:600}
+  .mt-code-status.error{color:#e0395a;background:#fff2f5;padding:10px 14px;border-radius:10px}
+  .mt-code-status.success{color:#1ab86a;background:#f0fbf5;padding:10px 14px;border-radius:10px}
+  .mt-code-status:empty{display:none}
+  .mt-resend{display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:#7e6b94;margin-top:4px}
+  .mt-resend-disabled{color:#b3a4c9 !important;pointer-events:none}
+  .mt-back{display:block;text-align:center;font-size:13px;color:#8b3ddb;text-decoration:none;font-weight:600;margin-top:8px;cursor:pointer}
+  .mt-back:hover{color:#5d2b9e;text-decoration:underline}
+  .mt-auth-footer{text-align:center;margin-top:22px;padding-top:20px;border-top:1px solid #f0e8fb;font-size:14px;color:#7e6b94}
+  .mt-footer-link{color:#8b3ddb;font-weight:700;text-decoration:none;margin-left:4px;transition:color .2s;cursor:pointer}
+  .mt-footer-link:hover{color:#5d2b9e;text-decoration:underline}
+
+  .mt-welcome-screen{text-align:center;padding:10px 0 4px}
+  .mt-welcome-avatar{width:80px;height:80px;margin:0 auto 18px;border-radius:50%;background:linear-gradient(135deg,#7c2fd4 0%,#a855f7 100%);color:#fff;font-size:34px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(124,47,212,.35);text-transform:uppercase}
+  .mt-welcome-title{font-size:14px;color:#8b7aa6;margin:0 0 4px;font-weight:500}
+  .mt-welcome-name{font-size:22px;font-weight:800;color:#2e1a4d;margin:0 0 24px;word-break:break-word}
+  .mt-welcome-actions{display:flex;flex-direction:column;gap:12px}
+
+  @media (max-width:480px){.mt-auth-modal{padding:30px 22px 22px;border-radius:20px}.mt-auth-logo{font-size:24px}.mt-tab{font-size:14px}.mt-code-inputs input{width:42px;height:50px;font-size:20px}}
+</style>
+</head>
+<body>
+
+<div class="mt-auth-overlay">
+  <div class="mt-auth-modal">
+    <button class="mt-auth-close" id="mt-auth-close" aria-label="Закрыть">&times;</button>
+    <div class="mt-auth-header">
+      <div class="mt-auth-logo">Mind<span>Test</span></div>
+      <p class="mt-auth-subtitle">Добро пожаловать! Войдите или создайте аккаунт</p>
+    </div>
+
+    <div class="mt-auth-tabs" id="mt-auth-tabs">
+      <button class="mt-tab active" data-tab="login">Вход</button>
+      <button class="mt-tab" data-tab="register">Регистрация</button>
+      <span class="mt-tab-indicator"></span>
+    </div>
+
+    <form class="mt-form active" id="mt-login-form">
+      <div class="mt-field"><label>Email</label><input type="email" name="email" placeholder="example@mail.com" required></div>
+      <div class="mt-field"><label>Пароль</label><input type="password" name="password" placeholder="••••••••" required></div>
+      <div class="mt-row">
+        <label class="mt-checkbox"><input type="checkbox"><span></span>Запомнить меня</label>
+        <a href="#" class="mt-forgot" id="mt-open-forgot">Забыли пароль?</a>
+      </div>
+      <button type="submit" class="mt-submit" id="mt-login-btn">Войти</button>
+      <div class="mt-login-message" id="mt-login-message"></div>
+      <div class="mt-guest-block">
+        <div class="mt-divider"><span>или</span></div>
+        <button type="button" class="mt-guest-btn" id="mt-guest-btn">Продолжить как гость
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <p class="mt-guest-hint">Без регистрации прогресс не сохраняется</p>
+      </div>
+    </form>
+
+    <form class="mt-form" id="mt-register-form">
+      <div class="mt-field"><label>Имя пользователя</label><input type="text" name="username" placeholder="Ваш никнейм" required></div>
+      <div class="mt-field"><label>Email</label><input type="email" name="email" placeholder="example@mail.com" required></div>
+      <div class="mt-field"><label>Пароль</label><input type="password" name="password" placeholder="Минимум 6 символов" minlength="6" required></div>
+      <label class="mt-checkbox mt-terms"><input type="checkbox" required><span></span>Я согласен с <a href="#">условиями</a> и <a href="#">политикой конфиденциальности</a></label>
+      <button type="submit" class="mt-submit" id="mt-register-btn">Создать аккаунт</button>
+    </form>
+
+    <form class="mt-form" id="mt-code-form">
+      <div class="mt-code-header">
+        <div class="mt-code-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></div>
+        <p class="mt-code-title">Введите код из письма</p>
+        <p class="mt-code-text">Мы отправили 6-значный код на <b id="mt-code-email">вашу почту</b>.<br>Проверьте папку «Спам».</p>
+      </div>
+      <div class="mt-code-inputs">
+        <input type="text" inputmode="numeric" maxlength="1" data-code-input>
+        <input type="text" inputmode="numeric" maxlength="1" data-code-input>
+        <input type="text" inputmode="numeric" maxlength="1" data-code-input>
+        <input type="text" inputmode="numeric" maxlength="1" data-code-input>
+        <input type="text" inputmode="numeric" maxlength="1" data-code-input>
+        <input type="text" inputmode="numeric" maxlength="1" data-code-input>
+      </div>
+      <div class="mt-code-status" id="mt-code-status"></div>
+      <button type="submit" class="mt-submit" id="mt-code-submit">Подтвердить</button>
+      <div class="mt-resend"><span>Отправить код повторно</span><a href="#" id="mt-resend-link" class="mt-forgot mt-resend-disabled">через 60 сек</a></div>
+      <a href="#" class="mt-back" id="mt-back-to-register">← Изменить email</a>
+    </form>
+
+    <form class="mt-form" id="mt-forgot-form">
+      <div class="mt-code-header">
+        <div class="mt-code-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <p class="mt-code-title">Восстановление пароля</p>
+        <p class="mt-code-text">Введите email, указанный при регистрации.</p>
+      </div>
+      <div class="mt-field"><label>Email</label><input type="email" name="email" placeholder="example@mail.com" required></div>
+      <button type="submit" class="mt-submit" id="mt-forgot-btn">Отправить код</button>
+      <div class="mt-code-status" id="mt-forgot-status"></div>
+      <a href="#" class="mt-back" id="mt-back-to-login-1">← Назад ко входу</a>
+    </form>
+
+    <form class="mt-form" id="mt-reset-form">
+      <div class="mt-code-header">
+        <div class="mt-code-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <p class="mt-code-title">Введите код из письма</p>
+        <p class="mt-code-text">Код отправлен на <b id="mt-reset-email">вашу почту</b>. Придумайте новый пароль.</p>
+      </div>
+      <div class="mt-code-inputs">
+        <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
+        <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
+        <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
+        <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
+        <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
+        <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
+      </div>
+      <div class="mt-field"><label>Новый пароль</label><input type="password" name="password" placeholder="Минимум 6 символов" minlength="6" required></div>
+      <div class="mt-field"><label>Повторите пароль</label><input type="password" name="password2" placeholder="Ещё раз" minlength="6" required></div>
+      <div class="mt-code-status" id="mt-reset-status"></div>
+      <button type="submit" class="mt-submit" id="mt-reset-btn">Сбросить пароль</button>
+      <div class="mt-resend"><span>Отправить код повторно</span><a href="#" id="mt-resend-reset-link" class="mt-forgot mt-resend-disabled">через 60 сек</a></div>
+      <a href="#" class="mt-back" id="mt-back-to-forgot">← Изменить email</a>
+    </form>
+
+    <div class="mt-welcome-screen" id="mt-welcome-screen" style="display:none">
+      <div class="mt-welcome-avatar" id="mt-welcome-avatar">?</div>
+      <p class="mt-welcome-title">Вы уже вошли</p>
+      <p class="mt-welcome-name" id="mt-welcome-name">—</p>
+      <div class="mt-welcome-actions">
+        <a href="./" class="mt-submit">На главную</a>
+        <button type="button" class="mt-guest-btn" id="mt-logout-btn">Выйти из аккаунта</button>
+      </div>
+    </div>
+
+    <div class="mt-auth-footer" id="mt-auth-footer">
+      <span class="mt-footer-text-login">Нет аккаунта?</span>
+      <span class="mt-footer-text-register" style="display:none">Уже есть аккаунт?</span>
+      <a href="#" class="mt-footer-link" data-switch="register">Зарегистрироваться</a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyF-_QTRAd5l9A41HwIEnStZruucLxZVu6oCUEiKBsiEbaIvPvjItjU_ScLeQS8I-5FFg/exec';
+  const HOME_URL   = './';
+
+  const SESSION_KEY = 'mindtest_user';
+  const GUEST_KEY   = 'mindtest_is_guest';
+
+  const tabsContainer  = document.querySelector('.mt-auth-tabs');
+  const tabs           = document.querySelectorAll('.mt-tab');
+  const forms = {
+    login:    document.getElementById('mt-login-form'),
+    register: document.getElementById('mt-register-form'),
+    code:     document.getElementById('mt-code-form'),
+    forgot:   document.getElementById('mt-forgot-form'),
+    reset:    document.getElementById('mt-reset-form')
+  };
+  const footerTextLogin    = document.querySelector('.mt-footer-text-login');
+  const footerTextRegister = document.querySelector('.mt-footer-text-register');
+  const footerLink         = document.querySelector('.mt-footer-link');
+  const footer             = document.getElementById('mt-auth-footer');
+  const welcomeScreen      = document.getElementById('mt-welcome-screen');
+  const authHeader         = document.querySelector('.mt-auth-header');
+
+  let pendingUser = { username: '', email: '', password: '' };
+  let resetEmail  = '';
+  let resendTimer = null;
+  let resendResetTimer = null;
+
+  function getCurrentUser() {
+    try { const raw = localStorage.getItem(SESSION_KEY); return raw ? JSON.parse(raw) : null; }
+    catch (e) { return null; }
+  }
+
+  function showWelcome(user) {
+    tabsContainer.style.display = 'none';
+    Object.keys(forms).forEach(k => forms[k].classList.remove('active'));
+    footer.style.display = 'none';
+    welcomeScreen.style.display = 'block';
+    document.getElementById('mt-welcome-name').textContent = user.username || user.email;
+    document.getElementById('mt-welcome-avatar').textContent = (user.username || user.email || '?').charAt(0).toUpperCase();
+    authHeader.style.display = 'none';
+  }
+
+  if (getCurrentUser()) showWelcome(getCurrentUser());
+
+  const logoutBtn = document.getElementById('mt-logout-btn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function () {
+      try { localStorage.removeItem(SESSION_KEY); } catch (e) {}
+      window.location.reload();
+    });
+  }
+
+  document.getElementById('mt-auth-close').addEventListener('click', function () {
+    window.location.href = HOME_URL;
+  });
+
+  document.getElementById('mt-guest-btn').addEventListener('click', function () {
+    try { localStorage.setItem(GUEST_KEY, '1'); localStorage.removeItem(SESSION_KEY); } catch (e) {}
+    window.location.href = HOME_URL;
+  });
+
+  function showForm(name) {
+    const isTab = (name === 'login' || name === 'register');
+    tabsContainer.style.display = isTab ? 'flex' : 'none';
+    footer.style.display = isTab ? 'block' : 'none';
+    authHeader.style.display = 'block';
+    Object.keys(forms).forEach(k => forms[k].classList.toggle('active', k === name));
+    if (isTab) {
+      tabsContainer.setAttribute('data-active', name);
+      tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+      if (name === 'login') {
+        footerTextLogin.style.display = 'inline';
+        footerTextRegister.style.display = 'none';
+        footerLink.textContent = 'Зарегистрироваться';
+        footerLink.setAttribute('data-switch', 'register');
+      } else {
+        footerTextLogin.style.display = 'none';
+        footerTextRegister.style.display = 'inline';
+        footerLink.textContent = 'Войти';
+        footerLink.setAttribute('data-switch', 'login');
+      }
+    }
+  }
+
+  tabs.forEach(t => t.addEventListener('click', () => showForm(t.dataset.tab)));
+  footerLink.addEventListener('click', (e) => { e.preventDefault(); showForm(footerLink.getAttribute('data-switch')); });
+
+  async function apiRequest(action, params) {
+    const body = new URLSearchParams(Object.assign({ action: action }, params));
+    const res = await fetch(SCRIPT_URL, { method: 'POST', body: body, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  }
+
+  const loginMessage = document.getElementById('mt-login-message');
+  const loginBtn     = document.getElementById('mt-login-btn');
+  function clearLoginMessage() { loginMessage.textContent = ''; loginMessage.className = 'mt-login-message'; }
+  function setLoginMessage(text, type) { loginMessage.textContent = text; loginMessage.className = 'mt-login-message ' + (type || ''); }
+
+  forms.login.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(forms.login);
+    const email    = (fd.get('email') || '').trim().toLowerCase();
+    const password = fd.get('password') || '';
+    if (!email || !password) return;
+    clearLoginMessage();
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Проверяем…';
+    try {
+      const result = await apiRequest('login', { email, password });
+      if (result.status !== 'success') throw new Error(result.message || 'Не удалось войти');
+      try {
+        localStorage.setItem(SESSION_KEY, JSON.stringify({ email: result.user.email, username: result.user.username, loginAt: Date.now() }));
+        localStorage.removeItem(GUEST_KEY);
+      } catch (err) {}
+      setLoginMessage('✓ Добро пожаловать, ' + result.user.username + '!', 'success');
+      setTimeout(() => { window.location.href = HOME_URL; }, 1200);
+    } catch (err) {
+      setLoginMessage(err.message, 'error');
+    } finally {
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Войти';
+    }
+  });
+
+  const registerBtn = document.getElementById('mt-register-btn');
+  forms.register.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(forms.register);
+    pendingUser = { username: fd.get('username').trim(), email: fd.get('email').trim().toLowerCase(), password: fd.get('password') };
+    registerBtn.disabled = true;
+    registerBtn.textContent = 'Отправляем код…';
+    try {
+      const result = await apiRequest('send', { email: pendingUser.email, username: pendingUser.username, password: pendingUser.password });
+      if (result.status !== 'success') throw new Error(result.message || 'Не удалось отправить код');
+      document.getElementById('mt-code-email').textContent = pendingUser.email;
+      clearCodeInputs();
+      setStatus('');
+      showForm('code');
+      startResendTimer();
+      setTimeout(() => document.querySelector('[data-code-input]').focus(), 100);
+    } catch (err) {
+      alert('Ошибка: ' + err.message);
+    } finally {
+      registerBtn.disabled = false;
+      registerBtn.textContent = 'Создать аккаунт';
+    }
+  });
+
+  const codeInputs = document.querySelectorAll('[data-code-input]');
+  const codeStatus = document.getElementById('mt-code-status');
+  const codeSubmit = document.getElementById('mt-code-submit');
+
+  function setStatus(text, type) { codeStatus.textContent = text || ''; codeStatus.className = 'mt-code-status' + (type ? ' ' + type : ''); }
+  function clearCodeInputs() { codeInputs.forEach(i => { i.value = ''; i.classList.remove('filled'); }); }
+  function getEnteredCode() { return Array.from(codeInputs).map(i => i.value).join(''); }
+
+  function bindCodeInputs(inputs) {
+    inputs.forEach((input, idx) => {
+      input.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/\D/g, '');
+        e.target.classList.toggle('filled', !!e.target.value);
+        if (e.target.value && idx < inputs.length - 1) inputs[idx + 1].focus();
+      });
+      input.addEventListener('keydown', (e) => { if (e.key === 'Backspace' && !e.target.value && idx > 0) inputs[idx - 1].focus(); });
+      input.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const pasted = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
+        pasted.split('').forEach((ch, i) => { if (inputs[i]) { inputs[i].value = ch; inputs[i].classList.add('filled'); } });
+        const lastIdx = Math.min(pasted.length, 5);
+        if (inputs[lastIdx]) inputs[lastIdx].focus();
+      });
+    });
+  }
+  bindCodeInputs(codeInputs);
+
+  forms.code.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const entered = getEnteredCode();
+    if (entered.length !== 6) { setStatus('Введите все 6 цифр', 'error'); return; }
+    codeSubmit.disabled = true;
+    codeSubmit.textContent = 'Проверяем…';
+    setStatus('');
+    try {
+      const result = await apiRequest('verify', { email: pendingUser.email, code: entered });
+      if (result.status !== 'success') throw new Error(result.message || 'Неверный код');
+      setStatus('✓ Email подтверждён! Регистрация завершена.', 'success');
+      try {
+        localStorage.setItem(SESSION_KEY, JSON.stringify({ email: result.user.email, username: result.user.username, loginAt: Date.now() }));
+        localStorage.removeItem(GUEST_KEY);
+      } catch (err) {}
+      setTimeout(() => { window.location.href = HOME_URL; }, 1800);
+    } catch (err) {
+      setStatus(err.message, 'error');
+      clearCodeInputs();
+      codeInputs[0].focus();
+    } finally {
+      codeSubmit.disabled = false;
+      codeSubmit.textContent = 'Подтвердить';
+    }
+  });
+
+  const resendLink = document.getElementById('mt-resend-link');
+  function startResendTimer() {
+    let seconds = 60;
+    resendLink.classList.add('mt-resend-disabled');
+    resendLink.textContent = 'через ' + seconds + ' сек';
+    clearInterval(resendTimer);
+    resendTimer = setInterval(() => {
+      seconds--;
+      if (seconds <= 0) {
+        clearInterval(resendTimer);
+        resendLink.classList.remove('mt-resend-disabled');
+        resendLink.textContent = 'отправить сейчас';
+      } else resendLink.textContent = 'через ' + seconds + ' сек';
+    }, 1000);
+  }
+
+  resendLink.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (resendLink.classList.contains('mt-resend-disabled')) return;
+    try {
+      const result = await apiRequest('send', { email: pendingUser.email, username: pendingUser.username, password: pendingUser.password });
+      if (result.status !== 'success') throw new Error(result.message);
+      setStatus('Код отправлен повторно', 'success');
+      startResendTimer();
+    } catch (err) { setStatus(err.message, 'error'); }
+  });
+
+  document.getElementById('mt-back-to-register').addEventListener('click', (e) => { e.preventDefault(); clearCodeInputs(); setStatus(''); showForm('register'); });
+
+  const forgotForm   = forms.forgot;
+  const resetForm    = forms.reset;
+  const forgotStatus = document.getElementById('mt-forgot-status');
+  const resetStatus  = document.getElementById('mt-reset-status');
+  const resetInputs  = document.querySelectorAll('[data-reset-input]');
+  const resendResetLink = document.getElementById('mt-resend-reset-link');
+  bindCodeInputs(resetInputs);
+
+  document.getElementById('mt-open-forgot').addEventListener('click', (e) => {
+    e.preventDefault();
+    showForm('forgot');
+    forgotStatus.textContent = ''; forgotStatus.className = 'mt-code-status';
+    forgotForm.reset();
+  });
+
+  const forgotBtn = document.getElementById('mt-forgot-btn');
+  forgotForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(forgotForm);
+    const email = (fd.get('email') || '').trim().toLowerCase();
+    if (!email) return;
+    resetEmail = email;
+    forgotStatus.textContent = ''; forgotStatus.className = 'mt-code-status';
+    forgotBtn.disabled = true;
+    forgotBtn.textContent = 'Отправляем…';
+    try {
+      const result = await apiRequest('forgot', { email: resetEmail });
+      if (result.status !== 'success') throw new Error(result.message || 'Не удалось отправить код');
+      document.getElementById('mt-reset-email').textContent = resetEmail;
+      resetInputs.forEach(i => { i.value = ''; i.classList.remove('filled'); });
+      resetStatus.textContent = ''; resetStatus.className = 'mt-code-status';
+      resetForm.reset();
+      showForm('reset');
+      startResetTimer();
+      setTimeout(() => resetInputs[0].focus(), 100);
+    } catch (err) {
+      forgotStatus.textContent = err.message;
+      forgotStatus.className = 'mt-code-status error';
+    } finally {
+      forgotBtn.disabled = false;
+      forgotBtn.textContent = 'Отправить код';
+    }
+  });
+
+  const resetBtn = document.getElementById('mt-reset-btn');
+  resetForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(resetForm);
+    const password  = fd.get('password') || '';
+    const password2 = fd.get('password2') || '';
+    const entered   = Array.from(resetInputs).map(i => i.value).join('');
+    if (entered.length !== 6) { resetStatus.textContent = 'Введите все 6 цифр'; resetStatus.className = 'mt-code-status error'; return; }
+    if (password.length < 6) { resetStatus.textContent = 'Пароль короче 6 символов'; resetStatus.className = 'mt-code-status error'; return; }
+    if (password !== password2) { resetStatus.textContent = 'Пароли не совпадают'; resetStatus.className = 'mt-code-status error'; return; }
+    resetStatus.textContent = ''; resetStatus.className = 'mt-code-status';
+    resetBtn.disabled = true;
+    resetBtn.textContent = 'Сохраняем…';
+    try {
+      const result = await apiRequest('reset', { email: resetEmail, code: entered, password: password });
+      if (result.status !== 'success') throw new Error(result.message || 'Не удалось сбросить пароль');
+      resetStatus.textContent = '✓ Пароль изменён! Сейчас вернём вас ко входу…';
+      resetStatus.className = 'mt-code-status success';
+      setTimeout(() => { showForm('login'); clearLoginMessage(); }, 1800);
+    } catch (err) {
+      resetStatus.textContent = err.message;
+      resetStatus.className = 'mt-code-status error';
+    } finally {
+      resetBtn.disabled = false;
+      resetBtn.textContent = 'Сбросить пароль';
+    }
+  });
+
+  function startResetTimer() {
+    let seconds = 60;
+    resendResetLink.classList.add('mt-resend-disabled');
+    resendResetLink.textContent = 'через ' + seconds + ' сек';
+    clearInterval(resendResetTimer);
+    resendResetTimer = setInterval(() => {
+      seconds--;
+      if (seconds <= 0) {
+        clearInterval(resendResetTimer);
+        resendResetLink.classList.remove('mt-resend-disabled');
+        resendResetLink.textContent = 'отправить сейчас';
+      } else resendResetLink.textContent = 'через ' + seconds + ' сек';
+    }, 1000);
+  }
+
+  resendResetLink.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (resendResetLink.classList.contains('mt-resend-disabled')) return;
+    try {
+      const result = await apiRequest('forgot', { email: resetEmail });
+      if (result.status !== 'success') throw new Error(result.message);
+      resetStatus.textContent = 'Код отправлен повторно';
+      resetStatus.className = 'mt-code-status success';
+      startResetTimer();
+    } catch (err) { resetStatus.textContent = err.message; resetStatus.className = 'mt-code-status error'; }
+  });
+
+  document.getElementById('mt-back-to-login-1').addEventListener('click', (e) => { e.preventDefault(); forgotStatus.textContent = ''; forgotStatus.className = 'mt-code-status'; showForm('login'); });
+  document.getElementById('mt-back-to-forgot').addEventListener('click', (e) => { e.preventDefault(); resetInputs.forEach(i => { i.value = ''; i.classList.remove('filled'); }); resetStatus.textContent = ''; resetStatus.className = 'mt-code-status'; showForm('forgot'); });
+
+})();
+</script>
+</body>
+</html>
