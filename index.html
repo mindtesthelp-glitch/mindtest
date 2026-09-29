@@ -3,541 +3,1007 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MindTest — Вход</title>
+<title>MindTest — Открой лучшее в себе</title>
+<meta name="description" content="MindTest — платформа с тестами на знания и самопознание. Проверь эрудицию и узнай себя лучше.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; }
-  html, body { margin:0; padding:0; }
-  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    background: #ffffff;
+    color: #2e1a4d;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { text-decoration: none; color: inherit; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
-  .mt-auth-overlay{min-height:100vh;background:linear-gradient(135deg,#f5efff 0%,#ece3fa 100%);display:flex;align-items:center;justify-content:center;padding:20px}
-  .mt-auth-modal{width:100%;max-width:440px;background:#fff;border-radius:24px;padding:40px 36px 28px;box-shadow:0 25px 70px rgba(93,43,158,.25),0 0 0 1px rgba(147,91,217,.08);position:relative;animation:mt-slide-up .5s cubic-bezier(.16,1,.3,1)}
-  @keyframes mt-slide-up{from{opacity:0;transform:translateY(30px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-  .mt-auth-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border:none;background:#f5efff;border-radius:50%;font-size:22px;color:#5d2b9e;cursor:pointer;line-height:1;transition:all .2s;display:flex;align-items:center;justify-content:center;font-family:inherit;padding:0;z-index:2}
-  .mt-auth-close:hover{background:#a855f7;color:#fff}
-  .mt-auth-header{text-align:center;margin-bottom:28px}
-  .mt-auth-logo{font-size:28px;font-weight:800;letter-spacing:-.5px;color:#5d2b9e;margin-bottom:8px}
-  .mt-auth-logo span{color:#a855f7}
-  .mt-auth-subtitle{font-size:14px;color:#7e6b94;margin:0;line-height:1.4}
-  .mt-auth-tabs{display:flex;position:relative;background:#f5efff;border-radius:14px;padding:5px;margin-bottom:26px}
-  .mt-tab{flex:1;position:relative;z-index:2;background:transparent;border:none;padding:12px 10px;font-size:15px;font-weight:600;color:#8b7aa6;cursor:pointer;border-radius:10px;transition:color .3s ease;font-family:inherit}
-  .mt-tab.active{color:#5d2b9e}
-  .mt-tab-indicator{position:absolute;top:5px;left:5px;width:calc(50% - 5px);height:calc(100% - 10px);background:#fff;border-radius:10px;box-shadow:0 4px 12px rgba(93,43,158,.12);transition:transform .35s cubic-bezier(.4,0,.2,1);z-index:1}
-  .mt-auth-tabs[data-active="register"] .mt-tab-indicator{transform:translateX(100%)}
-  .mt-form{display:none;flex-direction:column;gap:16px;animation:mt-form-in .35s ease}
-  .mt-form.active{display:flex}
-  @keyframes mt-form-in{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
-  .mt-field{display:flex;flex-direction:column;gap:7px}
-  .mt-field label{font-size:13px;font-weight:600;color:#4b3b63;padding-left:4px}
-  .mt-field input{width:100%;padding:14px 16px;border:2px solid #ece3fa;background:#faf7ff;border-radius:12px;font-size:15px;color:#2e1a4d;outline:none;transition:all .25s ease;font-family:inherit}
-  .mt-field input::placeholder{color:#b3a4c9}
-  .mt-field input:focus{border-color:#a855f7;background:#fff;box-shadow:0 0 0 4px rgba(168,85,247,.12)}
-  .mt-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:-4px}
-  .mt-checkbox{display:flex;align-items:center;gap:9px;font-size:13px;color:#6b5b82;cursor:pointer;user-select:none;line-height:1.4}
-  .mt-checkbox input{display:none}
-  .mt-checkbox span{width:18px;height:18px;min-width:18px;border:2px solid #d9c7f2;border-radius:6px;background:#faf7ff;position:relative;transition:all .2s ease}
-  .mt-checkbox input:checked + span{background:linear-gradient(135deg,#8b3ddb,#a855f7);border-color:#a855f7}
-  .mt-checkbox input:checked + span::after{content:'';position:absolute;left:4.5px;top:1px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
-  .mt-checkbox a{color:#8b3ddb;text-decoration:none;font-weight:600}
-  .mt-terms{margin-top:2px;align-items:flex-start}
-  .mt-forgot{font-size:13px;color:#8b3ddb;text-decoration:none;font-weight:600;white-space:nowrap;transition:color .2s;cursor:pointer}
-  .mt-forgot:hover{color:#5d2b9e;text-decoration:underline}
-  .mt-submit{display:block;width:100%;padding:15px;margin-top:6px;border:none;border-radius:12px;background:linear-gradient(135deg,#7c2fd4 0%,#a855f7 100%);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.2px;box-shadow:0 8px 20px rgba(124,47,212,.35);transition:transform .2s ease,box-shadow .2s ease;text-align:center;text-decoration:none}
-  .mt-submit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 26px rgba(124,47,212,.45)}
-  .mt-submit:disabled{opacity:.6;cursor:not-allowed}
-  .mt-divider{position:relative;text-align:center;margin:14px 0}
-  .mt-divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:#ece3fa}
-  .mt-divider span{position:relative;background:#fff;padding:0 14px;font-size:12px;color:#a898c2;text-transform:uppercase;letter-spacing:.5px}
-  .mt-guest-block{margin-top:6px}
-  .mt-guest-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;border:2px solid #ece3fa;background:#faf7ff;border-radius:12px;font-size:15px;font-weight:600;color:#5d2b9e;cursor:pointer;font-family:inherit;transition:all .2s ease}
-  .mt-guest-btn:hover{border-color:#c9a9f0;background:#f5efff;transform:translateY(-1px)}
-  .mt-guest-hint{margin:8px 0 0;text-align:center;font-size:12px;color:#a898c2;line-height:1.4}
-  .mt-login-message{font-size:13px;text-align:center;font-weight:600;line-height:1.4;min-height:0}
-  .mt-login-message.error{color:#e0395a;background:#fff2f5;padding:10px 14px;border-radius:10px}
-  .mt-login-message.success{color:#1ab86a;background:#f0fbf5;padding:10px 14px;border-radius:10px}
-  .mt-login-message:empty{display:none}
-  .mt-code-header{text-align:center;margin-bottom:6px}
-  .mt-code-icon{width:60px;height:60px;margin:0 auto 14px;border-radius:50%;background:#f5efff;display:flex;align-items:center;justify-content:center}
-  .mt-code-title{font-size:18px;font-weight:700;color:#2e1a4d;margin:0 0 8px}
-  .mt-code-text{font-size:13px;color:#7e6b94;line-height:1.5;margin:0}
-  .mt-code-text b{color:#5d2b9e}
-  .mt-code-inputs{display:flex;gap:8px;justify-content:center;margin:8px 0 4px}
-  .mt-code-inputs input{width:48px;height:56px;text-align:center;font-size:22px;font-weight:700;color:#2e1a4d;border:2px solid #ece3fa;background:#faf7ff;border-radius:12px;outline:none;transition:all .2s ease;font-family:inherit;padding:0}
-  .mt-code-inputs input:focus{border-color:#a855f7;background:#fff;box-shadow:0 0 0 4px rgba(168,85,247,.12)}
-  .mt-code-inputs input.filled{border-color:#c9a9f0;background:#fff}
-  .mt-code-status{min-height:18px;font-size:13px;text-align:center;font-weight:600}
-  .mt-code-status.error{color:#e0395a;background:#fff2f5;padding:10px 14px;border-radius:10px}
-  .mt-code-status.success{color:#1ab86a;background:#f0fbf5;padding:10px 14px;border-radius:10px}
-  .mt-code-status:empty{display:none}
-  .mt-resend{display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:#7e6b94;margin-top:4px}
-  .mt-resend-disabled{color:#b3a4c9 !important;pointer-events:none}
-  .mt-back{display:block;text-align:center;font-size:13px;color:#8b3ddb;text-decoration:none;font-weight:600;margin-top:8px;cursor:pointer}
-  .mt-back:hover{color:#5d2b9e;text-decoration:underline}
-  .mt-auth-footer{text-align:center;margin-top:22px;padding-top:20px;border-top:1px solid #f0e8fb;font-size:14px;color:#7e6b94}
-  .mt-footer-link{color:#8b3ddb;font-weight:700;text-decoration:none;margin-left:4px;transition:color .2s;cursor:pointer}
-  .mt-footer-link:hover{color:#5d2b9e;text-decoration:underline}
+  /* ===== ШАПКА ===== */
+  .site-header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #f0e8fb;
+  }
+  .header-inner {
+    max-width: 1200px; margin: 0 auto;
+    padding: 14px 24px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .logo {
+    font-size: 22px; font-weight: 800;
+    color: #5d2b9e; letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+  .logo span { color: #a855f7; }
 
-  .mt-welcome-screen{text-align:center;padding:10px 0 4px}
-  .mt-welcome-avatar{width:80px;height:80px;margin:0 auto 18px;border-radius:50%;background:linear-gradient(135deg,#7c2fd4 0%,#a855f7 100%);color:#fff;font-size:34px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(124,47,212,.35);text-transform:uppercase}
-  .mt-welcome-title{font-size:14px;color:#8b7aa6;margin:0 0 4px;font-weight:500}
-  .mt-welcome-name{font-size:22px;font-weight:800;color:#2e1a4d;margin:0 0 24px;word-break:break-word}
-  .mt-welcome-actions{display:flex;flex-direction:column;gap:12px}
+  .main-nav {
+    display: flex; gap: 4px; margin-left: auto;
+  }
+  .main-nav a {
+    padding: 8px 14px; border-radius: 10px;
+    font-size: 14px; font-weight: 600; color: #6b5b82;
+    transition: all 0.2s;
+  }
+  .main-nav a:hover { color: #5d2b9e; background: #f5efff; }
 
-  @media (max-width:480px){.mt-auth-modal{padding:30px 22px 22px;border-radius:20px}.mt-auth-logo{font-size:24px}.mt-tab{font-size:14px}.mt-code-inputs input{width:42px;height:50px;font-size:20px}}
+  .header-actions { display: flex; gap: 10px; align-items: center; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 10px 18px; border-radius: 12px;
+    font-size: 14px; font-weight: 700;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .btn-login {
+    background: #fff;
+    color: #5d2b9e;
+    border: 2px solid #a855f7;
+    box-shadow: 0 4px 14px rgba(168, 85, 247, 0.15);
+  }
+  .btn-login:hover {
+    background: #f5efff;
+    border-color: #7c2fd4;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(168, 85, 247, 0.25);
+  }
+  .btn-login svg { width: 16px; height: 16px; }
+
+  .btn-premium {
+    background: linear-gradient(135deg, #7c2fd4 0%, #a855f7 100%);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(124, 47, 212, 0.35);
+  }
+  .btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(124, 47, 212, 0.45);
+  }
+  .btn-premium svg { width: 16px; height: 16px; }
+
+  .burger { display: none; }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(180deg, #faf7ff 0%, #ffffff 100%);
+    padding: 60px 24px 60px;
+    overflow: hidden;
+  }
+  .hero-inner {
+    max-width: 1200px; margin: 0 auto;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900; line-height: 1.1;
+    letter-spacing: -1.5px; color: #2e1a4d;
+    margin-bottom: 14px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, #7c2fd4, #a855f7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-subtitle {
+    font-size: clamp(15px, 2vw, 18px);
+    color: #7e6b94; max-width: 620px;
+    margin: 0 auto 32px;
+  }
+  .hero-image-wrap {
+    max-width: 1000px; margin: 0 auto 32px;
+  }
+  .hero-image-wrap img {
+    width: 100%; height: auto; display: block;
+    border-radius: 20px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #7c2fd4 0%, #a855f7 100%);
+    color: #fff; padding: 16px 32px; font-size: 16px; border-radius: 14px;
+    box-shadow: 0 10px 28px rgba(124, 47, 212, 0.4);
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgba(124, 47, 212, 0.5);
+  }
+  .btn-primary svg { width: 20px; height: 20px; }
+
+  /* ===== СЕКЦИИ ===== */
+  .section { padding: 72px 24px; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-title {
+    font-size: clamp(26px, 3.5vw, 38px);
+    font-weight: 800; letter-spacing: -0.8px;
+    text-align: center; margin-bottom: 12px; color: #2e1a4d;
+  }
+  .section-subtitle {
+    text-align: center; color: #7e6b94;
+    font-size: 16px; max-width: 580px;
+    margin: 0 auto 48px;
+  }
+
+  /* ===== ПРЕИМУЩЕСТВА ===== */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .feature-card {
+    padding: 28px 24px;
+    background: #fff;
+    border: 2px solid #f0e8fb;
+    border-radius: 20px;
+    transition: all 0.25s ease;
+  }
+  .feature-card:hover {
+    border-color: #d9c7f2;
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(124, 47, 212, 0.1);
+  }
+  .feature-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f5efff, #ece3fa);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 18px; color: #7c2fd4;
+  }
+  .feature-icon svg { width: 26px; height: 26px; }
+  .feature-card h3 {
+    font-size: 17px; font-weight: 700; margin-bottom: 8px; color: #2e1a4d;
+  }
+  .feature-card p { font-size: 14px; color: #7e6b94; }
+
+  /* ===== ЗАЧЕМ ПРОХОДИТЬ ===== */
+  .benefits-section { background: #faf7ff; }
+  .benefits-list {
+    max-width: 860px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .benefit-item {
+    padding: 22px 24px;
+    background: #fff;
+    border-radius: 16px;
+    display: flex; align-items: flex-start; gap: 14px;
+    border: 2px solid #f0e8fb;
+  }
+  .benefit-check {
+    width: 26px; height: 26px; flex-shrink: 0;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #7c2fd4, #a855f7);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+  }
+  .benefit-check svg { width: 16px; height: 16px; }
+  .benefit-item p { font-size: 15px; color: #4b3b63; font-weight: 500; }
+
+  /* ===== КАТАЛОГ ===== */
+  .catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 860px; margin: 0 auto;
+  }
+  .catalog-card {
+    padding: 28px;
+    background: #fff;
+    border-radius: 18px;
+    border: 2px solid #f0e8fb;
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+  .catalog-card:hover {
+    border-color: #a855f7;
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(124, 47, 212, 0.14);
+  }
+  .catalog-emoji { font-size: 34px; margin-bottom: 12px; display: block; }
+  .catalog-card h3 { font-size: 17px; font-weight: 700; color: #2e1a4d; margin-bottom: 4px; }
+  .catalog-card p { font-size: 14px; color: #7e6b94; }
+
+  /* ===== О ПЛАТФОРМЕ ===== */
+  .about-text {
+    max-width: 780px; margin: 0 auto;
+    text-align: center;
+    font-size: 17px; line-height: 1.7;
+    color: #4b3b63;
+  }
+  .about-text p + p { margin-top: 16px; }
+  .about-highlight {
+    display: inline-block;
+    margin-top: 28px;
+    padding: 18px 26px;
+    background: #f5efff;
+    border-left: 4px solid #a855f7;
+    border-radius: 12px;
+    text-align: left;
+    font-size: 15px;
+    color: #5d2b9e;
+    font-weight: 500;
+  }
+
+  /* ===== PREMIUM ===== */
+  .premium-section {
+    background: linear-gradient(135deg, #2a1550 0%, #4b1e8c 100%);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .premium-section::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.4), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .premium-inner { position: relative; z-index: 1; }
+  .premium-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px; border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 13px; font-weight: 700;
+    color: #e9d5ff;
+    margin: 0 auto 20px; display: flex; width: fit-content;
+  }
+  .premium-badge svg { width: 16px; height: 16px; color: #fbbf24; }
+  .premium-section .section-title { color: #fff; }
+  .premium-section .section-subtitle { color: #c4a9e8; }
+
+  .premium-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    max-width: 1000px;
+    margin: 0 auto 36px;
+  }
+  .premium-card {
+    padding: 26px 22px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    transition: all 0.25s ease;
+  }
+  .premium-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+  }
+  .premium-card-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #a855f7, #7c2fd4);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+  .premium-card-icon svg { width: 22px; height: 22px; color: #fff; }
+  .premium-card h3 {
+    font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #fff;
+  }
+  .premium-card p { font-size: 14px; color: #c4a9e8; line-height: 1.55; }
+
+  .premium-cta {
+    text-align: center;
+  }
+  .premium-cta .btn-premium {
+    padding: 16px 36px; font-size: 16px;
+    background: #fff; color: #5d2b9e;
+    box-shadow: 0 10px 28px rgba(255, 255, 255, 0.2);
+  }
+  .premium-cta .btn-premium:hover {
+    background: #f5efff;
+    box-shadow: 0 14px 34px rgba(255, 255, 255, 0.3);
+  }
+
+  /* ===== ОТЗЫВЫ ===== */
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .review-card {
+    padding: 26px 24px;
+    background: #fff;
+    border: 2px solid #f0e8fb;
+    border-radius: 18px;
+    transition: all 0.25s ease;
+  }
+  .review-card:hover {
+    border-color: #d9c7f2;
+    box-shadow: 0 16px 32px rgba(124, 47, 212, 0.08);
+  }
+  .review-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 14px;
+  }
+  .review-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c2fd4, #a855f7);
+    color: #fff; font-weight: 800; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .review-name {
+    font-size: 14px; font-weight: 700; color: #2e1a4d;
+  }
+  .review-meta {
+    font-size: 12px; color: #a898c2;
+  }
+  .review-text {
+    font-size: 14px; color: #4b3b63; line-height: 1.6;
+  }
+  .review-stars {
+    display: flex; gap: 2px; margin-top: 12px; color: #fbbf24;
+  }
+  .review-stars svg { width: 14px; height: 14px; }
+
+  /* ===== FAQ ===== */
+  .faq-section { background: #faf7ff; }
+  .faq-list {
+    max-width: 760px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .faq-item {
+    background: #fff; border-radius: 16px;
+    border: 2px solid #f0e8fb;
+    overflow: hidden;
+    transition: border-color 0.25s;
+  }
+  .faq-item[open] { border-color: #d9c7f2; }
+  .faq-item summary {
+    padding: 20px 24px;
+    font-size: 16px; font-weight: 600; color: #2e1a4d;
+    cursor: pointer; list-style: none;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+';
+    font-size: 24px; font-weight: 400;
+    color: #a855f7;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item .faq-answer {
+    padding: 0 24px 20px;
+    font-size: 15px; color: #7e6b94; line-height: 1.65;
+  }
+
+  /* ===== ПОДДЕРЖКА ===== */
+  .support-card {
+    max-width: 720px; margin: 0 auto;
+    padding: 40px 32px;
+    background: linear-gradient(135deg, #f5efff 0%, #ece3fa 100%);
+    border-radius: 24px;
+    text-align: center;
+  }
+  .support-card h3 {
+    font-size: 22px; font-weight: 800; margin-bottom: 10px; color: #2e1a4d;
+  }
+  .support-card p {
+    font-size: 15px; color: #6b5b82; margin-bottom: 24px;
+    max-width: 460px; margin-left: auto; margin-right: auto;
+  }
+  .support-email {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 26px;
+    background: #fff; border-radius: 14px;
+    font-size: 15px; font-weight: 700; color: #5d2b9e;
+    border: 2px solid #fff;
+    transition: all 0.2s ease;
+    box-shadow: 0 6px 20px rgba(124, 47, 212, 0.12);
+  }
+  .support-email:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(124, 47, 212, 0.2);
+    border-color: #a855f7;
+  }
+  .support-email svg { width: 20px; height: 20px; color: #a855f7; }
+
+  /* ===== ФУТЕР ===== */
+  .site-footer {
+    padding: 32px 24px;
+    background: #fff;
+    border-top: 1px solid #f0e8fb;
+    text-align: center;
+    font-size: 14px; color: #a898c2;
+  }
+  .site-footer .logo { display: inline-block; margin-bottom: 8px; }
+
+  /* ===== ПЛАВАЮЩАЯ КНОПКА ПОДДЕРЖКИ ===== */
+  .support-fab {
+    position: fixed;
+    right: 24px; bottom: 24px;
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c2fd4 0%, #a855f7 100%);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 26px rgba(124, 47, 212, 0.45);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    z-index: 200;
+  }
+  .support-fab:hover {
+    transform: scale(1.08);
+    box-shadow: 0 14px 32px rgba(124, 47, 212, 0.55);
+  }
+  .support-fab svg { width: 26px; height: 26px; }
+  .support-fab::after {
+    content: '';
+    position: absolute;
+    top: 8px; right: 8px;
+    width: 10px; height: 10px;
+    background: #22c55e;
+    border-radius: 50%;
+    border: 2px solid #fff;
+  }
+
+  .support-popup {
+    position: fixed;
+    right: 24px; bottom: 96px;
+    width: 320px; max-width: calc(100vw - 48px);
+    background: #fff;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 20px 50px rgba(93, 43, 158, 0.25);
+    border: 1px solid #f0e8fb;
+    z-index: 199;
+    opacity: 0; visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.25s ease;
+  }
+  .support-popup.open {
+    opacity: 1; visibility: visible;
+    transform: translateY(0);
+  }
+  .support-popup h4 {
+    font-size: 16px; font-weight: 800; color: #2e1a4d;
+    margin-bottom: 8px;
+  }
+  .support-popup p {
+    font-size: 14px; color: #6b5b82; line-height: 1.55;
+    margin-bottom: 12px;
+  }
+  .support-popup .support-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border-radius: 999px;
+    background: #f0fbf5;
+    color: #1ab86a;
+    font-size: 12px; font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .support-popup .support-status span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #1ab86a;
+  }
+  .support-popup .support-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: #7c2fd4; font-weight: 700; font-size: 13px;
+    padding: 8px 14px;
+    background: #f5efff;
+    border-radius: 10px;
+    transition: all 0.2s;
+  }
+  .support-popup .support-link:hover {
+    background: #ece3fa;
+  }
+  .support-popup .support-link svg { width: 16px; height: 16px; }
+  .support-close {
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: #f5efff;
+    color: #5d2b9e;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s;
+  }
+  .support-close:hover { background: #a855f7; color: #fff; }
+
+  /* ===== АДАПТИВ ===== */
+  @media (max-width: 720px) {
+    .main-nav {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      flex-direction: column;
+      background: #fff;
+      padding: 12px;
+      border-bottom: 1px solid #f0e8fb;
+      box-shadow: 0 12px 24px rgba(93, 43, 158, 0.08);
+    }
+    .main-nav.open { display: flex; }
+    .header-inner { position: relative; padding: 12px 18px; gap: 12px; }
+    .btn { padding: 9px 14px; font-size: 13px; }
+    .btn-premium span { display: none; }
+    .btn-premium { padding: 9px 12px; }
+    .btn-login span { display: none; }
+    .btn-login { padding: 9px 12px; }
+    .section { padding: 52px 18px; }
+    .hero { padding: 32px 18px 48px; }
+    .btn-primary { padding: 14px 24px; font-size: 15px; }
+    .burger {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 10px; color: #5d2b9e;
+      background: #f5efff;
+      margin-left: auto;
+    }
+    .burger svg { width: 22px; height: 22px; }
+    .header-actions { margin-left: 0; }
+    .catalog-grid { grid-template-columns: 1fr; }
+    .features-grid,
+    .benefits-list { grid-template-columns: 1fr; }
+    .support-fab { right: 18px; bottom: 18px; width: 52px; height: 52px; }
+    .support-popup { right: 18px; bottom: 84px; }
+  }
+  @media (max-width: 400px) {
+    .header-inner { gap: 6px; }
+    .btn { padding: 8px 12px; }
+  }
 </style>
 </head>
 <body>
 
-<div class="mt-auth-overlay">
-  <div class="mt-auth-modal">
-    <button class="mt-auth-close" id="mt-auth-close" aria-label="Закрыть">&times;</button>
-    <div class="mt-auth-header">
-      <div class="mt-auth-logo">Mind<span>Test</span></div>
-      <p class="mt-auth-subtitle">Добро пожаловать! Войдите или создайте аккаунт</p>
-    </div>
+<!-- ===== ШАПКА ===== -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="./" class="logo">Mind<span>Test</span></a>
 
-    <div class="mt-auth-tabs" id="mt-auth-tabs">
-      <button class="mt-tab active" data-tab="login">Вход</button>
-      <button class="mt-tab" data-tab="register">Регистрация</button>
-      <span class="mt-tab-indicator"></span>
-    </div>
+    <nav class="main-nav" id="mainNav">
+      <a href="#catalog">Каталог</a>
+      <a href="#about">О платформе</a>
+      <a href="#support">Помощь</a>
+    </nav>
 
-    <form class="mt-form active" id="mt-login-form">
-      <div class="mt-field"><label>Email</label><input type="email" name="email" placeholder="example@mail.com" required></div>
-      <div class="mt-field"><label>Пароль</label><input type="password" name="password" placeholder="••••••••" required></div>
-      <div class="mt-row">
-        <label class="mt-checkbox"><input type="checkbox"><span></span>Запомнить меня</label>
-        <a href="#" class="mt-forgot" id="mt-open-forgot">Забыли пароль?</a>
-      </div>
-      <button type="submit" class="mt-submit" id="mt-login-btn">Войти</button>
-      <div class="mt-login-message" id="mt-login-message"></div>
-      <div class="mt-guest-block">
-        <div class="mt-divider"><span>или</span></div>
-        <button type="button" class="mt-guest-btn" id="mt-guest-btn">Продолжить как гость
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-        <p class="mt-guest-hint">Без регистрации прогресс не сохраняется</p>
-      </div>
-    </form>
-
-    <form class="mt-form" id="mt-register-form">
-      <div class="mt-field"><label>Имя пользователя</label><input type="text" name="username" placeholder="Ваш никнейм" required></div>
-      <div class="mt-field"><label>Email</label><input type="email" name="email" placeholder="example@mail.com" required></div>
-      <div class="mt-field"><label>Пароль</label><input type="password" name="password" placeholder="Минимум 6 символов" minlength="6" required></div>
-      <label class="mt-checkbox mt-terms"><input type="checkbox" required><span></span>Я согласен с <a href="#">условиями</a> и <a href="#">политикой конфиденциальности</a></label>
-      <button type="submit" class="mt-submit" id="mt-register-btn">Создать аккаунт</button>
-    </form>
-
-    <form class="mt-form" id="mt-code-form">
-      <div class="mt-code-header">
-        <div class="mt-code-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></div>
-        <p class="mt-code-title">Введите код из письма</p>
-        <p class="mt-code-text">Мы отправили 6-значный код на <b id="mt-code-email">вашу почту</b>.<br>Проверьте папку «Спам».</p>
-      </div>
-      <div class="mt-code-inputs">
-        <input type="text" inputmode="numeric" maxlength="1" data-code-input>
-        <input type="text" inputmode="numeric" maxlength="1" data-code-input>
-        <input type="text" inputmode="numeric" maxlength="1" data-code-input>
-        <input type="text" inputmode="numeric" maxlength="1" data-code-input>
-        <input type="text" inputmode="numeric" maxlength="1" data-code-input>
-        <input type="text" inputmode="numeric" maxlength="1" data-code-input>
-      </div>
-      <div class="mt-code-status" id="mt-code-status"></div>
-      <button type="submit" class="mt-submit" id="mt-code-submit">Подтвердить</button>
-      <div class="mt-resend"><span>Отправить код повторно</span><a href="#" id="mt-resend-link" class="mt-forgot mt-resend-disabled">через 60 сек</a></div>
-      <a href="#" class="mt-back" id="mt-back-to-register">← Изменить email</a>
-    </form>
-
-    <form class="mt-form" id="mt-forgot-form">
-      <div class="mt-code-header">
-        <div class="mt-code-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-        <p class="mt-code-title">Восстановление пароля</p>
-        <p class="mt-code-text">Введите email, указанный при регистрации.</p>
-      </div>
-      <div class="mt-field"><label>Email</label><input type="email" name="email" placeholder="example@mail.com" required></div>
-      <button type="submit" class="mt-submit" id="mt-forgot-btn">Отправить код</button>
-      <div class="mt-code-status" id="mt-forgot-status"></div>
-      <a href="#" class="mt-back" id="mt-back-to-login-1">← Назад ко входу</a>
-    </form>
-
-    <form class="mt-form" id="mt-reset-form">
-      <div class="mt-code-header">
-        <div class="mt-code-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-        <p class="mt-code-title">Введите код из письма</p>
-        <p class="mt-code-text">Код отправлен на <b id="mt-reset-email">вашу почту</b>. Придумайте новый пароль.</p>
-      </div>
-      <div class="mt-code-inputs">
-        <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
-        <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
-        <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
-        <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
-        <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
-        <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
-      </div>
-      <div class="mt-field"><label>Новый пароль</label><input type="password" name="password" placeholder="Минимум 6 символов" minlength="6" required></div>
-      <div class="mt-field"><label>Повторите пароль</label><input type="password" name="password2" placeholder="Ещё раз" minlength="6" required></div>
-      <div class="mt-code-status" id="mt-reset-status"></div>
-      <button type="submit" class="mt-submit" id="mt-reset-btn">Сбросить пароль</button>
-      <div class="mt-resend"><span>Отправить код повторно</span><a href="#" id="mt-resend-reset-link" class="mt-forgot mt-resend-disabled">через 60 сек</a></div>
-      <a href="#" class="mt-back" id="mt-back-to-forgot">← Изменить email</a>
-    </form>
-
-    <div class="mt-welcome-screen" id="mt-welcome-screen" style="display:none">
-      <div class="mt-welcome-avatar" id="mt-welcome-avatar">?</div>
-      <p class="mt-welcome-title">Вы уже вошли</p>
-      <p class="mt-welcome-name" id="mt-welcome-name">—</p>
-      <div class="mt-welcome-actions">
-        <a href="./" class="mt-submit">На главную</a>
-        <button type="button" class="mt-guest-btn" id="mt-logout-btn">Выйти из аккаунта</button>
-      </div>
-    </div>
-
-    <div class="mt-auth-footer" id="mt-auth-footer">
-      <span class="mt-footer-text-login">Нет аккаунта?</span>
-      <span class="mt-footer-text-register" style="display:none">Уже есть аккаунт?</span>
-      <a href="#" class="mt-footer-link" data-switch="register">Зарегистрироваться</a>
+    <div class="header-actions">
+      <a href="./auth.html" class="btn btn-login">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Войти</span>
+      </a>
+      <a href="#premium" class="btn btn-premium">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
+        <span>Premium</span>
+      </a>
+      <button class="burger" id="burger" aria-label="Меню">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
     </div>
   </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Добро пожаловать <em>в MindTest</em></h1>
+    <p class="hero-subtitle">Платформа с тестами на знания и на самопознание. Проверь эрудицию и узнай о себе больше.</p>
+
+    <div class="hero-image-wrap">
+      <img src="./hero.png" alt="MindTest — тесты, развитие, ты">
+    </div>
+
+    <a href="#catalog" class="btn btn-primary">
+      Выбрать тест
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ===== ПРЕИМУЩЕСТВА ===== -->
+<section class="section">
+  <div class="section-inner">
+    <h2 class="section-title">Почему MindTest</h2>
+    <p class="section-subtitle">Мы делаем тесты, которые помогают проверить себя и узнать новое.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+        </div>
+        <h3>Тесты на любой вкус</h3>
+        <p>Психологические — чтобы узнать себя. На знания — чтобы проверить эрудицию.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h3>Понятные результаты</h3>
+        <p>После каждого теста — подробный разбор: правильные ответы в тестах знаний, объяснение — в психологических.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3>Бесплатный старт</h3>
+        <p>Все базовые тесты — бесплатно, без ограничений.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3>Быстро и удобно</h3>
+        <p>Тесты занимают 5–20 минут. Результат — сразу после прохождения.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ЗАЧЕМ ПРОХОДИТЬ ТЕСТЫ ===== -->
+<section class="section benefits-section">
+  <div class="section-inner">
+    <h2 class="section-title">Что дают тесты</h2>
+    <p class="section-subtitle">Не просто «интересно», а полезно для тебя.</p>
+
+    <div class="benefits-list">
+      <div class="benefit-item">
+        <div class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>Понимаешь свои сильные стороны и то, что можно развить</p>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>Проверяешь знания и узнаёшь что-то новое</p>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>Получаешь персональные награды по итогам тестов</p>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>Открываешь новые темы и интересы</p>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>Можешь делиться результатами с друзьями</p>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>Твои результаты сохраняются в личном профиле</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== КАТАЛОГ ===== -->
+<section class="section" id="catalog">
+  <div class="section-inner">
+    <h2 class="section-title">Каталог тестов</h2>
+    <p class="section-subtitle">Выбирай категорию — про себя или про мир вокруг.</p>
+
+    <div class="catalog-grid">
+      <a href="./auth.html" class="catalog-card">
+        <span class="catalog-emoji">🧠</span>
+        <h3>Психология и характер</h3>
+        <p>Кто ты на самом деле</p>
+      </a>
+      <a href="./auth.html" class="catalog-card">
+        <span class="catalog-emoji">💜</span>
+        <h3>Интересы и хобби</h3>
+        <p>Что тебя по-настоящему увлекает</p>
+      </a>
+      <a href="./auth.html" class="catalog-card">
+        <span class="catalog-emoji">✨</span>
+        <h3>Таланты и способности</h3>
+        <p>Твои сильные стороны</p>
+      </a>
+      <a href="./auth.html" class="catalog-card">
+        <span class="catalog-emoji">🚀</span>
+        <h3>Развитие и цели</h3>
+        <p>Куда двигаться дальше</p>
+      </a>
+      <a href="./auth.html" class="catalog-card">
+        <span class="catalog-emoji">📚</span>
+        <h3>Знания и эрудиция</h3>
+        <p>История, наука, культура</p>
+      </a>
+      <a href="./auth.html" class="catalog-card">
+        <span class="catalog-emoji">🧩</span>
+        <h3>Логика и IQ</h3>
+        <p>Проверь свой ум</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== О ПЛАТФОРМЕ ===== -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <h2 class="section-title">О платформе</h2>
+    <p class="section-subtitle">Коротко о том, что такое MindTest</p>
+
+    <div class="about-text">
+      <p>MindTest — это пространство, где ты можешь проверить свои знания и узнать о себе больше, чем расскажет любой разговор. Мы собрали тесты на самые разные темы: от психологии и логики до истории, науки и культуры.</p>
+      <p>За каждый пройденный тест ты получаешь <b>личные награды</b> — например, «Оптимист», «Эрудит», «Творец». Они собираются в твоём профиле и показывают, какие стороны тебя уже раскрыты.</p>
+      <p>Все зарегистрированные пользователи попадают в <b>общий рейтинг</b> — чем больше тестов ты проходишь, тем выше поднимаешься. Результатами можно делиться с друзьями.</p>
+
+      <div class="about-highlight">
+        💜 Если тебе интересна платформа — пройди пару тестов и расскажи о нас друзьям. Это лучшая поддержка для нас.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PREMIUM ===== -->
+<section class="section premium-section" id="premium">
+  <div class="section-inner premium-inner">
+    <div class="premium-badge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
+      Premium
+    </div>
+    <h2 class="section-title">Больше, чем просто тесты</h2>
+    <p class="section-subtitle">Premium открывает полную картину о тебе — и помогает двигаться дальше.</p>
+
+    <div class="premium-grid">
+      <div class="premium-card">
+        <div class="premium-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+        </div>
+        <h3>Личные рекомендации</h3>
+        <p>Персональные советы по итогам тестов: что развивать, на что обратить внимание, куда двигаться.</p>
+      </div>
+
+      <div class="premium-card">
+        <div class="premium-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 8.5l7 .9-5 4.8 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.8 7-.9L12 2z"/></svg>
+        </div>
+        <h3>Расширенные награды</h3>
+        <p>Эксклюзивные достижения и редкие титулы, которые не получишь на бесплатном тарифе.</p>
+      </div>
+
+      <div class="premium-card">
+        <div class="premium-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h3>Глубокий разбор</h3>
+        <p>Каждый результат — с детальным анализом, а не просто коротким выводом.</p>
+      </div>
+
+      <div class="premium-card">
+        <div class="premium-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7 9 9.7 3 15.7"/></svg>
+        </div>
+        <h3>История и прогресс</h3>
+        <p>Следи за тем, как меняются твои результаты с течением времени.</p>
+      </div>
+
+      <div class="premium-card">
+        <div class="premium-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+        </div>
+        <h3>Приоритет в рейтинге</h3>
+        <p>Premium-профили отмечаются особой меткой и видны в топе рейтинга.</p>
+      </div>
+
+      <div class="premium-card">
+        <div class="premium-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Приоритетная поддержка</h3>
+        <p>Ответ от команды MindTest — в первую очередь.</p>
+      </div>
+    </div>
+
+    <div class="premium-cta">
+      <a href="./auth.html" class="btn btn-premium">Оформить Premium</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ОТЗЫВЫ ===== -->
+<section class="section">
+  <div class="section-inner">
+    <h2 class="section-title">Отзывы пользователей</h2>
+    <p class="section-subtitle">Что говорят те, кто уже прошёл тесты MindTest.</p>
+
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">А</div>
+          <div>
+            <div class="review-name">Аня</div>
+            <div class="review-meta">15 лет</div>
+          </div>
+        </div>
+        <p class="review-text">Прошла тест на характер — и правда, всё совпало. Было приятно узнать о себе что-то новое.</p>
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">М</div>
+          <div>
+            <div class="review-name">Максим</div>
+            <div class="review-meta">16 лет</div>
+          </div>
+        </div>
+        <p class="review-text">Сначала думал, что это очередная бесполезная залипалка. Прошёл один тест — затянуло. Особенно нравятся награды.</p>
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">К</div>
+          <div>
+            <div class="review-name">Кристина</div>
+            <div class="review-meta">14 лет</div>
+          </div>
+        </div>
+        <p class="review-text">Сайт красивый, тесты понятные. Рекомендации в Premium реально помогают понять, куда двигаться.</p>
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="section faq-section" id="faq">
+  <div class="section-inner">
+    <h2 class="section-title">Частые вопросы</h2>
+    <p class="section-subtitle">Коротко о главном. Не нашёл ответ — напиши нам.</p>
+
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Это бесплатно?</summary>
+        <div class="faq-answer">Да. Базовые тесты можно проходить бесплатно. Premium-подписка — это дополнение: она открывает персональные рекомендации, расширенные награды и другие функции, но без неё платформа тоже полностью рабочая.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Нужна ли регистрация?</summary>
+        <div class="faq-answer">Для базовых тестов — нет. Но если хочешь, чтобы результаты сохранялись, ты мог(ла) возвращаться к ним и получать награды, лучше зарегистрироваться.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Какие тесты есть на платформе?</summary>
+        <div class="faq-answer">Два больших направления: тесты о тебе (психология, характер, интересы, таланты) и тесты на знания (эрудиция, логика, история, наука, культура). Выбирай, что ближе.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Сколько идёт один тест?</summary>
+        <div class="faq-answer">От 5 до 20 минут — в зависимости от теста. Есть быстрые — на знания, есть подольше — на психологию. Результат показывается сразу после завершения.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Что такое рейтинг пользователей?</summary>
+        <div class="faq-answer">Все зарегистрированные пользователи попадают в общий рейтинг. Чем больше тестов ты проходишь и чем активнее участвуешь — тем выше поднимаешься. Premium-профили отмечаются особой меткой.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Что даёт Premium?</summary>
+        <div class="faq-answer">Личные рекомендации по итогам тестов, расширенные награды, глубокий разбор результатов, история прогресса, приоритет в рейтинге и приоритетную поддержку. Оформить можно в любой момент.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Как поделиться результатом?</summary>
+        <div class="faq-answer">После прохождения теста у тебя будет кнопка «Поделиться». Можно отправить результат другу или сохранить себе — на выбор.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ПОДДЕРЖКА ===== -->
+<section class="section" id="support">
+  <div class="section-inner">
+    <div class="support-card">
+      <h3>Нужна помощь?</h3>
+      <p>Если что-то не работает, есть вопрос или идея — напиши нам. Мы читаем каждое сообщение и стараемся отвечать в течение двух дней.</p>
+      <a href="mailto:mindtest.help@gmail.com" class="support-email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+        mindtest.help@gmail.com
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ФУТЕР ===== -->
+<footer class="site-footer">
+  <div class="logo">Mind<span>Test</span></div>
+  <p>© 2026 MindTest. Все права защищены.</p>
+</footer>
+
+<!-- ===== ПЛАВАЮЩАЯ КНОПКА ПОДДЕРЖКИ ===== -->
+<button class="support-fab" id="supportFab" aria-label="Поддержка">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 11l18-8v18L3 13v-2z"/>
+    <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
+  </svg>
+</button>
+
+<div class="support-popup" id="supportPopup">
+  <button class="support-close" id="supportClose" aria-label="Закрыть">&times;</button>
+  <h4>Поддержка MindTest</h4>
+  <div class="support-status"><span></span> Онлайн</div>
+  <p>Есть вопрос, идея или что-то не работает? Мы поможем.</p>
+  <p>Ответим в течение <b>двух дней</b>.</p>
+  <a href="#support" class="support-link" id="supportGoLink">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    Перейти в поддержку
+  </a>
 </div>
 
 <script>
-(function() {
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyF-_QTRAd5l9A41HwIEnStZruucLxZVu6oCUEiKBsiEbaIvPvjItjU_ScLeQS8I-5FFg/exec';
-  const HOME_URL   = './';
-
-  const SESSION_KEY = 'mindtest_user';
-  const GUEST_KEY   = 'mindtest_is_guest';
-
-  const tabsContainer  = document.querySelector('.mt-auth-tabs');
-  const tabs           = document.querySelectorAll('.mt-tab');
-  const forms = {
-    login:    document.getElementById('mt-login-form'),
-    register: document.getElementById('mt-register-form'),
-    code:     document.getElementById('mt-code-form'),
-    forgot:   document.getElementById('mt-forgot-form'),
-    reset:    document.getElementById('mt-reset-form')
-  };
-  const footerTextLogin    = document.querySelector('.mt-footer-text-login');
-  const footerTextRegister = document.querySelector('.mt-footer-text-register');
-  const footerLink         = document.querySelector('.mt-footer-link');
-  const footer             = document.getElementById('mt-auth-footer');
-  const welcomeScreen      = document.getElementById('mt-welcome-screen');
-  const authHeader         = document.querySelector('.mt-auth-header');
-
-  let pendingUser = { username: '', email: '', password: '' };
-  let resetEmail  = '';
-  let resendTimer = null;
-  let resendResetTimer = null;
-
-  function getCurrentUser() {
-    try { const raw = localStorage.getItem(SESSION_KEY); return raw ? JSON.parse(raw) : null; }
-    catch (e) { return null; }
-  }
-
-  function showWelcome(user) {
-    tabsContainer.style.display = 'none';
-    Object.keys(forms).forEach(k => forms[k].classList.remove('active'));
-    footer.style.display = 'none';
-    welcomeScreen.style.display = 'block';
-    document.getElementById('mt-welcome-name').textContent = user.username || user.email;
-    document.getElementById('mt-welcome-avatar').textContent = (user.username || user.email || '?').charAt(0).toUpperCase();
-    authHeader.style.display = 'none';
-  }
-
-  if (getCurrentUser()) showWelcome(getCurrentUser());
-
-  const logoutBtn = document.getElementById('mt-logout-btn');
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', function () {
-      try { localStorage.removeItem(SESSION_KEY); } catch (e) {}
-      window.location.reload();
-    });
-  }
-
-  document.getElementById('mt-auth-close').addEventListener('click', function () {
-    window.location.href = HOME_URL;
+  // ===== Бургер-меню =====
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('mainNav');
+  burger.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => nav.classList.remove('open'));
   });
 
-  document.getElementById('mt-guest-btn').addEventListener('click', function () {
-    try { localStorage.setItem(GUEST_KEY, '1'); localStorage.removeItem(SESSION_KEY); } catch (e) {}
-    window.location.href = HOME_URL;
+  // ===== Плавающая кнопка поддержки =====
+  const fab = document.getElementById('supportFab');
+  const popup = document.getElementById('supportPopup');
+  const closeBtn = document.getElementById('supportClose');
+
+  fab.addEventListener('click', (e) => {
+    e.stopPropagation();
+    popup.classList.toggle('open');
   });
-
-  function showForm(name) {
-    const isTab = (name === 'login' || name === 'register');
-    tabsContainer.style.display = isTab ? 'flex' : 'none';
-    footer.style.display = isTab ? 'block' : 'none';
-    authHeader.style.display = 'block';
-    Object.keys(forms).forEach(k => forms[k].classList.toggle('active', k === name));
-    if (isTab) {
-      tabsContainer.setAttribute('data-active', name);
-      tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-      if (name === 'login') {
-        footerTextLogin.style.display = 'inline';
-        footerTextRegister.style.display = 'none';
-        footerLink.textContent = 'Зарегистрироваться';
-        footerLink.setAttribute('data-switch', 'register');
-      } else {
-        footerTextLogin.style.display = 'none';
-        footerTextRegister.style.display = 'inline';
-        footerLink.textContent = 'Войти';
-        footerLink.setAttribute('data-switch', 'login');
-      }
-    }
-  }
-
-  tabs.forEach(t => t.addEventListener('click', () => showForm(t.dataset.tab)));
-  footerLink.addEventListener('click', (e) => { e.preventDefault(); showForm(footerLink.getAttribute('data-switch')); });
-
-  async function apiRequest(action, params) {
-    const body = new URLSearchParams(Object.assign({ action: action }, params));
-    const res = await fetch(SCRIPT_URL, { method: 'POST', body: body, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    return res.json();
-  }
-
-  const loginMessage = document.getElementById('mt-login-message');
-  const loginBtn     = document.getElementById('mt-login-btn');
-  function clearLoginMessage() { loginMessage.textContent = ''; loginMessage.className = 'mt-login-message'; }
-  function setLoginMessage(text, type) { loginMessage.textContent = text; loginMessage.className = 'mt-login-message ' + (type || ''); }
-
-  forms.login.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const fd = new FormData(forms.login);
-    const email    = (fd.get('email') || '').trim().toLowerCase();
-    const password = fd.get('password') || '';
-    if (!email || !password) return;
-    clearLoginMessage();
-    loginBtn.disabled = true;
-    loginBtn.textContent = 'Проверяем…';
-    try {
-      const result = await apiRequest('login', { email, password });
-      if (result.status !== 'success') throw new Error(result.message || 'Не удалось войти');
-      try {
-        localStorage.setItem(SESSION_KEY, JSON.stringify({ email: result.user.email, username: result.user.username, loginAt: Date.now() }));
-        localStorage.removeItem(GUEST_KEY);
-      } catch (err) {}
-      setLoginMessage('✓ Добро пожаловать, ' + result.user.username + '!', 'success');
-      setTimeout(() => { window.location.href = HOME_URL; }, 1200);
-    } catch (err) {
-      setLoginMessage(err.message, 'error');
-    } finally {
-      loginBtn.disabled = false;
-      loginBtn.textContent = 'Войти';
+  closeBtn.addEventListener('click', () => popup.classList.remove('open'));
+  document.addEventListener('click', (e) => {
+    if (!popup.contains(e.target) && e.target !== fab && !fab.contains(e.target)) {
+      popup.classList.remove('open');
     }
   });
 
-  const registerBtn = document.getElementById('mt-register-btn');
-  forms.register.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const fd = new FormData(forms.register);
-    pendingUser = { username: fd.get('username').trim(), email: fd.get('email').trim().toLowerCase(), password: fd.get('password') };
-    registerBtn.disabled = true;
-    registerBtn.textContent = 'Отправляем код…';
-    try {
-      const result = await apiRequest('send', { email: pendingUser.email, username: pendingUser.username, password: pendingUser.password });
-      if (result.status !== 'success') throw new Error(result.message || 'Не удалось отправить код');
-      document.getElementById('mt-code-email').textContent = pendingUser.email;
-      clearCodeInputs();
-      setStatus('');
-      showForm('code');
-      startResendTimer();
-      setTimeout(() => document.querySelector('[data-code-input]').focus(), 100);
-    } catch (err) {
-      alert('Ошибка: ' + err.message);
-    } finally {
-      registerBtn.disabled = false;
-      registerBtn.textContent = 'Создать аккаунт';
-    }
+  document.getElementById('supportGoLink').addEventListener('click', () => {
+    popup.classList.remove('open');
   });
-
-  const codeInputs = document.querySelectorAll('[data-code-input]');
-  const codeStatus = document.getElementById('mt-code-status');
-  const codeSubmit = document.getElementById('mt-code-submit');
-
-  function setStatus(text, type) { codeStatus.textContent = text || ''; codeStatus.className = 'mt-code-status' + (type ? ' ' + type : ''); }
-  function clearCodeInputs() { codeInputs.forEach(i => { i.value = ''; i.classList.remove('filled'); }); }
-  function getEnteredCode() { return Array.from(codeInputs).map(i => i.value).join(''); }
-
-  function bindCodeInputs(inputs) {
-    inputs.forEach((input, idx) => {
-      input.addEventListener('input', (e) => {
-        e.target.value = e.target.value.replace(/\D/g, '');
-        e.target.classList.toggle('filled', !!e.target.value);
-        if (e.target.value && idx < inputs.length - 1) inputs[idx + 1].focus();
-      });
-      input.addEventListener('keydown', (e) => { if (e.key === 'Backspace' && !e.target.value && idx > 0) inputs[idx - 1].focus(); });
-      input.addEventListener('paste', (e) => {
-        e.preventDefault();
-        const pasted = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
-        pasted.split('').forEach((ch, i) => { if (inputs[i]) { inputs[i].value = ch; inputs[i].classList.add('filled'); } });
-        const lastIdx = Math.min(pasted.length, 5);
-        if (inputs[lastIdx]) inputs[lastIdx].focus();
-      });
-    });
-  }
-  bindCodeInputs(codeInputs);
-
-  forms.code.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const entered = getEnteredCode();
-    if (entered.length !== 6) { setStatus('Введите все 6 цифр', 'error'); return; }
-    codeSubmit.disabled = true;
-    codeSubmit.textContent = 'Проверяем…';
-    setStatus('');
-    try {
-      const result = await apiRequest('verify', { email: pendingUser.email, code: entered });
-      if (result.status !== 'success') throw new Error(result.message || 'Неверный код');
-      setStatus('✓ Email подтверждён! Регистрация завершена.', 'success');
-      try {
-        localStorage.setItem(SESSION_KEY, JSON.stringify({ email: result.user.email, username: result.user.username, loginAt: Date.now() }));
-        localStorage.removeItem(GUEST_KEY);
-      } catch (err) {}
-      setTimeout(() => { window.location.href = HOME_URL; }, 1800);
-    } catch (err) {
-      setStatus(err.message, 'error');
-      clearCodeInputs();
-      codeInputs[0].focus();
-    } finally {
-      codeSubmit.disabled = false;
-      codeSubmit.textContent = 'Подтвердить';
-    }
-  });
-
-  const resendLink = document.getElementById('mt-resend-link');
-  function startResendTimer() {
-    let seconds = 60;
-    resendLink.classList.add('mt-resend-disabled');
-    resendLink.textContent = 'через ' + seconds + ' сек';
-    clearInterval(resendTimer);
-    resendTimer = setInterval(() => {
-      seconds--;
-      if (seconds <= 0) {
-        clearInterval(resendTimer);
-        resendLink.classList.remove('mt-resend-disabled');
-        resendLink.textContent = 'отправить сейчас';
-      } else resendLink.textContent = 'через ' + seconds + ' сек';
-    }, 1000);
-  }
-
-  resendLink.addEventListener('click', async (e) => {
-    e.preventDefault();
-    if (resendLink.classList.contains('mt-resend-disabled')) return;
-    try {
-      const result = await apiRequest('send', { email: pendingUser.email, username: pendingUser.username, password: pendingUser.password });
-      if (result.status !== 'success') throw new Error(result.message);
-      setStatus('Код отправлен повторно', 'success');
-      startResendTimer();
-    } catch (err) { setStatus(err.message, 'error'); }
-  });
-
-  document.getElementById('mt-back-to-register').addEventListener('click', (e) => { e.preventDefault(); clearCodeInputs(); setStatus(''); showForm('register'); });
-
-  const forgotForm   = forms.forgot;
-  const resetForm    = forms.reset;
-  const forgotStatus = document.getElementById('mt-forgot-status');
-  const resetStatus  = document.getElementById('mt-reset-status');
-  const resetInputs  = document.querySelectorAll('[data-reset-input]');
-  const resendResetLink = document.getElementById('mt-resend-reset-link');
-  bindCodeInputs(resetInputs);
-
-  document.getElementById('mt-open-forgot').addEventListener('click', (e) => {
-    e.preventDefault();
-    showForm('forgot');
-    forgotStatus.textContent = ''; forgotStatus.className = 'mt-code-status';
-    forgotForm.reset();
-  });
-
-  const forgotBtn = document.getElementById('mt-forgot-btn');
-  forgotForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const fd = new FormData(forgotForm);
-    const email = (fd.get('email') || '').trim().toLowerCase();
-    if (!email) return;
-    resetEmail = email;
-    forgotStatus.textContent = ''; forgotStatus.className = 'mt-code-status';
-    forgotBtn.disabled = true;
-    forgotBtn.textContent = 'Отправляем…';
-    try {
-      const result = await apiRequest('forgot', { email: resetEmail });
-      if (result.status !== 'success') throw new Error(result.message || 'Не удалось отправить код');
-      document.getElementById('mt-reset-email').textContent = resetEmail;
-      resetInputs.forEach(i => { i.value = ''; i.classList.remove('filled'); });
-      resetStatus.textContent = ''; resetStatus.className = 'mt-code-status';
-      resetForm.reset();
-      showForm('reset');
-      startResetTimer();
-      setTimeout(() => resetInputs[0].focus(), 100);
-    } catch (err) {
-      forgotStatus.textContent = err.message;
-      forgotStatus.className = 'mt-code-status error';
-    } finally {
-      forgotBtn.disabled = false;
-      forgotBtn.textContent = 'Отправить код';
-    }
-  });
-
-  const resetBtn = document.getElementById('mt-reset-btn');
-  resetForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const fd = new FormData(resetForm);
-    const password  = fd.get('password') || '';
-    const password2 = fd.get('password2') || '';
-    const entered   = Array.from(resetInputs).map(i => i.value).join('');
-    if (entered.length !== 6) { resetStatus.textContent = 'Введите все 6 цифр'; resetStatus.className = 'mt-code-status error'; return; }
-    if (password.length < 6) { resetStatus.textContent = 'Пароль короче 6 символов'; resetStatus.className = 'mt-code-status error'; return; }
-    if (password !== password2) { resetStatus.textContent = 'Пароли не совпадают'; resetStatus.className = 'mt-code-status error'; return; }
-    resetStatus.textContent = ''; resetStatus.className = 'mt-code-status';
-    resetBtn.disabled = true;
-    resetBtn.textContent = 'Сохраняем…';
-    try {
-      const result = await apiRequest('reset', { email: resetEmail, code: entered, password: password });
-      if (result.status !== 'success') throw new Error(result.message || 'Не удалось сбросить пароль');
-      resetStatus.textContent = '✓ Пароль изменён! Сейчас вернём вас ко входу…';
-      resetStatus.className = 'mt-code-status success';
-      setTimeout(() => { showForm('login'); clearLoginMessage(); }, 1800);
-    } catch (err) {
-      resetStatus.textContent = err.message;
-      resetStatus.className = 'mt-code-status error';
-    } finally {
-      resetBtn.disabled = false;
-      resetBtn.textContent = 'Сбросить пароль';
-    }
-  });
-
-  function startResetTimer() {
-    let seconds = 60;
-    resendResetLink.classList.add('mt-resend-disabled');
-    resendResetLink.textContent = 'через ' + seconds + ' сек';
-    clearInterval(resendResetTimer);
-    resendResetTimer = setInterval(() => {
-      seconds--;
-      if (seconds <= 0) {
-        clearInterval(resendResetTimer);
-        resendResetLink.classList.remove('mt-resend-disabled');
-        resendResetLink.textContent = 'отправить сейчас';
-      } else resendResetLink.textContent = 'через ' + seconds + ' сек';
-    }, 1000);
-  }
-
-  resendResetLink.addEventListener('click', async (e) => {
-    e.preventDefault();
-    if (resendResetLink.classList.contains('mt-resend-disabled')) return;
-    try {
-      const result = await apiRequest('forgot', { email: resetEmail });
-      if (result.status !== 'success') throw new Error(result.message);
-      resetStatus.textContent = 'Код отправлен повторно';
-      resetStatus.className = 'mt-code-status success';
-      startResetTimer();
-    } catch (err) { resetStatus.textContent = err.message; resetStatus.className = 'mt-code-status error'; }
-  });
-
-  document.getElementById('mt-back-to-login-1').addEventListener('click', (e) => { e.preventDefault(); forgotStatus.textContent = ''; forgotStatus.className = 'mt-code-status'; showForm('login'); });
-  document.getElementById('mt-back-to-forgot').addEventListener('click', (e) => { e.preventDefault(); resetInputs.forEach(i => { i.value = ''; i.classList.remove('filled'); }); resetStatus.textContent = ''; resetStatus.className = 'mt-code-status'; showForm('forgot'); });
-
-})();
 </script>
 </body>
 </html>
