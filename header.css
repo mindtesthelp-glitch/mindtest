@@ -1,0 +1,151 @@
+/* ===== АВАТАРКА ПОЛЬЗОВАТЕЛЯ ===== */
+.mt-avatar-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.mt-avatar-btn {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c2fd4 0%, #a855f7 100%);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  box-shadow: 0 6px 18px rgba(124, 47, 212, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+  padding: 0;
+}
+.mt-avatar-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(124, 47, 212, 0.45);
+}
+
+.mt-avatar-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 280px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #f0e8fb;
+  box-shadow: 0 20px 50px rgba(93, 43, 158, 0.2);
+  padding: 8px;
+  z-index: 300;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: all 0.2s ease;
+}
+.mt-avatar-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Шапка меню: имя + email */
+.mt-avatar-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+}
+.mt-avatar-big {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c2fd4 0%, #a855f7 100%);
+  color: #fff;
+  font-weight: 800;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+.mt-avatar-info {
+  min-width: 0;
+  flex: 1;
+}
+.mt-avatar-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2e1a4d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+.mt-avatar-email {
+  font-size: 12px;
+  color: #a898c2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  margin-top: 2px;
+}
+
+.mt-avatar-divider {
+  height: 1px;
+  background: #f0e8fb;
+  margin: 6px 8px;
+}
+
+/* Кнопки меню */
+.mt-avatar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4b3b63;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background: none;
+  text-align: left;
+  font-family: inherit;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.mt-avatar-item:hover {
+  background: #f5efff;
+  color: #5d2b9e;
+}
+.mt-avatar-item svg {
+  width: 18px;
+  height: 18px;
+  color: #a855f7;
+  flex-shrink: 0;
+}
+
+/* Выйти — красная */
+.mt-avatar-logout {
+  color: #e0395a;
+}
+.mt-avatar-logout svg { color: #e0395a; }
+.mt-avatar-logout:hover {
+  background: #fff2f5;
+  color: #e0395a;
+}
+
+/* Адаптив */
+@media (max-width: 720px) {
+  .mt-avatar-btn {
+    width: 40px; height: 40px;
+    font-size: 16px;
+  }
+  .mt-avatar-menu {
+    width: 260px;
+    right: -8px;
+  }
+}
