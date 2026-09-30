@@ -43,6 +43,9 @@
   .mt-checkbox input:checked + span::after{content:'';position:absolute;left:4.5px;top:1px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
   .mt-checkbox a{color:#8b3ddb;text-decoration:none;font-weight:600}
   .mt-terms{margin-top:2px;align-items:flex-start}
+  .mt-checkbox.mt-error span{border-color:#e0395a;background:#fff2f5}
+  .mt-checkbox.mt-error a{color:#e0395a}
+  .mt-checkbox.mt-error{color:#e0395a}
   .mt-forgot{font-size:13px;color:#8b3ddb;text-decoration:none;font-weight:600;white-space:nowrap;transition:color .2s;cursor:pointer}
   .mt-forgot:hover{color:#5d2b9e;text-decoration:underline}
   .mt-submit{display:block;width:100%;padding:15px;margin-top:6px;border:none;border-radius:12px;background:linear-gradient(135deg,#7c2fd4 0%,#a855f7 100%);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.2px;box-shadow:0 8px 20px rgba(124,47,212,.35);transition:transform .2s ease,box-shadow .2s ease;text-align:center;text-decoration:none}
@@ -387,9 +390,27 @@
     }
   });
 
+  // === РЕГИСТРАЦИЯ ===
   const registerBtn = document.getElementById('mt-register-btn');
+  const termsLabel = forms.register.querySelector('.mt-terms');
+  const termsCheckbox = termsLabel.querySelector('input[type="checkbox"]');
+
+  // Убираем подсветку при отметке галочки
+  termsCheckbox.addEventListener('change', () => {
+    if (termsCheckbox.checked) {
+      termsLabel.classList.remove('mt-error');
+    }
+  });
+
   forms.register.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    // Проверяем галочку
+    if (!termsCheckbox.checked) {
+      termsLabel.classList.add('mt-error');
+      return;
+    }
+
     const fd = new FormData(forms.register);
     pendingUser = { username: fd.get('username').trim(), email: fd.get('email').trim().toLowerCase(), password: fd.get('password') };
     registerBtn.disabled = true;
