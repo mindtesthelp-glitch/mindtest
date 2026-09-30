@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./header.css">
 <style>
   * { box-sizing: border-box; }
   html, body { margin:0; padding:0; }
@@ -31,13 +32,13 @@
   @keyframes mt-form-in{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
   .mt-field{display:flex;flex-direction:column;gap:7px}
   .mt-field label{font-size:13px;font-weight:600;color:#4b3b63;padding-left:4px}
-  .mt-field input{width:100%;padding:14px 16px;border:2px solid #ece3fa;background:#faf7ff;border-radius:12px;font-size:15px;color:#2e1a4d;outline:none;transition:all .25s ease;font-family:inherit}
+  .mt-field input{width:100%;padding:14px 16px;border:2px solid #ece3fa;background:#faf7ff;border-radius:12px;font-size:15px;color:#2e1a4d;outline:none;transition:all .25s ease;font-family:inherit;box-sizing:border-box}
   .mt-field input::placeholder{color:#b3a4c9}
   .mt-field input:focus{border-color:#a855f7;background:#fff;box-shadow:0 0 0 4px rgba(168,85,247,.12)}
   .mt-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:-4px}
   .mt-checkbox{display:flex;align-items:center;gap:9px;font-size:13px;color:#6b5b82;cursor:pointer;user-select:none;line-height:1.4}
   .mt-checkbox input{display:none}
-  .mt-checkbox span{width:18px;height:18px;min-width:18px;border:2px solid #d9c7f2;border-radius:6px;background:#faf7ff;position:relative;transition:all .2s ease}
+  .mt-checkbox span{width:18px;height:18px;min-width:18px;border:2px solid #d9c7f2;border-radius:6px;background:#faf7ff;position:relative;transition:all .2s ease;box-sizing:border-box}
   .mt-checkbox input:checked + span{background:linear-gradient(135deg,#8b3ddb,#a855f7);border-color:#a855f7}
   .mt-checkbox input:checked + span::after{content:'';position:absolute;left:4.5px;top:1px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
   .mt-checkbox a{color:#8b3ddb;text-decoration:none;font-weight:600}
@@ -104,9 +105,16 @@
       <span class="mt-tab-indicator"></span>
     </div>
 
+    <!-- ===== ФОРМА ВХОДА ===== -->
     <form class="mt-form active" id="mt-login-form">
-      <div class="mt-field"><label>Email</label><input type="email" name="email" placeholder="example@mail.com" required></div>
-      <div class="mt-field"><label>Пароль</label><input type="password" name="password" placeholder="••••••••" required></div>
+      <div class="mt-field">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="example@mail.com" required>
+      </div>
+      <div class="mt-field">
+        <label>Пароль</label>
+        <input type="password" name="password" placeholder="••••••••" required>
+      </div>
       <div class="mt-row">
         <label class="mt-checkbox"><input type="checkbox"><span></span>Запомнить меня</label>
         <a href="#" class="mt-forgot" id="mt-open-forgot">Забыли пароль?</a>
@@ -115,26 +123,45 @@
       <div class="mt-login-message" id="mt-login-message"></div>
       <div class="mt-guest-block">
         <div class="mt-divider"><span>или</span></div>
-        <button type="button" class="mt-guest-btn" id="mt-guest-btn">Продолжить как гость
+        <button type="button" class="mt-guest-btn" id="mt-guest-btn">
+          Продолжить как гость
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
         <p class="mt-guest-hint">Без регистрации прогресс не сохраняется</p>
       </div>
     </form>
 
+    <!-- ===== РЕГИСТРАЦИЯ (шаг 1) ===== -->
     <form class="mt-form" id="mt-register-form">
-      <div class="mt-field"><label>Имя пользователя</label><input type="text" name="username" placeholder="Ваш никнейм" required></div>
-      <div class="mt-field"><label>Email</label><input type="email" name="email" placeholder="example@mail.com" required></div>
-      <div class="mt-field"><label>Пароль</label><input type="password" name="password" placeholder="Минимум 6 символов" minlength="6" required></div>
-      <label class="mt-checkbox mt-terms"><input type="checkbox" required><span></span>Я согласен с <a href="#">условиями</a> и <a href="#">политикой конфиденциальности</a></label>
+      <div class="mt-field">
+        <label>Имя пользователя</label>
+        <input type="text" name="username" placeholder="Ваш никнейм" required>
+      </div>
+      <div class="mt-field">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="example@mail.com" required>
+      </div>
+      <div class="mt-field">
+        <label>Пароль</label>
+        <input type="password" name="password" placeholder="Минимум 6 символов" minlength="6" required>
+      </div>
+      <label class="mt-checkbox mt-terms">
+        <input type="checkbox" required><span></span>
+        Я согласен с <a href="#">условиями</a> и <a href="#">политикой конфиденциальности</a>
+      </label>
       <button type="submit" class="mt-submit" id="mt-register-btn">Создать аккаунт</button>
     </form>
 
+    <!-- ===== ПОДТВЕРЖДЕНИЕ КОДА (шаг 2 регистрации) ===== -->
     <form class="mt-form" id="mt-code-form">
       <div class="mt-code-header">
-        <div class="mt-code-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></div>
+        <div class="mt-code-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/>
+          </svg>
+        </div>
         <p class="mt-code-title">Введите код из письма</p>
-        <p class="mt-code-text">Мы отправили 6-значный код на <b id="mt-code-email">вашу почту</b>.<br>Проверьте папку «Спам».</p>
+        <p class="mt-code-text">Мы отправили 6-значный код на <b id="mt-code-email">вашу почту</b>.<br>Проверьте папку «Спам», если письмо не пришло.</p>
       </div>
       <div class="mt-code-inputs">
         <input type="text" inputmode="numeric" maxlength="1" data-code-input>
@@ -146,28 +173,47 @@
       </div>
       <div class="mt-code-status" id="mt-code-status"></div>
       <button type="submit" class="mt-submit" id="mt-code-submit">Подтвердить</button>
-      <div class="mt-resend"><span>Отправить код повторно</span><a href="#" id="mt-resend-link" class="mt-forgot mt-resend-disabled">через 60 сек</a></div>
+      <div class="mt-resend">
+        <span>Отправить код повторно</span>
+        <a href="#" id="mt-resend-link" class="mt-forgot mt-resend-disabled">через 60 сек</a>
+      </div>
       <a href="#" class="mt-back" id="mt-back-to-register">← Изменить email</a>
     </form>
 
+    <!-- ===== ВОССТАНОВЛЕНИЕ: ШАГ 1 — ВВОД EMAIL ===== -->
     <form class="mt-form" id="mt-forgot-form">
       <div class="mt-code-header">
-        <div class="mt-code-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="mt-code-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
         <p class="mt-code-title">Восстановление пароля</p>
-        <p class="mt-code-text">Введите email, указанный при регистрации.</p>
+        <p class="mt-code-text">Введите email, указанный при регистрации.<br>Мы отправим на него код для сброса пароля.</p>
       </div>
-      <div class="mt-field"><label>Email</label><input type="email" name="email" placeholder="example@mail.com" required></div>
+      <div class="mt-field">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="example@mail.com" required>
+      </div>
       <button type="submit" class="mt-submit" id="mt-forgot-btn">Отправить код</button>
       <div class="mt-code-status" id="mt-forgot-status"></div>
       <a href="#" class="mt-back" id="mt-back-to-login-1">← Назад ко входу</a>
     </form>
 
+    <!-- ===== ВОССТАНОВЛЕНИЕ: ШАГ 2 — КОД + НОВЫЙ ПАРОЛЬ ===== -->
     <form class="mt-form" id="mt-reset-form">
       <div class="mt-code-header">
-        <div class="mt-code-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="mt-code-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
         <p class="mt-code-title">Введите код из письма</p>
-        <p class="mt-code-text">Код отправлен на <b id="mt-reset-email">вашу почту</b>. Придумайте новый пароль.</p>
+        <p class="mt-code-text">Код отправлен на <b id="mt-reset-email">вашу почту</b>.<br>Придумайте новый пароль.</p>
       </div>
+
       <div class="mt-code-inputs">
         <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
         <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
@@ -176,14 +222,26 @@
         <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
         <input type="text" inputmode="numeric" maxlength="1" data-reset-input>
       </div>
-      <div class="mt-field"><label>Новый пароль</label><input type="password" name="password" placeholder="Минимум 6 символов" minlength="6" required></div>
-      <div class="mt-field"><label>Повторите пароль</label><input type="password" name="password2" placeholder="Ещё раз" minlength="6" required></div>
+
+      <div class="mt-field">
+        <label>Новый пароль</label>
+        <input type="password" name="password" placeholder="Минимум 6 символов" minlength="6" required>
+      </div>
+      <div class="mt-field">
+        <label>Повторите пароль</label>
+        <input type="password" name="password2" placeholder="Ещё раз" minlength="6" required>
+      </div>
+
       <div class="mt-code-status" id="mt-reset-status"></div>
       <button type="submit" class="mt-submit" id="mt-reset-btn">Сбросить пароль</button>
-      <div class="mt-resend"><span>Отправить код повторно</span><a href="#" id="mt-resend-reset-link" class="mt-forgot mt-resend-disabled">через 60 сек</a></div>
+      <div class="mt-resend">
+        <span>Отправить код повторно</span>
+        <a href="#" id="mt-resend-reset-link" class="mt-forgot mt-resend-disabled">через 60 сек</a>
+      </div>
       <a href="#" class="mt-back" id="mt-back-to-forgot">← Изменить email</a>
     </form>
 
+    <!-- ===== ЭКРАН «ВЫ УЖЕ ВОШЛИ» ===== -->
     <div class="mt-welcome-screen" id="mt-welcome-screen" style="display:none">
       <div class="mt-welcome-avatar" id="mt-welcome-avatar">?</div>
       <p class="mt-welcome-title">Вы уже вошли</p>
@@ -539,5 +597,6 @@
 
 })();
 </script>
+<script src="./header.js"></script>
 </body>
 </html>
