@@ -198,6 +198,10 @@
   .mt-msubmit:disabled { opacity: .6; cursor: not-allowed; }
 
   .mt-message { display: none !important; }
+  .mt-form-alert { display: none; padding: 12px 14px; border-radius: 11px; font-size: 13px; line-height: 1.5; text-align: center; font-weight: 500; }
+  .mt-form-alert.show { display: block; }
+  .mt-form-alert.info { background: #f5efff; color: #5d2b9e; border: 1.5px solid #d9c7f2; }
+  .mt-form-alert.error { background: #fff2f5; color: #c72a4e; border: 1.5px solid #f5c6d0; }
   .mt-mguest-block { margin-top: 6px; }
   .mt-mdivider { position: relative; text-align: center; margin: 14px 0; }
   .mt-mdivider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #ece3fa; }
@@ -606,6 +610,7 @@
     </div>
 
     <form class="mt-mform active" id="mm-login-form" novalidate>
+      <div class="mt-form-alert" id="mm-login-alert"></div>
       <div class="mt-mfield"><label>Email</label><input type="email" name="email" placeholder="example@mail.com"></div>
       <div class="mt-mfield"><label>Пароль</label><input type="password" name="password" placeholder="••••••••"></div>
       <div class="mt-mrow">
@@ -624,6 +629,7 @@
     </form>
 
     <form class="mt-mform" id="mm-register-form" novalidate>
+      <div class="mt-form-alert" id="mm-register-alert"></div>
       <div class="mt-mfield"><label>Имя пользователя</label><input type="text" name="username" placeholder="Ваш никнейм"></div>
       <div class="mt-mfield"><label>Email</label><input type="email" name="email" placeholder="example@mail.com"></div>
       <div class="mt-mfield"><label>Пароль</label><input type="password" name="password" placeholder="Минимум 6 символов"></div>
@@ -807,6 +813,13 @@
       closeModal();
     });
 
+    function clearAlerts() {
+      var la = document.getElementById('mm-login-alert');
+      var ra = document.getElementById('mm-register-alert');
+      if (la) { la.className = 'mt-form-alert'; la.textContent = ''; }
+      if (ra) { ra.className = 'mt-form-alert'; ra.textContent = ''; }
+    }
+
     function showMform(name) {
       var isTab = (name === 'login' || name === 'register');
       tabsBox.style.display = isTab ? 'flex' : 'none';
@@ -826,8 +839,8 @@
         }
       }
     }
-    tabs.forEach(function(t){ t.addEventListener('click', function(){ showMform(t.dataset.tab); }); });
-    mfooterLink.addEventListener('click', function(e){ e.preventDefault(); showMform(mfooterLink.getAttribute('data-switch')); });
+    tabs.forEach(function(t){ t.addEventListener('click', function(){ clearAlerts(); showMform(t.dataset.tab); }); });
+    mfooterLink.addEventListener('click', function(e){ e.preventDefault(); clearAlerts(); showMform(mfooterLink.getAttribute('data-switch')); });
 
     function markError(input) {
       input.classList.add('mt-error');
@@ -837,6 +850,7 @@
     var loginBtn = document.getElementById('mm-login-btn');
     mforms.login.addEventListener('submit', async function(e) {
       e.preventDefault();
+      clearAlerts();
       var fd = new FormData(mforms.login);
       var emailIn = mforms.login.querySelector('input[name="email"]');
       var passIn = mforms.login.querySelector('input[name="password"]');
@@ -869,6 +883,7 @@
 
     mforms.register.addEventListener('submit', async function(e) {
       e.preventDefault();
+      clearAlerts();
       termsLb.classList.remove('mt-error');
       var fd = new FormData(mforms.register);
       var userIn = mforms.register.querySelector('input[name="username"]');
@@ -889,6 +904,25 @@
       try {
         var res2 = await sb.auth.signUp({ email: email, password: password, options: { data: { username: username } } });
         if (res2.error) throw new Error(translateError(res2.error.message));
+
+        // 🔍 Проверка: если email уже зарегистрирован, Supabase вернёт "фейковый успех"
+        // с пустым массивом identities — реальный пользователь не создан, письмо не отправлено.
+        var d = res2.data;
+        if (d && d.user && Array.isArray(d.user.identities) && d.user.identities.length === 0) {
+          // Подставляем email в форму входа
+          var loginEmailIn = mforms.login.querySelector('input[name="email"]');
+          var loginPassIn = mforms.login.querySelector('input[name="password"]');
+          loginEmailIn.value = email;
+          loginPassIn.value = '';
+          showMform('login');
+          var la = document.getElementById('mm-login-alert');
+          la.className = 'mt-form-alert show info';
+          la.textContent = 'Этот email уже зарегистрирован. Введите пароль от аккаунта и войдите.';
+          setTimeout(function(){ loginPassIn.focus(); }, 150);
+          regBtn.disabled = false; regBtn.textContent = 'Создать аккаунт';
+          return;
+        }
+
         document.getElementById('mm-code-email').textContent = email;
         clearMCode();
         document.getElementById('mm-code-status').textContent = '';
