@@ -954,9 +954,9 @@
     <div class="support-card">
       <h3>Нужна помощь?</h3>
       <p>Если что-то не работает, есть вопрос или идея — напиши нам. Мы читаем каждое сообщение и стараемся отвечать в течение двух дней.</p>
-      <a href="mailto:mindtest.help@gmail.com" class="support-email">
+      <a href="mailto:support@mindtest-online.ru" class="support-email">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
-        mindtest.help@gmail.com
+        support@mindtest-online.ru
       </a>
     </div>
   </div>
@@ -989,6 +989,7 @@
 </div>
 
 <script>
+  // ===== Бургер-меню =====
   const burger = document.getElementById('burger');
   const nav = document.getElementById('mainNav');
   burger.addEventListener('click', () => nav.classList.toggle('open'));
@@ -996,6 +997,7 @@
     a.addEventListener('click', () => nav.classList.remove('open'));
   });
 
+  // ===== Плавающая кнопка поддержки =====
   const fab = document.getElementById('supportFab');
   const popup = document.getElementById('supportPopup');
   const closeBtn = document.getElementById('supportClose');
