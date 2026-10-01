@@ -94,8 +94,8 @@
   .premium-cta { text-align: center; }
   .premium-cta .btn-premium { padding: 16px 36px; font-size: 16px; background: #fff; color: #5d2b9e; }
 
-  .reviews-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 28px; max-width: 1000px; margin: 0 auto; grid-auto-rows: 1fr; }
-  .review-card { padding: 30px 28px; background: #fff; border: 2px solid #f0e8fb; border-radius: 20px; transition: all .25s; display: flex; flex-direction: column; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 28px; max-width: 1300px; margin: 0 auto; }
+  .review-card { padding: 30px 28px; background: #fff; border: 2px solid #f0e8fb; border-radius: 20px; transition: all .25s; display: flex; flex-direction: column; min-height: 250px; }
   .review-card:hover { border-color: #d9c7f2; }
   .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
   .review-avatar { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; font-weight: 800; font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -247,6 +247,7 @@
     .burger { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; color: #5d2b9e; background: #f5efff; flex-shrink: 0; }
     .burger svg { width: 22px; height: 22px; }
     .catalog-grid, .features-grid, .benefits-list, .premium-grid, .reviews-grid { grid-template-columns: 1fr; }
+    .review-card { min-height: 0; }
     .support-fab { right: 18px; bottom: 18px; width: 52px; height: 52px; }
     .support-popup { right: 18px; bottom: 84px; }
     section[id] { scroll-margin-top: 70px; }
