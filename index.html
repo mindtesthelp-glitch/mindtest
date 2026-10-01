@@ -5,146 +5,102 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MindTest — Открой лучшее в себе</title>
 <link rel="icon" type="image/png" href="./favicon.png">
-<meta name="description" content="MindTest — платформа с тестами на знания и самопознание. Проверь эрудицию и узнай себя лучше.">
+<meta name="description" content="MindTest — платформа с тестами на знания и самопознание.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./header.css">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-    background: #ffffff; color: #2e1a4d;
-    line-height: 1.5; -webkit-font-smoothing: antialiased;
-  }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif; background: #fff; color: #2e1a4d; line-height: 1.5; -webkit-font-smoothing: antialiased; }
   a { text-decoration: none; color: inherit; }
   button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
   section[id] { scroll-margin-top: 90px; }
 
-  .site-header {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid #f0e8fb;
-  }
-  .header-inner {
-    max-width: 100%; margin: 0 auto;
-    padding: 14px 48px;
-    display: flex; align-items: center; gap: 20px;
-  }
-  .logo { font-size: 22px; font-weight: 800; color: #5d2b9e; letter-spacing: -0.5px; flex-shrink: 0; }
+  .site-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #f0e8fb; }
+  .header-inner { max-width: 100%; margin: 0 auto; padding: 14px 48px; display: flex; align-items: center; gap: 20px; }
+  .logo { font-size: 22px; font-weight: 800; color: #5d2b9e; letter-spacing: -.5px; flex-shrink: 0; }
   .logo span { color: #a855f7; }
   .main-nav { display: flex; gap: 4px; margin-left: auto; }
-  .main-nav a { padding: 8px 14px; border-radius: 10px; font-size: 14px; font-weight: 600; color: #6b5b82; transition: all 0.2s; }
+  .main-nav a { padding: 8px 14px; border-radius: 10px; font-size: 14px; font-weight: 600; color: #6b5b82; transition: all .2s; }
   .main-nav a:hover { color: #5d2b9e; background: #f5efff; }
   .header-actions { display: flex; gap: 10px; align-items: center; }
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    padding: 10px 18px; border-radius: 12px;
-    font-size: 14px; font-weight: 700;
-    transition: all 0.2s ease; white-space: nowrap;
-  }
-  .btn-login {
-    background: #fff; color: #5d2b9e;
-    border: 2px solid #a855f7;
-    box-shadow: 0 4px 14px rgba(168, 85, 247, 0.15);
-  }
-  .btn-login:hover { background: #f5efff; border-color: #7c2fd4; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(168, 85, 247, 0.25); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; border-radius: 12px; font-size: 14px; font-weight: 700; transition: all .2s ease; white-space: nowrap; }
+  .btn-login { background: #fff; color: #5d2b9e; border: 2px solid #a855f7; box-shadow: 0 4px 14px rgba(168,85,247,.15); }
+  .btn-login:hover { background: #f5efff; border-color: #7c2fd4; transform: translateY(-2px); }
   .btn-login svg { width: 16px; height: 16px; }
-  .btn-premium {
-    background: linear-gradient(135deg, #7c2fd4 0%, #a855f7 100%);
-    color: #fff;
-    box-shadow: 0 6px 18px rgba(124, 47, 212, 0.35);
-  }
-  .btn-premium:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(124, 47, 212, 0.45); }
+  .btn-premium { background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; box-shadow: 0 6px 18px rgba(124,47,212,.35); }
+  .btn-premium:hover { transform: translateY(-2px); }
   .btn-premium svg { width: 16px; height: 16px; }
   .burger { display: none; }
 
-  .hero { background: linear-gradient(180deg, #faf7ff 0%, #ffffff 100%); padding: 60px 48px; overflow: hidden; }
+  .hero { background: linear-gradient(180deg,#faf7ff,#fff); padding: 60px 48px; overflow: hidden; }
   .hero-inner { max-width: 100%; margin: 0 auto; text-align: center; }
-  .hero h1 {
-    font-size: clamp(36px, 5.5vw, 76px);
-    font-weight: 900; line-height: 1.1;
-    letter-spacing: -2px; color: #2e1a4d;
-    margin-bottom: 16px;
-  }
-  .hero h1 em {
-    font-style: normal;
-    background: linear-gradient(135deg, #7c2fd4, #a855f7);
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+  .hero h1 { font-size: clamp(36px, 5.5vw, 76px); font-weight: 900; line-height: 1.1; letter-spacing: -2px; color: #2e1a4d; margin-bottom: 16px; }
+  .hero h1 em { font-style: normal; background: linear-gradient(135deg,#7c2fd4,#a855f7); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
   .hero-subtitle { font-size: clamp(16px, 2vw, 20px); color: #7e6b94; max-width: 720px; margin: 0 auto 36px; }
   .hero-image-wrap { max-width: 1500px; margin: 0 auto 36px; }
   .hero-image-wrap img { width: 100%; height: auto; display: block; border-radius: 20px; }
-  .btn-primary {
-    background: linear-gradient(135deg, #7c2fd4 0%, #a855f7 100%);
-    color: #fff; padding: 16px 32px; font-size: 16px; border-radius: 14px;
-    box-shadow: 0 10px 28px rgba(124, 47, 212, 0.4);
-  }
-  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(124, 47, 212, 0.5); }
+  .btn-primary { background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; padding: 16px 32px; font-size: 16px; border-radius: 14px; box-shadow: 0 10px 28px rgba(124,47,212,.4); }
+  .btn-primary:hover { transform: translateY(-3px); }
   .btn-primary svg { width: 20px; height: 20px; }
 
   .section { padding: 80px 48px; }
   .section-inner { max-width: 100%; margin: 0 auto; }
-  .section-title {
-    font-size: clamp(28px, 4vw, 46px);
-    font-weight: 800; letter-spacing: -1px;
-    text-align: center; margin-bottom: 12px; color: #2e1a4d;
-  }
+  .section-title { font-size: clamp(28px, 4vw, 46px); font-weight: 800; letter-spacing: -1px; text-align: center; margin-bottom: 12px; color: #2e1a4d; }
   .section-subtitle { text-align: center; color: #7e6b94; font-size: 17px; max-width: 640px; margin: 0 auto 52px; }
 
-  .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 1300px; margin: 0 auto; }
-  .feature-card { padding: 36px 32px; background: #fff; border: 2px solid #f0e8fb; border-radius: 22px; transition: all 0.25s ease; }
-  .feature-card:hover { border-color: #d9c7f2; transform: translateY(-4px); box-shadow: 0 20px 40px rgba(124, 47, 212, 0.1); }
-  .feature-icon { width: 56px; height: 56px; border-radius: 16px; background: linear-gradient(135deg, #f5efff, #ece3fa); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: #7c2fd4; }
+  .features-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; max-width: 1300px; margin: 0 auto; }
+  .feature-card { padding: 36px 32px; background: #fff; border: 2px solid #f0e8fb; border-radius: 22px; transition: all .25s; }
+  .feature-card:hover { border-color: #d9c7f2; transform: translateY(-4px); }
+  .feature-icon { width: 56px; height: 56px; border-radius: 16px; background: linear-gradient(135deg,#f5efff,#ece3fa); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: #7c2fd4; }
   .feature-icon svg { width: 28px; height: 28px; }
-  .feature-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 10px; color: #2e1a4d; }
+  .feature-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 10px; }
   .feature-card p { font-size: 15px; color: #7e6b94; line-height: 1.6; }
 
   .benefits-section { background: #faf7ff; }
-  .benefits-list { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .benefits-list { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
   .benefit-item { padding: 26px 28px; background: #fff; border-radius: 18px; display: flex; align-items: flex-start; gap: 16px; border: 2px solid #f0e8fb; }
-  .benefit-check { width: 28px; height: 28px; flex-shrink: 0; border-radius: 9px; background: linear-gradient(135deg, #7c2fd4, #a855f7); display: flex; align-items: center; justify-content: center; color: #fff; }
+  .benefit-check { width: 28px; height: 28px; flex-shrink: 0; border-radius: 9px; background: linear-gradient(135deg,#7c2fd4,#a855f7); display: flex; align-items: center; justify-content: center; color: #fff; }
   .benefit-check svg { width: 17px; height: 17px; }
   .benefit-item p { font-size: 15px; color: #4b3b63; font-weight: 500; }
 
-  .catalog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1300px; margin: 0 auto; }
-  .catalog-card { padding: 34px; background: #fff; border-radius: 20px; border: 2px solid #f0e8fb; transition: all 0.25s ease; cursor: pointer; }
-  .catalog-card:hover { border-color: #a855f7; transform: translateY(-4px); box-shadow: 0 16px 32px rgba(124, 47, 212, 0.14); }
+  .catalog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; max-width: 1300px; margin: 0 auto; }
+  .catalog-card { padding: 34px; background: #fff; border-radius: 20px; border: 2px solid #f0e8fb; transition: all .25s; cursor: pointer; }
+  .catalog-card:hover { border-color: #a855f7; transform: translateY(-4px); }
   .catalog-emoji { font-size: 40px; margin-bottom: 14px; display: block; }
-  .catalog-card h3 { font-size: 19px; font-weight: 700; color: #2e1a4d; margin-bottom: 6px; }
+  .catalog-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 6px; }
   .catalog-card p { font-size: 15px; color: #7e6b94; }
 
   .about-text { max-width: 1100px; margin: 0 auto; text-align: center; font-size: 18px; line-height: 1.8; color: #4b3b63; }
   .about-text p + p { margin-top: 18px; }
   .about-highlight { display: inline-block; margin-top: 32px; padding: 20px 30px; background: #f5efff; border-left: 4px solid #a855f7; border-radius: 14px; text-align: left; font-size: 16px; color: #5d2b9e; font-weight: 500; }
 
-  .premium-section { background: linear-gradient(135deg, #2a1550 0%, #4b1e8c 100%); color: #fff; position: relative; overflow: hidden; }
-  .premium-section::before { content: ''; position: absolute; top: -50%; right: -20%; width: 700px; height: 700px; background: radial-gradient(circle, rgba(168, 85, 247, 0.4), transparent 70%); border-radius: 50%; pointer-events: none; }
+  .premium-section { background: linear-gradient(135deg,#2a1550,#4b1e8c); color: #fff; position: relative; overflow: hidden; }
+  .premium-section::before { content: ''; position: absolute; top: -50%; right: -20%; width: 700px; height: 700px; background: radial-gradient(circle, rgba(168,85,247,.4), transparent 70%); border-radius: 50%; pointer-events: none; }
   .premium-inner { position: relative; z-index: 1; }
-  .premium-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.2); font-size: 13px; font-weight: 700; color: #e9d5ff; margin: 0 auto 20px; display: flex; width: fit-content; }
+  .premium-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); font-size: 13px; font-weight: 700; color: #e9d5ff; margin: 0 auto 20px; }
   .premium-badge svg { width: 16px; height: 16px; color: #fbbf24; }
   .premium-section .section-title { color: #fff; }
   .premium-section .section-subtitle { color: #c4a9e8; }
-  .premium-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1300px; margin: 0 auto 40px; }
-  .premium-card { padding: 30px 26px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 20px; transition: all 0.25s ease; }
-  .premium-card:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-3px); }
-  .premium-card-icon { width: 46px; height: 46px; border-radius: 13px; background: linear-gradient(135deg, #a855f7, #7c2fd4); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+  .premium-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; max-width: 1300px; margin: 0 auto 40px; }
+  .premium-card { padding: 30px 26px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 20px; transition: all .25s; }
+  .premium-card:hover { background: rgba(255,255,255,.1); transform: translateY(-3px); }
+  .premium-card-icon { width: 46px; height: 46px; border-radius: 13px; background: linear-gradient(135deg,#a855f7,#7c2fd4); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
   .premium-card-icon svg { width: 23px; height: 23px; color: #fff; }
-  .premium-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: #fff; }
+  .premium-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
   .premium-card p { font-size: 14px; color: #c4a9e8; line-height: 1.6; }
   .premium-cta { text-align: center; }
-  .premium-cta .btn-premium { padding: 16px 36px; font-size: 16px; background: #fff; color: #5d2b9e; box-shadow: 0 10px 28px rgba(255, 255, 255, 0.2); }
-  .premium-cta .btn-premium:hover { background: #f5efff; box-shadow: 0 14px 34px rgba(255, 255, 255, 0.3); }
+  .premium-cta .btn-premium { padding: 16px 36px; font-size: 16px; background: #fff; color: #5d2b9e; }
 
-  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1300px; margin: 0 auto; }
-  .review-card { padding: 30px 28px; background: #fff; border: 2px solid #f0e8fb; border-radius: 20px; transition: all 0.25s ease; }
-  .review-card:hover { border-color: #d9c7f2; box-shadow: 0 16px 32px rgba(124, 47, 212, 0.08); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; max-width: 1300px; margin: 0 auto; }
+  .review-card { padding: 30px 28px; background: #fff; border: 2px solid #f0e8fb; border-radius: 20px; transition: all .25s; }
+  .review-card:hover { border-color: #d9c7f2; }
   .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-  .review-avatar { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, #7c2fd4, #a855f7); color: #fff; font-weight: 800; font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .review-name { font-size: 15px; font-weight: 700; color: #2e1a4d; }
+  .review-avatar { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; font-weight: 800; font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .review-name { font-size: 15px; font-weight: 700; }
   .review-meta { font-size: 13px; color: #a898c2; }
   .review-text { font-size: 15px; color: #4b3b63; line-height: 1.65; }
   .review-stars { display: flex; gap: 2px; margin-top: 14px; color: #fbbf24; }
@@ -152,157 +108,152 @@
 
   .faq-section { background: #faf7ff; }
   .faq-list { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
-  .faq-item { background: #fff; border-radius: 16px; border: 2px solid #f0e8fb; overflow: hidden; transition: border-color 0.25s; }
+  .faq-item { background: #fff; border-radius: 16px; border: 2px solid #f0e8fb; overflow: hidden; transition: border-color .25s; }
   .faq-item[open] { border-color: #d9c7f2; }
-  .faq-item summary { padding: 24px 28px; font-size: 17px; font-weight: 600; color: #2e1a4d; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .faq-item summary { padding: 24px 28px; font-size: 17px; font-weight: 600; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .faq-item summary::-webkit-details-marker { display: none; }
-  .faq-item summary::after { content: '+'; font-size: 26px; font-weight: 400; color: #a855f7; transition: transform 0.3s ease; flex-shrink: 0; }
+  .faq-item summary::after { content: '+'; font-size: 26px; color: #a855f7; transition: transform .3s; }
   .faq-item[open] summary::after { transform: rotate(45deg); }
   .faq-item .faq-answer { padding: 0 28px 24px; font-size: 15px; color: #7e6b94; line-height: 1.7; }
 
-  .support-card { max-width: 1000px; margin: 0 auto; padding: 52px 40px; background: linear-gradient(135deg, #f5efff 0%, #ece3fa 100%); border-radius: 26px; text-align: center; }
-  .support-card h3 { font-size: 26px; font-weight: 800; margin-bottom: 12px; color: #2e1a4d; }
+  .support-card { max-width: 1000px; margin: 0 auto; padding: 52px 40px; background: linear-gradient(135deg,#f5efff,#ece3fa); border-radius: 26px; text-align: center; }
+  .support-card h3 { font-size: 26px; font-weight: 800; margin-bottom: 12px; }
   .support-card p { font-size: 16px; color: #6b5b82; margin-bottom: 26px; max-width: 560px; margin-left: auto; margin-right: auto; }
-  .support-email { display: inline-flex; align-items: center; gap: 10px; padding: 15px 28px; background: #fff; border-radius: 14px; font-size: 16px; font-weight: 700; color: #5d2b9e; border: 2px solid #fff; transition: all 0.2s ease; box-shadow: 0 6px 20px rgba(124, 47, 212, 0.12); }
-  .support-email:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(124, 47, 212, 0.2); border-color: #a855f7; }
+  .support-email { display: inline-flex; align-items: center; gap: 10px; padding: 15px 28px; background: #fff; border-radius: 14px; font-size: 16px; font-weight: 700; color: #5d2b9e; border: 2px solid #fff; transition: all .2s; box-shadow: 0 6px 20px rgba(124,47,212,.12); }
+  .support-email:hover { transform: translateY(-2px); border-color: #a855f7; }
   .support-email svg { width: 20px; height: 20px; color: #a855f7; }
 
   .site-footer { padding: 36px 24px; background: #fff; border-top: 1px solid #f0e8fb; text-align: center; font-size: 14px; color: #a898c2; }
   .site-footer .logo { display: inline-block; margin-bottom: 8px; }
 
-  .support-fab { position: fixed; right: 24px; bottom: 24px; width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(135deg, #7c2fd4 0%, #a855f7 100%); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 26px rgba(124, 47, 212, 0.45); cursor: pointer; transition: all 0.25s ease; z-index: 200; }
-  .support-fab:hover { transform: scale(1.08); box-shadow: 0 14px 32px rgba(124, 47, 212, 0.55); }
+  .support-fab { position: fixed; right: 24px; bottom: 24px; width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 26px rgba(124,47,212,.45); cursor: pointer; transition: all .25s; z-index: 200; }
+  .support-fab:hover { transform: scale(1.08); }
   .support-fab svg { width: 26px; height: 26px; }
   .support-fab::after { content: ''; position: absolute; top: 8px; right: 8px; width: 10px; height: 10px; background: #22c55e; border-radius: 50%; border: 2px solid #fff; }
 
-  .support-popup { position: fixed; right: 24px; bottom: 96px; width: 320px; max-width: calc(100vw - 48px); background: #fff; border-radius: 18px; padding: 22px; box-shadow: 0 20px 50px rgba(93, 43, 158, 0.25); border: 1px solid #f0e8fb; z-index: 199; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.25s ease; }
+  .support-popup { position: fixed; right: 24px; bottom: 96px; width: 320px; max-width: calc(100vw - 48px); background: #fff; border-radius: 18px; padding: 22px; box-shadow: 0 20px 50px rgba(93,43,158,.25); border: 1px solid #f0e8fb; z-index: 199; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all .25s; }
   .support-popup.open { opacity: 1; visibility: visible; transform: translateY(0); }
-  .support-popup h4 { font-size: 16px; font-weight: 800; color: #2e1a4d; margin-bottom: 8px; }
+  .support-popup h4 { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
   .support-popup p { font-size: 14px; color: #6b5b82; line-height: 1.55; margin-bottom: 12px; }
   .support-popup .support-status { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: #f0fbf5; color: #1ab86a; font-size: 12px; font-weight: 700; margin-bottom: 12px; }
   .support-popup .support-status span { width: 6px; height: 6px; border-radius: 50%; background: #1ab86a; }
-  .support-popup .support-link { display: inline-flex; align-items: center; gap: 8px; color: #7c2fd4; font-weight: 700; font-size: 13px; padding: 8px 14px; background: #f5efff; border-radius: 10px; transition: all 0.2s; }
-  .support-popup .support-link:hover { background: #ece3fa; }
+  .support-popup .support-link { display: inline-flex; align-items: center; gap: 8px; color: #7c2fd4; font-weight: 700; font-size: 13px; padding: 8px 14px; background: #f5efff; border-radius: 10px; }
   .support-popup .support-link svg { width: 16px; height: 16px; }
-  .support-close { position: absolute; top: 12px; right: 12px; width: 26px; height: 26px; border-radius: 50%; background: #f5efff; color: #5d2b9e; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all 0.2s; }
+  .support-close { position: absolute; top: 12px; right: 12px; width: 26px; height: 26px; border-radius: 50%; background: #f5efff; color: #5d2b9e; display: flex; align-items: center; justify-content: center; font-size: 16px; }
   .support-close:hover { background: #a855f7; color: #fff; }
 
   /* ===== МОДАЛЬНОЕ ОКНО ===== */
-  .mt-modal-overlay{position:fixed;inset:0;background:rgba(46,26,77,.35);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000;animation:mt-fade-in .3s ease}
-  .mt-modal-overlay.open{display:flex}
-  @keyframes mt-fade-in{from{opacity:0}to{opacity:1}}
-  .mt-modal{width:100%;max-width:440px;background:#fff;border-radius:24px;padding:40px 36px 28px;box-shadow:0 25px 70px rgba(93,43,158,.45);position:relative;box-sizing:border-box;max-height:92vh;overflow-y:auto;animation:mt-slide-up .4s cubic-bezier(.16,1,.3,1)}
-  @keyframes mt-slide-up{from{opacity:0;transform:translateY(30px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-  .mt-modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border:none;background:#f5efff;border-radius:50%;font-size:22px;color:#5d2b9e;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;z-index:2;transition:all .2s}
-  .mt-modal-close:hover{background:#a855f7;color:#fff}
-  .mt-modal-header{text-align:center;margin-bottom:28px}
-  .mt-modal-logo{font-size:28px;font-weight:800;letter-spacing:-.5px;color:#5d2b9e;margin-bottom:8px}
-  .mt-modal-logo span{color:#a855f7}
-  .mt-modal-subtitle{font-size:14px;color:#7e6b94;margin:0;line-height:1.4}
-  .mt-modal-tabs{display:flex;position:relative;background:#f5efff;border-radius:14px;padding:5px;margin-bottom:26px}
-  .mt-modal-tab{flex:1;position:relative;z-index:2;background:transparent;border:none;padding:12px 10px;font-size:15px;font-weight:600;color:#8b7aa6;cursor:pointer;border-radius:10px;transition:color .3s ease;font-family:inherit}
-  .mt-modal-tab.active{color:#5d2b9e}
-  .mt-modal-tab-indicator{position:absolute;top:5px;left:5px;width:calc(50% - 5px);height:calc(100% - 10px);background:#fff;border-radius:10px;box-shadow:0 4px 12px rgba(93,43,158,.12);transition:transform .35s cubic-bezier(.4,0,.2,1);z-index:1}
-  .mt-modal-tabs[data-active="register"] .mt-modal-tab-indicator{transform:translateX(100%)}
-  .mt-mform{display:none;flex-direction:column;gap:16px}
-  .mt-mform.active{display:flex;animation:mt-form-in .35s ease}
-  @keyframes mt-form-in{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
-  .mt-mfield{display:flex;flex-direction:column;gap:7px}
-  .mt-mfield label{font-size:13px;font-weight:600;color:#4b3b63;padding-left:4px}
-  .mt-mfield input{width:100%;padding:14px 16px;border:2px solid #ece3fa;background:#faf7ff;border-radius:12px;font-size:15px;color:#2e1a4d;outline:none;transition:all .25s ease;font-family:inherit;box-sizing:border-box}
-  .mt-mfield input::placeholder{color:#b3a4c9}
-  .mt-mfield input:focus{border-color:#a855f7;background:#fff;box-shadow:0 0 0 4px rgba(168,85,247,.12)}
+  .mt-modal-overlay { position: fixed; inset: 0; background: rgba(46,26,77,.35); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 1000; animation: mt-fade-in .3s ease; }
+  .mt-modal-overlay.open { display: flex; }
+  @keyframes mt-fade-in { from { opacity: 0; } to { opacity: 1; } }
+  .mt-modal { width: 100%; max-width: 440px; background: #fff; border-radius: 24px; padding: 40px 36px 28px; box-shadow: 0 25px 70px rgba(93,43,158,.45); position: relative; box-sizing: border-box; max-height: 92vh; overflow-y: auto; animation: mt-slide-up .4s cubic-bezier(.16,1,.3,1); }
+  @keyframes mt-slide-up { from { opacity: 0; transform: translateY(30px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  .mt-modal-close { position: absolute; top: 16px; right: 16px; width: 34px; height: 34px; border: none; background: #f5efff; border-radius: 50%; font-size: 22px; color: #5d2b9e; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; z-index: 2; transition: all .2s; }
+  .mt-modal-close:hover { background: #a855f7; color: #fff; }
+  .mt-modal-header { text-align: center; margin-bottom: 28px; }
+  .mt-modal-logo { font-size: 28px; font-weight: 800; letter-spacing: -.5px; color: #5d2b9e; margin-bottom: 8px; }
+  .mt-modal-logo span { color: #a855f7; }
+  .mt-modal-subtitle { font-size: 14px; color: #7e6b94; margin: 0; line-height: 1.4; }
+  .mt-modal-tabs { display: flex; position: relative; background: #f5efff; border-radius: 14px; padding: 5px; margin-bottom: 26px; }
+  .mt-modal-tab { flex: 1; position: relative; z-index: 2; background: transparent; border: none; padding: 12px 10px; font-size: 15px; font-weight: 600; color: #8b7aa6; cursor: pointer; border-radius: 10px; transition: color .3s; font-family: inherit; }
+  .mt-modal-tab.active { color: #5d2b9e; }
+  .mt-modal-tab-indicator { position: absolute; top: 5px; left: 5px; width: calc(50% - 5px); height: calc(100% - 10px); background: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(93,43,158,.12); transition: transform .35s; z-index: 1; }
+  .mt-modal-tabs[data-active="register"] .mt-modal-tab-indicator { transform: translateX(100%); }
 
-  /* ПОДСВЕТКА ПОЛЕЙ */
+  .mt-mform { display: none; flex-direction: column; gap: 16px; }
+  .mt-mform.active { display: flex; }
+  .mt-mfield { display: flex; flex-direction: column; gap: 7px; }
+  .mt-mfield label { font-size: 13px; font-weight: 600; color: #4b3b63; padding-left: 4px; }
+  .mt-mfield input { width: 100%; padding: 14px 16px; border: 2px solid #ece3fa; background: #faf7ff; border-radius: 12px; font-size: 15px; color: #2e1a4d; outline: none; transition: all .25s; font-family: inherit; box-sizing: border-box; }
+  .mt-mfield input::placeholder { color: #b3a4c9; }
+  .mt-mfield input:focus { border-color: #a855f7; background: #fff; box-shadow: 0 0 0 4px rgba(168,85,247,.12); }
+
+  /* Подсветка полей */
   .mt-mfield input.mt-error,
   .mt-mform input.mt-error,
-  .mt-modal input.mt-error{
-    border-color:#e0395a !important;
-    background:#fff2f5 !important;
-    animation:mt-shake .4s;
+  .mt-modal input.mt-error {
+    border-color: #e0395a !important;
+    background: #fff2f5 !important;
+    animation: mt-shake .4s;
   }
-  .mt-mfield input.mt-error::placeholder,
-  .mt-mform input.mt-error::placeholder,
-  .mt-modal input.mt-error::placeholder{color:#e0395a}
 
-  .mt-mrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:-4px}
-  .mt-mcheckbox{display:flex;align-items:center;gap:9px;font-size:13px;color:#6b5b82;cursor:pointer;user-select:none;line-height:1.4}
-  .mt-mcheckbox input{display:none}
-  .mt-mcheckbox > span{width:18px;height:18px;min-width:18px;border:2px solid #d9c7f2;border-radius:6px;background:#faf7ff;position:relative;transition:all .2s ease;box-sizing:border-box}
-  .mt-mcheckbox input:checked + span{background:linear-gradient(135deg,#8b3ddb,#a855f7);border-color:#a855f7}
-  .mt-mcheckbox input:checked + span::after{content:'';position:absolute;left:4.5px;top:1px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
-  .mt-mcheckbox a{color:#8b3ddb;text-decoration:none;font-weight:600}
-  .mt-mterms{margin-top:2px;align-items:flex-start}
+  .mt-mrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: -4px; }
+  .mt-mcheckbox { display: flex; align-items: center; gap: 9px; font-size: 13px; color: #6b5b82; cursor: pointer; user-select: none; line-height: 1.4; }
+  .mt-mcheckbox input { display: none; }
+  .mt-mcheckbox > span { width: 18px; height: 18px; min-width: 18px; border: 2px solid #d9c7f2; border-radius: 6px; background: #faf7ff; position: relative; transition: all .2s; box-sizing: border-box; }
+  .mt-mcheckbox input:checked + span { background: linear-gradient(135deg,#8b3ddb,#a855f7); border-color: #a855f7; }
+  .mt-mcheckbox input:checked + span::after { content: ''; position: absolute; left: 4.5px; top: 1px; width: 5px; height: 9px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  .mt-mcheckbox a { color: #8b3ddb; text-decoration: none; font-weight: 600; }
+  .mt-mterms { margin-top: 2px; align-items: flex-start; }
 
-  /* ПОДСВЕТКА ГАЛОЧКИ — расширенные селекторы, чтобы перебить input:checked + span */
+  /* Подсветка галочки — сильные селекторы */
   .mt-mcheckbox.mt-error > span,
   .mt-mcheckbox.mt-error input + span,
-  .mt-mcheckbox.mt-error input:checked + span{
-    border-color:#e0395a !important;
-    background:#fff2f5 !important;
-    animation:mt-shake .4s;
+  .mt-mcheckbox.mt-error input:checked + span {
+    border-color: #e0395a !important;
+    background: #fff2f5 !important;
+    animation: mt-shake .4s;
   }
   .mt-mcheckbox.mt-error > span::after,
-  .mt-mcheckbox.mt-error input:checked + span::after{
-    border-color:#e0395a !important;
-  }
+  .mt-mcheckbox.mt-error input:checked + span::after { border-color: #e0395a !important; }
   .mt-mcheckbox.mt-error,
-  .mt-mcheckbox.mt-error span,
-  .mt-mcheckbox.mt-error a{color:#e0395a}
+  .mt-mcheckbox.mt-error a { color: #e0395a; }
 
-  @keyframes mt-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-  .mt-mforgot{font-size:13px;color:#8b3ddb;text-decoration:none;font-weight:600;cursor:pointer}
-  .mt-mforgot:hover{color:#5d2b9e;text-decoration:underline}
-  .mt-msubmit{display:block;width:100%;padding:15px;margin-top:6px;border:none;border-radius:12px;background:linear-gradient(135deg,#7c2fd4 0%,#a855f7 100%);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 8px 20px rgba(124,47,212,.35);transition:transform .2s ease,box-shadow .2s ease}
-  .mt-msubmit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 26px rgba(124,47,212,.45)}
-  .mt-msubmit:disabled{opacity:.6;cursor:not-allowed}
-  .mt-message{font-size:13px;text-align:center;font-weight:600;line-height:1.4}
-  .mt-message.error{color:#e0395a;background:#fff2f5;padding:10px 14px;border-radius:10px}
-  .mt-message.success{color:#1ab86a;background:#f0fbf5;padding:10px 14px;border-radius:10px}
-  .mt-message:empty{display:none}
-  .mt-mguest-block{margin-top:6px}
-  .mt-mdivider{position:relative;text-align:center;margin:14px 0}
-  .mt-mdivider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:#ece3fa}
-  .mt-mdivider span{position:relative;background:#fff;padding:0 14px;font-size:12px;color:#a898c2;text-transform:uppercase;letter-spacing:.5px}
-  .mt-mguest-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;border:2px solid #ece3fa;background:#faf7ff;border-radius:12px;font-size:15px;font-weight:600;color:#5d2b9e;cursor:pointer;font-family:inherit;transition:all .2s ease;box-sizing:border-box}
-  .mt-mguest-btn:hover{border-color:#c9a9f0;background:#f5efff;transform:translateY(-1px)}
-  .mt-mguest-btn svg{transition:transform .2s ease}
-  .mt-mguest-btn:hover svg{transform:translateX(3px)}
-  .mt-mguest-hint{margin:8px 0 0;text-align:center;font-size:12px;color:#a898c2;line-height:1.4}
-  .mt-mcode-header{text-align:center;margin-bottom:6px}
-  .mt-mcode-icon{width:60px;height:60px;margin:0 auto 14px;border-radius:50%;background:#f5efff;display:flex;align-items:center;justify-content:center}
-  .mt-mcode-title{font-size:18px;font-weight:700;color:#2e1a4d;margin:0 0 8px}
-  .mt-mcode-text{font-size:13px;color:#7e6b94;line-height:1.5;margin:0}
-  .mt-mcode-text b{color:#5d2b9e}
-  .mt-mcode-inputs{display:flex;gap:8px;justify-content:center;margin:8px 0 4px}
-  .mt-mcode-inputs input{width:48px;height:56px;text-align:center;font-size:22px;font-weight:700;color:#2e1a4d;border:2px solid #ece3fa;background:#faf7ff;border-radius:12px;outline:none;transition:all .2s ease;font-family:inherit;padding:0;box-sizing:border-box}
-  .mt-mcode-inputs input:focus{border-color:#a855f7;background:#fff;box-shadow:0 0 0 4px rgba(168,85,247,.12)}
-  .mt-mcode-inputs input.filled{border-color:#c9a9f0;background:#fff}
-  .mt-mcode-status{min-height:18px;font-size:13px;text-align:center;font-weight:600}
-  .mt-mcode-status.error{color:#e0395a}
-  .mt-mcode-status.success{color:#1ab86a}
-  .mt-mcode-status:empty{display:none}
-  .mt-mresend{display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:#7e6b94;margin-top:4px}
-  .mt-mresend-disabled{color:#b3a4c9 !important;pointer-events:none}
-  .mt-mback{display:block;text-align:center;font-size:13px;color:#8b3ddb;font-weight:600;margin-top:8px;cursor:pointer}
-  .mt-mback:hover{color:#5d2b9e;text-decoration:underline}
-  .mt-mfooter{text-align:center;margin-top:22px;padding-top:20px;border-top:1px solid #f0e8fb;font-size:14px;color:#7e6b94}
-  .mt-mfooter-link{color:#8b3ddb;font-weight:700;text-decoration:none;margin-left:4px;cursor:pointer}
-  .mt-mfooter-link:hover{color:#5d2b9e;text-decoration:underline}
+  @keyframes mt-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 
+  .mt-mforgot { font-size: 13px; color: #8b3ddb; text-decoration: none; font-weight: 600; cursor: pointer; }
+  .mt-mforgot:hover { color: #5d2b9e; text-decoration: underline; }
+  .mt-msubmit { display: block; width: 100%; padding: 15px; margin-top: 6px; border: none; border-radius: 12px; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; box-shadow: 0 8px 20px rgba(124,47,212,.35); transition: transform .2s; }
+  .mt-msubmit:hover:not(:disabled) { transform: translateY(-2px); }
+  .mt-msubmit:disabled { opacity: .6; cursor: not-allowed; }
+
+  /* Скрываем сообщения-тексты, оставляем только пустые блоки для совместимости */
+  .mt-message { display: none !important; }
+
+  .mt-mguest-block { margin-top: 6px; }
+  .mt-mdivider { position: relative; text-align: center; margin: 14px 0; }
+  .mt-mdivider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #ece3fa; }
+  .mt-mdivider span { position: relative; background: #fff; padding: 0 14px; font-size: 12px; color: #a898c2; text-transform: uppercase; letter-spacing: .5px; }
+  .mt-mguest-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px; border: 2px solid #ece3fa; background: #faf7ff; border-radius: 12px; font-size: 15px; font-weight: 600; color: #5d2b9e; cursor: pointer; font-family: inherit; transition: all .2s; box-sizing: border-box; }
+  .mt-mguest-btn:hover { border-color: #c9a9f0; background: #f5efff; }
+  .mt-mguest-btn svg { transition: transform .2s; }
+  .mt-mguest-btn:hover svg { transform: translateX(3px); }
+  .mt-mguest-hint { margin: 8px 0 0; text-align: center; font-size: 12px; color: #a898c2; line-height: 1.4; }
+
+  .mt-mcode-header { text-align: center; margin-bottom: 6px; }
+  .mt-mcode-icon { width: 60px; height: 60px; margin: 0 auto 14px; border-radius: 50%; background: #f5efff; display: flex; align-items: center; justify-content: center; }
+  .mt-mcode-title { font-size: 18px; font-weight: 700; margin: 0 0 8px; }
+  .mt-mcode-text { font-size: 13px; color: #7e6b94; line-height: 1.5; margin: 0; }
+  .mt-mcode-text b { color: #5d2b9e; }
+  .mt-mcode-inputs { display: flex; gap: 8px; justify-content: center; margin: 8px 0 4px; }
+  .mt-mcode-inputs input { width: 48px; height: 56px; text-align: center; font-size: 22px; font-weight: 700; color: #2e1a4d; border: 2px solid #ece3fa; background: #faf7ff; border-radius: 12px; outline: none; transition: all .2s; font-family: inherit; padding: 0; box-sizing: border-box; }
+  .mt-mcode-inputs input:focus { border-color: #a855f7; background: #fff; box-shadow: 0 0 0 4px rgba(168,85,247,.12); }
+  .mt-mcode-inputs input.filled { border-color: #c9a9f0; background: #fff; }
+  .mt-mcode-status { min-height: 18px; font-size: 13px; text-align: center; font-weight: 600; }
+  .mt-mcode-status.error { color: #e0395a; }
+  .mt-mcode-status.success { color: #1ab86a; }
+  .mt-mcode-status:empty { display: none; }
+  .mt-mresend { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; color: #7e6b94; margin-top: 4px; }
+  .mt-mresend-disabled { color: #b3a4c9 !important; pointer-events: none; }
+  .mt-mback { display: block; text-align: center; font-size: 13px; color: #8b3ddb; font-weight: 600; margin-top: 8px; cursor: pointer; }
+  .mt-mback:hover { color: #5d2b9e; text-decoration: underline; }
+  .mt-mfooter { text-align: center; margin-top: 22px; padding-top: 20px; border-top: 1px solid #f0e8fb; font-size: 14px; color: #7e6b94; }
+  .mt-mfooter-link { color: #8b3ddb; font-weight: 700; text-decoration: none; margin-left: 4px; cursor: pointer; }
+  .mt-mfooter-link:hover { color: #5d2b9e; text-decoration: underline; }
+
+  /* ===== АДАПТИВ ===== */
   @media (max-width: 1000px) {
-    .features-grid, .catalog-grid, .benefits-list, .premium-grid, .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+    .features-grid, .catalog-grid, .benefits-list, .premium-grid, .reviews-grid { grid-template-columns: repeat(2,1fr); }
   }
   @media (max-width: 720px) {
-    .main-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: #fff; padding: 12px; border-bottom: 1px solid #f0e8fb; box-shadow: 0 12px 24px rgba(93, 43, 158, 0.08); }
+    .main-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: #fff; padding: 12px; border-bottom: 1px solid #f0e8fb; box-shadow: 0 12px 24px rgba(93,43,158,.08); }
     .main-nav.open { display: flex; }
     .header-inner { position: relative; padding: 12px 16px; gap: 10px; max-width: 100%; justify-content: space-between; }
     .logo { font-size: 20px; }
     .btn { padding: 9px 14px; font-size: 13px; }
+    .btn-premium span, .btn-login span { display: none; }
     .btn-premium { padding: 9px 14px; }
-    .btn-premium span { display: none; }
     .btn-login { padding: 9px 12px; }
-    .btn-login span { display: none; }
     .header-actions { margin-left: auto; gap: 8px; }
     .section { padding: 52px 18px; }
     .hero { padding: 32px 18px 48px; }
@@ -312,10 +263,30 @@
     .catalog-grid, .features-grid, .benefits-list, .premium-grid, .reviews-grid { grid-template-columns: 1fr; }
     .support-fab { right: 18px; bottom: 18px; width: 52px; height: 52px; }
     .support-popup { right: 18px; bottom: 84px; }
-    .mt-modal { padding: 32px 22px 24px; border-radius: 20px; }
-    .mt-modal-logo { font-size: 24px; }
-    .mt-mcode-inputs input { width: 42px; height: 50px; font-size: 20px; }
     section[id] { scroll-margin-top: 70px; }
+  }
+  @media (max-width: 480px) {
+    .mt-modal-overlay { padding: 8px; align-items: flex-start; padding-top: 16px; padding-bottom: 16px; }
+    .mt-modal { padding: 26px 18px 20px; border-radius: 18px; max-width: 100%; max-height: calc(100vh - 32px); }
+    .mt-modal-close { top: 12px; right: 12px; width: 30px; height: 30px; font-size: 20px; }
+    .mt-modal-header { margin-bottom: 20px; }
+    .mt-modal-logo { font-size: 24px; }
+    .mt-modal-subtitle { font-size: 13px; }
+    .mt-modal-tabs { margin-bottom: 20px; padding: 4px; }
+    .mt-modal-tab { padding: 10px 8px; font-size: 14px; }
+    .mt-mform { gap: 13px; }
+    .mt-mfield label { font-size: 12px; }
+    .mt-mfield input { padding: 12px 14px; font-size: 14px; border-radius: 10px; }
+    .mt-msubmit { padding: 13px; font-size: 15px; border-radius: 10px; }
+    .mt-mcheckbox { font-size: 12px; }
+    .mt-mcode-inputs { gap: 5px; }
+    .mt-mcode-inputs input { width: 38px; height: 46px; font-size: 18px; border-radius: 10px; }
+    .mt-mcode-icon { width: 50px; height: 50px; margin-bottom: 10px; }
+    .mt-mcode-title { font-size: 16px; }
+    .mt-mcode-text { font-size: 12px; }
+    .mt-mguest-btn { padding: 12px; font-size: 14px; }
+    .mt-mfooter { margin-top: 18px; padding-top: 16px; font-size: 13px; }
+    .mt-mdivider { margin: 12px 0; }
   }
   @media (max-width: 400px) {
     .header-inner { gap: 6px; padding: 10px 12px; }
@@ -324,6 +295,8 @@
     .burger { width: 36px; height: 36px; }
     .btn-login { padding: 8px 10px; }
     .btn-premium { padding: 8px 10px; }
+    .mt-mcode-inputs { gap: 4px; }
+    .mt-mcode-inputs input { width: 34px; height: 42px; font-size: 16px; }
   }
 </style>
 </head>
@@ -357,11 +330,8 @@
   <div class="hero-inner">
     <h1>Добро пожаловать <em>в MindTest</em></h1>
     <p class="hero-subtitle">Платформа с тестами на знания и на самопознание. Проверь эрудицию и узнай о себе больше.</p>
-    <div class="hero-image-wrap">
-      <img src="./hero.png" alt="MindTest — тесты, развитие, ты">
-    </div>
-    <a href="#catalog" class="btn btn-primary">
-      Выбрать тест
+    <div class="hero-image-wrap"><img src="./hero.png" alt="MindTest"></div>
+    <a href="#catalog" class="btn btn-primary">Выбрать тест
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
   </div>
@@ -372,26 +342,10 @@
     <h2 class="section-title">Почему MindTest</h2>
     <p class="section-subtitle">Мы делаем тесты, которые помогают проверить себя и узнать новое.</p>
     <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div>
-        <h3>Тесты на любой вкус</h3>
-        <p>Психологические — чтобы узнать себя. На знания — чтобы проверить эрудицию.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-        <h3>Понятные результаты</h3>
-        <p>После каждого теста — подробный разбор: правильные ответы в тестах знаний, объяснение — в психологических.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-        <h3>Бесплатный старт</h3>
-        <p>Все базовые тесты — бесплатно, без ограничений.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-        <h3>Быстро и удобно</h3>
-        <p>Тесты занимают 5–20 минут. Результат — сразу после прохождения.</p>
-      </div>
+      <div class="feature-card"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div><h3>Тесты на любой вкус</h3><p>Психологические — чтобы узнать себя. На знания — чтобы проверить эрудицию.</p></div>
+      <div class="feature-card"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><h3>Понятные результаты</h3><p>После каждого теста — подробный разбор: правильные ответы в тестах знаний, объяснение — в психологических.</p></div>
+      <div class="feature-card"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><h3>Бесплатный старт</h3><p>Все базовые тесты — бесплатно, без ограничений.</p></div>
+      <div class="feature-card"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><h3>Быстро и удобно</h3><p>Тесты занимают 5–20 минут. Результат — сразу после прохождения.</p></div>
     </div>
   </div>
 </section>
@@ -431,10 +385,10 @@
     <h2 class="section-title">О платформе</h2>
     <p class="section-subtitle">Коротко о том, что такое MindTest</p>
     <div class="about-text">
-      <p>MindTest — это пространство, где ты можешь проверить свои знания и узнать о себе больше, чем расскажет любой разговор. Мы собрали тесты на самые разные темы: от психологии и логики до истории, науки и культуры.</p>
-      <p>За каждый пройденный тест ты получаешь <b>личные награды</b> — например, «Оптимист», «Эрудит», «Творец». Они собираются в твоём профиле и показывают, какие стороны тебя уже раскрыты.</p>
-      <p>Все зарегистрированные пользователи попадают в <b>общий рейтинг</b> — чем больше тестов ты проходишь, тем выше поднимаешься. Результатами можно делиться с друзьями.</p>
-      <div class="about-highlight">💜 Если тебе интересна платформа — пройди пару тестов и расскажи о нас друзьям. Это лучшая поддержка для нас.</div>
+      <p>MindTest — это пространство, где ты можешь проверить свои знания и узнать о себе больше, чем расскажет любой разговор.</p>
+      <p>За каждый пройденный тест ты получаешь <b>личные награды</b> — например, «Оптимист», «Эрудит», «Творец».</p>
+      <p>Все зарегистрированные пользователи попадают в <b>общий рейтинг</b> — чем больше тестов ты проходишь, тем выше поднимаешься.</p>
+      <div class="about-highlight">💜 Если тебе интересна платформа — пройди пару тестов и расскажи о нас друзьям.</div>
     </div>
   </div>
 </section>
@@ -443,14 +397,14 @@
   <div class="section-inner premium-inner">
     <div class="premium-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>Premium</div>
     <h2 class="section-title">Больше, чем просто тесты</h2>
-    <p class="section-subtitle">Premium открывает полную картину о тебе — и помогает двигаться дальше.</p>
+    <p class="section-subtitle">Premium открывает полную картину о тебе.</p>
     <div class="premium-grid">
-      <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg></div><h3>Личные рекомендации</h3><p>Персональные советы по итогам тестов: что развивать, на что обратить внимание, куда двигаться.</p></div>
-      <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 8.5l7 .9-5 4.8 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.8 7-.9L12 2z"/></svg></div><h3>Расширенные награды</h3><p>Эксклюзивные достижения и редкие титулы, которые не получишь на бесплатном тарифе.</p></div>
-      <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><h3>Глубокий разбор</h3><p>Каждый результат — с детальным анализом, а не просто коротким выводом.</p></div>
-      <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7 9 9.7 3 15.7"/></svg></div><h3>История и прогресс</h3><p>Следи за тем, как меняются твои результаты с течением времени.</p></div>
-      <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div><h3>Приоритет в рейтинге</h3><p>Premium-профили отмечаются особой меткой и видны в топе рейтинга.</p></div>
-      <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>Приоритетная поддержка</h3><p>Ответ от команды MindTest — в первую очередь.</p></div>
+      <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg></div><h3>Личные рекомендации</h3><p>Персональные советы по итогам тестов.</p></div>
+      <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15 8.5l7 .9-5 4.8 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.8 7-.9L12 2z"/></svg></div><h3>Расширенные награды</h3><p>Эксклюзивные достижения и титулы.</p></div>
+      <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><h3>Глубокий разбор</h3><p>Детальный анализ каждого результата.</p></div>
+      <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7 9 9.7 3 15.7"/></svg></div><h3>История и прогресс</h3><p>Следи за своими результатами.</p></div>
+      <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div><h3>Приоритет в рейтинге</h3><p>Premium-профили отмечаются особой меткой.</p></div>
+      <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>Приоритетная поддержка</h3><p>Ответ от команды — в первую очередь.</p></div>
     </div>
     <div class="premium-cta"><button type="button" class="btn btn-premium" id="premiumAuthBtn">Оформить Premium</button></div>
   </div>
@@ -461,9 +415,9 @@
     <h2 class="section-title">Отзывы пользователей</h2>
     <p class="section-subtitle">Что говорят те, кто уже прошёл тесты MindTest.</p>
     <div class="reviews-grid">
-      <div class="review-card"><div class="review-header"><div class="review-avatar">А</div><div><div class="review-name">Аня</div><div class="review-meta">15 лет</div></div></div><p class="review-text">Прошла тест на характер — и правда, всё совпало. Было приятно узнать о себе что-то новое.</p><div class="review-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div></div>
-      <div class="review-card"><div class="review-header"><div class="review-avatar">М</div><div><div class="review-name">Максим</div><div class="review-meta">16 лет</div></div></div><p class="review-text">Сначала думал, что это очередная бесполезная залипалка. Прошёл один тест — затянуло. Особенно нравятся награды.</p><div class="review-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div></div>
-      <div class="review-card"><div class="review-header"><div class="review-avatar">К</div><div><div class="review-name">Кристина</div><div class="review-meta">14 лет</div></div></div><p class="review-text">Сайт красивый, тесты понятные. Рекомендации в Premium реально помогают понять, куда двигаться.</p><div class="review-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div></div>
+      <div class="review-card"><div class="review-header"><div class="review-avatar">А</div><div><div class="review-name">Аня</div><div class="review-meta">15 лет</div></div></div><p class="review-text">Прошла тест на характер — и правда, всё совпало.</p></div>
+      <div class="review-card"><div class="review-header"><div class="review-avatar">М</div><div><div class="review-name">Максим</div><div class="review-meta">16 лет</div></div></div><p class="review-text">Сначала думал, что это очередная залипалка. Прошёл один тест — затянуло.</p></div>
+      <div class="review-card"><div class="review-header"><div class="review-avatar">К</div><div><div class="review-name">Кристина</div><div class="review-meta">14 лет</div></div></div><p class="review-text">Сайт красивый, тесты понятные. Рекомендации в Premium реально помогают.</p></div>
     </div>
   </div>
 </section>
@@ -471,15 +425,15 @@
 <section class="section faq-section" id="faq">
   <div class="section-inner">
     <h2 class="section-title">Частые вопросы</h2>
-    <p class="section-subtitle">Коротко о главном. Не нашёл ответ — напиши нам.</p>
+    <p class="section-subtitle">Коротко о главном.</p>
     <div class="faq-list">
-      <details class="faq-item"><summary>Это бесплатно?</summary><div class="faq-answer">Да. Базовые тесты можно проходить бесплатно. Premium-подписка — это дополнение: она открывает персональные рекомендации, расширенные награды и другие функции, но без неё платформа тоже полностью рабочая.</div></details>
-      <details class="faq-item"><summary>Нужна ли регистрация?</summary><div class="faq-answer">Для базовых тестов — нет. Но если хочешь, чтобы результаты сохранялись, ты мог(ла) возвращаться к ним и получать награды, лучше зарегистрироваться.</div></details>
-      <details class="faq-item"><summary>Какие тесты есть на платформе?</summary><div class="faq-answer">Два больших направления: тесты о тебе (психология, характер, интересы, таланты) и тесты на знания (эрудиция, логика, история, наука, культура). Выбирай, что ближе.</div></details>
-      <details class="faq-item"><summary>Сколько идёт один тест?</summary><div class="faq-answer">От 5 до 20 минут — в зависимости от теста. Есть быстрые — на знания, есть подольше — на психологию. Результат показывается сразу после завершения.</div></details>
-      <details class="faq-item"><summary>Что такое рейтинг пользователей?</summary><div class="faq-answer">Все зарегистрированные пользователи попадают в общий рейтинг. Чем больше тестов ты проходишь и чем активнее участвуешь — тем выше поднимаешься. Premium-профили отмечаются особой меткой.</div></details>
-      <details class="faq-item"><summary>Что даёт Premium?</summary><div class="faq-answer">Личные рекомендации по итогам тестов, расширенные награды, глубокий разбор результатов, история прогресса, приоритет в рейтинге и приоритетную поддержку. Оформить можно в любой момент.</div></details>
-      <details class="faq-item"><summary>Как поделиться результатом?</summary><div class="faq-answer">После прохождения теста у тебя будет кнопка «Поделиться». Можно отправить результат другу или сохранить себе — на выбор.</div></details>
+      <details class="faq-item"><summary>Это бесплатно?</summary><div class="faq-answer">Да. Базовые тесты можно проходить бесплатно. Premium — это дополнение.</div></details>
+      <details class="faq-item"><summary>Нужна ли регистрация?</summary><div class="faq-answer">Для базовых тестов — нет. Но чтобы результаты сохранялись, лучше зарегистрироваться.</div></details>
+      <details class="faq-item"><summary>Какие тесты есть?</summary><div class="faq-answer">Два направления: тесты о тебе и тесты на знания.</div></details>
+      <details class="faq-item"><summary>Сколько идёт тест?</summary><div class="faq-answer">От 5 до 20 минут. Результат — сразу после завершения.</div></details>
+      <details class="faq-item"><summary>Что такое рейтинг?</summary><div class="faq-answer">Все зарегистрированные пользователи попадают в общий рейтинг.</div></details>
+      <details class="faq-item"><summary>Что даёт Premium?</summary><div class="faq-answer">Личные рекомендации, расширенные награды, глубокий разбор, история прогресса.</div></details>
+      <details class="faq-item"><summary>Как поделиться результатом?</summary><div class="faq-answer">После прохождения — кнопка «Поделиться».</div></details>
     </div>
   </div>
 </section>
@@ -488,7 +442,7 @@
   <div class="section-inner">
     <div class="support-card">
       <h3>Нужна помощь?</h3>
-      <p>Если что-то не работает, есть вопрос или идея — напиши нам. Мы читаем каждое сообщение и стараемся отвечать в течение двух дней.</p>
+      <p>Если что-то не работает, есть вопрос или идея — напиши нам.</p>
       <a href="mailto:support@mindtest-online.ru" class="support-email">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
         support@mindtest-online.ru
@@ -542,8 +496,7 @@
       <div class="mt-message" id="mm-login-message"></div>
       <div class="mt-mguest-block">
         <div class="mt-mdivider"><span>или</span></div>
-        <button type="button" class="mt-mguest-btn" id="mm-guest-btn">
-          Продолжить как гость
+        <button type="button" class="mt-mguest-btn" id="mm-guest-btn">Продолжить как гость
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
         <p class="mt-mguest-hint">Без регистрации прогресс не сохраняется</p>
@@ -676,6 +629,7 @@
     var SUPABASE_KEY = 'sb_publishable_CLkaXW763H_rrgAoibZ_NA_JckeKwZm';
     var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     var SESSION_KEY = 'mindtest_user';
+    var HOME_URL = './';
 
     var overlay = document.getElementById('authModalOverlay');
     var closeM = document.getElementById('authModalClose');
@@ -709,6 +663,11 @@
       if (msg.indexOf('invalid') !== -1 && msg.indexOf('token') !== -1) return 'Неверный код';
       if (msg.indexOf('rate limit') !== -1 || msg.indexOf('too many') !== -1) return 'Слишком часто. Подождите';
       return msg;
+    }
+
+    // Плавный переход на главную без reload()
+    function goHome() {
+      window.location.href = HOME_URL;
     }
 
     function openModal() {
@@ -762,21 +721,18 @@
     }
 
     // ВХОД
-    var loginMsg = document.getElementById('mm-login-message');
     var loginBtn = document.getElementById('mm-login-btn');
     mforms.login.addEventListener('submit', async function(e) {
       e.preventDefault();
-      loginMsg.textContent = ''; loginMsg.className = 'mt-message';
       var fd = new FormData(mforms.login);
       var emailIn = mforms.login.querySelector('input[name="email"]');
       var passIn = mforms.login.querySelector('input[name="password"]');
       var email = (fd.get('email') || '').trim().toLowerCase();
       var password = fd.get('password') || '';
-      var msgs = [];
-      if (!email) { markError(emailIn); msgs.push('email'); }
-      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { markError(emailIn); msgs.push('корректный email'); }
-      if (!password) { markError(passIn); msgs.push('пароль'); }
-      if (msgs.length) { loginMsg.textContent = 'Введите: ' + msgs.join(', '); loginMsg.className = 'mt-message error'; return; }
+      var hasErr = false;
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { markError(emailIn); hasErr = true; }
+      if (!password) { markError(passIn); hasErr = true; }
+      if (hasErr) return;
 
       loginBtn.disabled = true; loginBtn.textContent = 'Проверяем…';
       try {
@@ -785,13 +741,13 @@
         var u = res.data.user;
         var user = { email: u.email, username: (u.user_metadata && u.user_metadata.username) || u.email };
         try { localStorage.setItem(SESSION_KEY, JSON.stringify(user)); localStorage.removeItem('mindtest_is_guest'); } catch(e){}
-        loginMsg.textContent = '✓ Добро пожаловать, ' + user.username + '!';
-        loginMsg.className = 'mt-message success';
-        setTimeout(function(){ window.location.reload(); }, 900);
+        loginBtn.textContent = '✓ Успех!';
+        setTimeout(goHome, 600);
       } catch (err2) {
-        loginMsg.textContent = err2.message; loginMsg.className = 'mt-message error';
-      } finally {
-        loginBtn.disabled = false; loginBtn.textContent = 'Войти';
+        markError(passIn);
+        markError(emailIn);
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Войти';
       }
     });
 
@@ -804,8 +760,6 @@
     mforms.register.addEventListener('submit', async function(e) {
       e.preventDefault();
       termsLb.classList.remove('mt-error');
-      var regMsg = document.getElementById('mm-register-message');
-      regMsg.textContent = ''; regMsg.className = 'mt-message';
       var fd = new FormData(mforms.register);
       var userIn = mforms.register.querySelector('input[name="username"]');
       var emailIn = mforms.register.querySelector('input[name="email"]');
@@ -813,14 +767,12 @@
       var username = (fd.get('username') || '').trim();
       var email = (fd.get('email') || '').trim().toLowerCase();
       var password = fd.get('password') || '';
-      var msgs = [];
-      if (!username) { markError(userIn); msgs.push('имя пользователя'); }
-      if (!email) { markError(emailIn); msgs.push('email'); }
-      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { markError(emailIn); msgs.push('корректный email'); }
-      if (!password) { markError(passIn); msgs.push('пароль'); }
-      else if (password.length < 6) { markError(passIn); msgs.push('пароль от 6 символов'); }
-      if (!termsCb.checked) { termsLb.classList.add('mt-error'); msgs.push('галочку согласия'); }
-      if (msgs.length) { regMsg.textContent = 'Нужно: ' + msgs.join(', '); regMsg.className = 'mt-message error'; return; }
+      var hasErr = false;
+      if (!username) { markError(userIn); hasErr = true; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { markError(emailIn); hasErr = true; }
+      if (!password || password.length < 6) { markError(passIn); hasErr = true; }
+      if (!termsCb.checked) { termsLb.classList.add('mt-error'); hasErr = true; }
+      if (hasErr) return;
 
       pendingUser = { username: username, email: email, password: password };
       regBtn.disabled = true; regBtn.textContent = 'Отправляем код…';
@@ -834,7 +786,7 @@
         startMResend();
         setTimeout(function(){ document.querySelector('[data-mm-code]').focus(); }, 100);
       } catch (err2) {
-        regMsg.textContent = err2.message; regMsg.className = 'mt-message error';
+        markError(emailIn);
       } finally {
         regBtn.disabled = false; regBtn.textContent = 'Создать аккаунт';
       }
@@ -877,13 +829,13 @@
         try { localStorage.setItem(SESSION_KEY, JSON.stringify(user)); localStorage.removeItem('mindtest_is_guest'); } catch(e){}
         mCodeStatus.textContent = '✓ Email подтверждён!';
         mCodeStatus.className = 'mt-mcode-status success';
-        setTimeout(function(){ window.location.reload(); }, 1200);
+        mCodeBtn.textContent = '✓ Успех!';
+        setTimeout(goHome, 900);
       } catch (err2) {
         mCodeStatus.textContent = err2.message;
         mCodeStatus.className = 'mt-mcode-status error';
         clearMCode();
         mCodeInputs[0].focus();
-      } finally {
         mCodeBtn.disabled = false; mCodeBtn.textContent = 'Подтвердить';
       }
     });
@@ -926,8 +878,7 @@
       var fd = new FormData(mforms.forgot);
       var emailIn = mforms.forgot.querySelector('input[name="email"]');
       var email = (fd.get('email') || '').trim().toLowerCase();
-      if (!email) { markError(emailIn); mForgotStatus.textContent = 'Введите email'; mForgotStatus.className = 'mt-mcode-status error'; return; }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { markError(emailIn); mForgotStatus.textContent = 'Некорректный email'; mForgotStatus.className = 'mt-mcode-status error'; return; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { markError(emailIn); return; }
       resetEmail = email;
       mForgotBtn.disabled = true; mForgotBtn.textContent = 'Отправляем…';
       try {
@@ -941,8 +892,7 @@
         startMResetTimer();
         setTimeout(function(){ document.querySelector('[data-mm-reset]').focus(); }, 100);
       } catch (err2) {
-        mForgotStatus.textContent = err2.message;
-        mForgotStatus.className = 'mt-mcode-status error';
+        markError(emailIn);
       } finally {
         mForgotBtn.disabled = false; mForgotBtn.textContent = 'Отправить код';
       }
@@ -961,13 +911,16 @@
       var password = fd.get('password') || '';
       var password2 = fd.get('password2') || '';
       var entered = Array.prototype.map.call(mResetInputs, function(i){ return i.value; }).join('');
-      var msgs = [];
-      if (entered.length !== 6) msgs.push('6-значный код');
-      if (!password) { markError(passIn); msgs.push('новый пароль'); }
-      else if (password.length < 6) { markError(passIn); msgs.push('пароль от 6 символов'); }
-      if (password !== password2) { markError(pass2In); msgs.push('одинаковые пароли'); }
-      if (msgs.length) { mResetStatus.textContent = 'Нужно: ' + msgs.join(', '); mResetStatus.className = 'mt-mcode-status error'; return; }
+      var hasErr = false;
+      if (entered.length !== 6) { hasErr = true; }
+      if (!password || password.length < 6) { markError(passIn); hasErr = true; }
+      if (password !== password2) { markError(pass2In); hasErr = true; }
+      if (hasErr) {
+        if (entered.length !== 6) { mResetStatus.textContent = 'Введите 6-значный код'; mResetStatus.className = 'mt-mcode-status error'; }
+        return;
+      }
       mResetBtn.disabled = true; mResetBtn.textContent = 'Сохраняем…';
+      mResetStatus.textContent = ''; mResetStatus.className = 'mt-mcode-status';
       try {
         var otpRes = await sb.auth.verifyOtp({ email: resetEmail, token: entered, type: 'recovery' });
         if (otpRes.error) throw new Error(translateError(otpRes.error.message));
@@ -976,11 +929,11 @@
         mResetStatus.textContent = '✓ Пароль изменён!';
         mResetStatus.className = 'mt-mcode-status success';
         try { await sb.auth.signOut(); } catch(e){}
-        setTimeout(function(){ showMform('login'); }, 1500);
+        mResetBtn.textContent = '✓ Готово!';
+        setTimeout(function(){ showMform('login'); mResetBtn.disabled = false; mResetBtn.textContent = 'Сбросить пароль'; }, 1400);
       } catch (err2) {
         mResetStatus.textContent = err2.message;
         mResetStatus.className = 'mt-mcode-status error';
-      } finally {
         mResetBtn.disabled = false; mResetBtn.textContent = 'Сбросить пароль';
       }
     });
