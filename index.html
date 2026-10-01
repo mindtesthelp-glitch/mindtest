@@ -559,12 +559,23 @@
       box-shadow: 0 12px 24px rgba(93, 43, 158, 0.08);
     }
     .main-nav.open { display: flex; }
-    .header-inner { position: relative; padding: 12px 18px; gap: 12px; max-width: 100%; }
+    .header-inner {
+      position: relative;
+      padding: 12px 16px;
+      gap: 10px;
+      max-width: 100%;
+      justify-content: space-between;
+    }
+    .logo { font-size: 20px; }
     .btn { padding: 9px 14px; font-size: 13px; }
+    .btn-premium { padding: 9px 14px; }
     .btn-premium span { display: none; }
-    .btn-premium { padding: 9px 12px; }
-    .btn-login span { display: none; }
     .btn-login { padding: 9px 12px; }
+    .btn-login span { display: none; }
+    .header-actions {
+      margin-left: auto;
+      gap: 8px;
+    }
     .section { padding: 52px 18px; }
     .hero { padding: 32px 18px 48px; }
     .btn-primary { padding: 14px 24px; font-size: 15px; }
@@ -573,10 +584,9 @@
       width: 40px; height: 40px;
       border-radius: 10px; color: #5d2b9e;
       background: #f5efff;
-      margin-left: auto;
+      flex-shrink: 0;
     }
     .burger svg { width: 22px; height: 22px; }
-    .header-actions { margin-left: 0; }
     .catalog-grid,
     .features-grid,
     .benefits-list,
@@ -586,8 +596,12 @@
     .support-popup { right: 18px; bottom: 84px; }
   }
   @media (max-width: 400px) {
-    .header-inner { gap: 6px; }
-    .btn { padding: 8px 12px; }
+    .header-inner { gap: 6px; padding: 10px 12px; }
+    .logo { font-size: 18px; }
+    .btn { padding: 8px 10px; }
+    .burger { width: 36px; height: 36px; }
+    .btn-login { padding: 8px 10px; }
+    .btn-premium { padding: 8px 10px; }
   }
 </style>
 </head>
