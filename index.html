@@ -40,6 +40,30 @@
   .hero h1 { font-size: clamp(36px, 5.5vw, 76px); font-weight: 900; line-height: 1.1; letter-spacing: -2px; color: #2e1a4d; margin-bottom: 16px; }
   .hero h1 em { font-style: normal; background: linear-gradient(135deg,#7c2fd4,#a855f7); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
   .hero-subtitle { font-size: clamp(16px, 2vw, 20px); color: #7e6b94; max-width: 720px; margin: 0 auto 10px; }
+
+  /* Плашка «Новые тесты — 2 раза в неделю» */
+  .hero-update-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto 20px;
+    padding: 9px 18px;
+    background: #f5efff;
+    border: 1.5px solid #d9c7f2;
+    border-radius: 999px;
+    color: #5d2b9e;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .hero-update-badge .hero-update-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 4px rgba(34,197,94,.18);
+    flex-shrink: 0;
+  }
+
   .hero-image-wrap { max-width: 1500px; margin: 0 auto 20px; }
   .hero-image-wrap img { width: 100%; height: auto; display: block; border-radius: 20px; }
   .btn-primary { background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; padding: 16px 32px; font-size: 16px; border-radius: 14px; box-shadow: 0 10px 28px rgba(124,47,212,.4); }
@@ -93,6 +117,22 @@
   .premium-card p { font-size: 14px; color: #c4a9e8; line-height: 1.6; }
   .premium-cta { text-align: center; }
   .premium-cta .btn-premium { padding: 16px 36px; font-size: 16px; background: #fff; color: #5d2b9e; }
+
+  /* «Новое» бейдж для новых карточек */
+  .premium-card.is-new { border-color: rgba(168,85,247,.5); background: rgba(168,85,247,.12); position: relative; }
+  .premium-card-new-label {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #fbbf24;
+    color: #422006;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+  }
 
   .reviews-section { padding-left: 24px; padding-right: 24px; }
   .reviews-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; max-width: 100%; margin: 0 auto; }
@@ -250,6 +290,7 @@
     .reviews-section { padding-left: 18px; padding-right: 18px; }
     .hero { padding: 32px 18px 48px; }
     .hero-subtitle { margin-bottom: 10px; }
+    .hero-update-badge { font-size: 13px; padding: 8px 14px; margin-bottom: 16px; }
     .hero-image-wrap { margin-bottom: 14px; }
     .btn-primary { padding: 14px 24px; font-size: 15px; }
     .burger { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; color: #5d2b9e; background: #f5efff; flex-shrink: 0; }
@@ -324,6 +365,10 @@
   <div class="hero-inner">
     <h1>Добро пожаловать <em>в MindTest</em></h1>
     <p class="hero-subtitle">Платформа с тестами на знания и на самопознание. Проверь эрудицию и узнай о себе больше.</p>
+    <div class="hero-update-badge">
+      <span class="hero-update-dot"></span>
+      Новые тесты выходят 2 раза в неделю
+    </div>
     <div class="hero-image-wrap"><img src="./hero.png" alt="MindTest"></div>
     <a href="catalog.html" class="btn btn-primary">Выбрать тест
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -364,12 +409,12 @@
     <h2 class="section-title">Каталог тестов</h2>
     <p class="section-subtitle">Выбирай категорию — про себя или про мир вокруг.</p>
     <div class="catalog-grid">
-      <a href="#" class="catalog-card"><span class="catalog-emoji">🧠</span><h3>Психология и характер</h3><p>Кто ты на самом деле</p></a>
-      <a href="#" class="catalog-card"><span class="catalog-emoji">💜</span><h3>Интересы и хобби</h3><p>Что тебя по-настоящему увлекает</p></a>
-      <a href="#" class="catalog-card"><span class="catalog-emoji">✨</span><h3>Таланты и способности</h3><p>Твои сильные стороны</p></a>
-      <a href="#" class="catalog-card"><span class="catalog-emoji">🚀</span><h3>Развитие и цели</h3><p>Куда двигаться дальше</p></a>
-      <a href="#" class="catalog-card"><span class="catalog-emoji">📚</span><h3>Знания и эрудиция</h3><p>История, наука, культура</p></a>
-      <a href="#" class="catalog-card"><span class="catalog-emoji">🧩</span><h3>Логика и IQ</h3><p>Проверь свой ум</p></a>
+      <a href="catalog.html" class="catalog-card"><span class="catalog-emoji">🧠</span><h3>Психология и характер</h3><p>Кто ты на самом деле</p></a>
+      <a href="catalog.html" class="catalog-card"><span class="catalog-emoji">💜</span><h3>Интересы и хобби</h3><p>Что тебя по-настоящему увлекает</p></a>
+      <a href="catalog.html" class="catalog-card"><span class="catalog-emoji">✨</span><h3>Таланты и способности</h3><p>Твои сильные стороны</p></a>
+      <a href="catalog.html" class="catalog-card"><span class="catalog-emoji">🚀</span><h3>Развитие и цели</h3><p>Куда двигаться дальше</p></a>
+      <a href="catalog.html" class="catalog-card"><span class="catalog-emoji">📚</span><h3>Знания и эрудиция</h3><p>История, наука, культура</p></a>
+      <a href="catalog.html" class="catalog-card"><span class="catalog-emoji">🧩</span><h3>Логика и IQ</h3><p>Проверь свой ум</p></a>
     </div>
   </div>
 </section>
@@ -382,6 +427,7 @@
       <p>MindTest — это пространство, где ты можешь проверить свои знания и узнать о себе больше, чем расскажет любой разговор. Мы собрали тесты на самые разные темы: от психологии и логики до истории, науки и культуры.</p>
       <p>За каждый пройденный тест ты получаешь <b>личные награды</b> — например, «Оптимист», «Эрудит», «Творец». Они собираются в твоём профиле и показывают, какие стороны тебя уже раскрыты.</p>
       <p>Все зарегистрированные пользователи попадают в <b>общий рейтинг</b> — чем больше тестов ты проходишь, тем выше поднимаешься. Результатами можно делиться с друзьями.</p>
+      <p><b>Новые тесты выходят 2 раза в неделю</b> — так что заходи почаще, чтобы не пропустить свежие.</p>
       <div class="about-highlight">💜 Если тебе интересна платформа — пройди пару тестов и расскажи о нас друзьям. Это лучшая поддержка для нас.</div>
     </div>
   </div>
@@ -399,6 +445,23 @@
       <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7 9 9.7 3 15.7"/></svg></div><h3>История и прогресс</h3><p>Следи за тем, как меняются твои результаты с течением времени.</p></div>
       <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div><h3>Приоритет в рейтинге</h3><p>Premium-профили отмечаются особой меткой и видны в топе рейтинга.</p></div>
       <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>Приоритетная поддержка</h3><p>Ответ от команды MindTest — в первую очередь.</p></div>
+
+      <!-- Ранний доступ к тестам (Новое) -->
+      <div class="premium-card is-new">
+        <span class="premium-card-new-label">Новое</span>
+        <div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3>Ранний доступ к тестам</h3>
+        <p>Проходи новые тесты на 2–3 дня раньше всех, пока они ещё не в общем каталоге.</p>
+      </div>
+
+      <!-- НОВОЕ: Расширенная статистика -->
+      <div class="premium-card is-new">
+        <span class="premium-card-new-label">Новое</span>
+        <div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="13" width="3" height="5"/><rect x="12" y="9" width="3" height="9"/><rect x="17" y="5" width="3" height="13"/></svg></div>
+        <h3>Расширенная статистика</h3>
+        <p>Личный дашборд: графики прогресса, средние результаты по категориям, любимые темы и динамика за всё время.</p>
+      </div>
+
     </div>
     <div class="premium-cta"><button type="button" class="btn btn-premium" id="premiumAuthBtn">Оформить Premium</button></div>
   </div>
@@ -463,6 +526,13 @@
     <p class="section-subtitle">Не нашёл ответ — напиши нам на почту, указанную в разделе «Помощь».</p>
     <div class="faq-list">
       <details class="faq-item">
+        <summary>Как часто выходят новые тесты?</summary>
+        <div class="faq-answer">
+          <p>Мы добавляем новые тесты <b>2 раза в неделю</b> — обычно во вторник и пятницу. Так что заходи почаще, чтобы не пропустить свежие.</p>
+          <p>А если у тебя есть Premium — ты получаешь к новым тестам <b>ранний доступ</b> на 2–3 дня раньше всех. Это значит, что ты можешь пройти новинку ещё до того, как она появится в общем каталоге.</p>
+        </div>
+      </details>
+      <details class="faq-item">
         <summary>Это бесплатно?</summary>
         <div class="faq-answer">
           <p>Да, все базовые тесты на платформе можно проходить бесплатно и без каких-либо ограничений по количеству прохождений. Ты можешь проходить любые тесты из каталога столько раз, сколько захочешь.</p>
@@ -472,7 +542,9 @@
             <li>расширенные награды и редкие титулы;</li>
             <li>глубокий разбор каждого результата;</li>
             <li>историю прохождений и отслеживание прогресса;</li>
-            <li>приоритет в общем рейтинге пользователей.</li>
+            <li>приоритет в общем рейтинге пользователей;</li>
+            <li>ранний доступ к новым тестам на 2–3 дня раньше всех;</li>
+            <li>расширенную статистику с графиками и анализом.</li>
           </ul>
           <p>При этом без Premium платформа остаётся полностью рабочей — все основные функции доступны каждому.</p>
         </div>
@@ -503,7 +575,7 @@
             <li><b>Знания и эрудиция</b> — вопросы про историю, науку, культуру, искусство.</li>
             <li><b>Логика и IQ</b> — задачи на мышление, внимание и скорость реакции.</li>
           </ul>
-          <p>Каталог постоянно пополняется — со временем появятся новые категории и тесты.</p>
+          <p>Каталог постоянно пополняется — новые тесты выходят 2 раза в неделю.</p>
         </div>
       </details>
       <details class="faq-item">
@@ -540,6 +612,8 @@
             <li><b>Глубокий разбор</b> — детальный анализ каждого результата с пояснениями и примерами.</li>
             <li><b>История и прогресс</b> — графики изменений результатов во времени, сравнение с прошлыми попытками.</li>
             <li><b>Приоритет в рейтинге</b> — особая метка в профиле и преимущество в топе.</li>
+            <li><b>Ранний доступ к тестам</b> — новые тесты на 2–3 дня раньше всех.</li>
+            <li><b>Расширенная статистика</b> — личный дашборд с графиками прогресса и анализом результатов.</li>
             <li><b>Приоритетная поддержка</b> — ответ от команды MindTest в первую очередь.</li>
           </ul>
           <p>Оформить подписку можно в любой момент — прямо из личного кабинета.</p>
