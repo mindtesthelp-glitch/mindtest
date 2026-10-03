@@ -202,7 +202,7 @@
     .btn-nav svg { width: 18px; height: 18px; }
     .result-body { padding: 28px 22px 26px; }
     .result-chart { grid-template-columns: 1fr; gap: 26px; padding: 24px 20px; }
-    .result-radar svg { max-width: 320px; }
+    .result-radar svg { max-width: 340px; }
     .result-actions { grid-template-columns: 1fr; }
     .premium-rec { padding: 28px 22px; border-radius: 20px; }
     .result-type-big { font-size: 64px; }
@@ -602,16 +602,16 @@
     var labels = '';
     points.forEach(function(p) {
       var rad = p.angle * Math.PI / 180;
-      var lx = cx + (R + 44) * Math.cos(rad);
-      var ly = cy + (R + 30) * Math.sin(rad);
+      var lx = cx + (R + 58) * Math.cos(rad);
+      var ly = cy + (R + 42) * Math.sin(rad);
       var anchor = 'middle';
       if (Math.abs(Math.cos(rad)) > 0.5) anchor = Math.cos(rad) > 0 ? 'start' : 'end';
       var dy = 0;
-      if (Math.sin(rad) > 0.5) dy = 16;
-      if (Math.sin(rad) < -0.5) dy = -22;
+      if (Math.sin(rad) > 0.5) dy = 18;
+      if (Math.sin(rad) < -0.5) dy = -24;
 
-      labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="22" font-weight="900" fill="#7c2fd4">' + p.lead + '</text>';
-      labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy + 16).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#a898c2">' + PAIR_LABELS[p.lead] + '</text>';
+      labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="26" font-weight="900" fill="#7c2fd4">' + p.lead + '</text>';
+      labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy + 18).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#6b5b82">' + PAIR_LABELS[p.lead] + '</text>';
     });
 
     var dots = '';
@@ -620,7 +620,7 @@
     });
 
     var svg = '';
-    svg += '<svg viewBox="-30 -20 460 420" xmlns="http://www.w3.org/2000/svg">';
+    svg += '<svg viewBox="-140 -60 620 480" xmlns="http://www.w3.org/2000/svg">';
     svg +=   gridLines;
     svg +=   axesLines;
     svg +=   '<polygon points="' + polyPoints + '" fill="rgba(168,85,247,.35)" stroke="#7c2fd4" stroke-width="2.5" stroke-linejoin="round"/>';
