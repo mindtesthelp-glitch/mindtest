@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Каталог тестов — MindTest</title>
 <link rel="icon" type="image/png" href="./favicon.png">
-<meta name="description" content="Все тесты MindTest: психология, знания, логика, интересы. Найди свой тест.">
+<meta name="description" content="Все тесты MindTest: психология, знания, логика, таланты.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -13,31 +13,78 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif; background: #fff; color: #2e1a4d; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif; background: #faf7ff; color: #2e1a4d; line-height: 1.5; -webkit-font-smoothing: antialiased; }
   a { text-decoration: none; color: inherit; }
   button { font-family: inherit; cursor: pointer; border: none; background: none; }
-  input, select { font-family: inherit; }
-  svg { flex-shrink: 0; }
 
-  /* ═════════ ШАПКА ═════════ */
+  /* Шапка — как на главной + кнопка «На главную» */
   .site-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #f0e8fb; }
   .header-inner { max-width: 100%; margin: 0 auto; padding: 14px 48px; display: flex; align-items: center; gap: 20px; }
   .logo { font-size: 22px; font-weight: 800; color: #5d2b9e; letter-spacing: -.5px; flex-shrink: 0; }
   .logo span { color: #a855f7; }
-  .main-nav { display: flex; gap: 4px; margin-left: auto; }
-  .main-nav a { padding: 8px 14px; border-radius: 10px; font-size: 14px; font-weight: 600; color: #6b5b82; transition: all .2s; }
-  .main-nav a:hover, .main-nav a.active { color: #5d2b9e; background: #f5efff; }
-  .header-actions { display: flex; gap: 10px; align-items: center; }
+  .header-actions { display: flex; gap: 10px; align-items: center; margin-left: auto; }
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; border-radius: 12px; font-size: 14px; font-weight: 700; transition: all .2s ease; white-space: nowrap; }
+  .btn-back { background: #fff; color: #5d2b9e; border: 2px solid #ece3fa; }
+  .btn-back:hover { border-color: #a855f7; background: #f5efff; transform: translateY(-2px); }
+  .btn-back svg { width: 16px; height: 16px; }
   .btn-login { background: #fff; color: #5d2b9e; border: 2px solid #a855f7; box-shadow: 0 4px 14px rgba(168,85,247,.15); }
   .btn-login:hover { background: #f5efff; border-color: #7c2fd4; transform: translateY(-2px); }
   .btn-login svg { width: 16px; height: 16px; }
   .btn-premium { background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; box-shadow: 0 6px 18px rgba(124,47,212,.35); }
   .btn-premium:hover { transform: translateY(-2px); }
   .btn-premium svg { width: 16px; height: 16px; }
-  .burger { display: none; }
 
-  /* ═════════ МОДАЛКА АВТОРИЗАЦИИ ═════════ */
+  /* Hero каталога */
+  .catalog-hero { padding: 56px 48px 32px; text-align: center; }
+  .catalog-hero h1 { font-size: clamp(32px, 4.5vw, 52px); font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 14px; }
+  .catalog-hero h1 em { font-style: normal; background: linear-gradient(135deg,#7c2fd4,#a855f7); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .catalog-hero p { font-size: 17px; color: #7e6b94; max-width: 620px; margin: 0 auto; }
+
+  /* Панель поиска и фильтров */
+  .catalog-controls { max-width: 1300px; margin: 0 auto; padding: 32px 48px 0; }
+  .search-row { display: flex; gap: 12px; margin-bottom: 20px; }
+  .search-box { flex: 1; position: relative; }
+  .search-box svg { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: #a898c2; pointer-events: none; }
+  .search-box input { width: 100%; padding: 16px 18px 16px 52px; border: 2px solid #ece3fa; background: #fff; border-radius: 16px; font-size: 15px; color: #2e1a4d; outline: none; transition: all .25s; font-family: inherit; }
+  .search-box input::placeholder { color: #b3a4c9; }
+  .search-box input:focus { border-color: #a855f7; box-shadow: 0 0 0 4px rgba(168,85,247,.12); }
+  .sort-select { padding: 16px 44px 16px 20px; border: 2px solid #ece3fa; background: #fff; border-radius: 16px; font-size: 15px; font-weight: 600; color: #4b3b63; outline: none; transition: all .25s; font-family: inherit; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237c2fd4' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 18px center; }
+  .sort-select:focus { border-color: #a855f7; box-shadow: 0 0 0 4px rgba(168,85,247,.12); }
+
+  /* Фильтры-категории */
+  .filter-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border: 2px solid #ece3fa; background: #fff; border-radius: 999px; font-size: 14px; font-weight: 600; color: #6b5b82; transition: all .2s; cursor: pointer; }
+  .chip:hover { border-color: #c9a9f0; color: #5d2b9e; }
+  .chip.active { background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; border-color: transparent; box-shadow: 0 6px 16px rgba(124,47,212,.3); }
+  .chip svg { width: 16px; height: 16px; }
+
+  /* Сетка карточек */
+  .catalog-grid { max-width: 1300px; margin: 0 auto; padding: 0 48px 80px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .test-card { display: flex; flex-direction: column; padding: 28px 26px 26px; background: #fff; border: 2px solid #f0e8fb; border-radius: 22px; transition: all .25s; cursor: pointer; position: relative; }
+  .test-card:hover { border-color: #a855f7; transform: translateY(-4px); box-shadow: 0 20px 40px rgba(124,47,212,.12); }
+  .test-card-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .test-card-icon { width: 52px; height: 52px; border-radius: 15px; background: linear-gradient(135deg,#f5efff,#ece3fa); display: flex; align-items: center; justify-content: center; color: #7c2fd4; flex-shrink: 0; }
+  .test-card-icon svg { width: 26px; height: 26px; }
+  .test-card-cat { display: inline-block; padding: 4px 10px; border-radius: 999px; background: #f5efff; color: #7c2fd4; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+  .test-card h3 { font-size: 18px; font-weight: 800; letter-spacing: -.3px; line-height: 1.3; color: #2e1a4d; margin-bottom: 8px; }
+  .test-card p { font-size: 14px; color: #7e6b94; line-height: 1.6; margin-bottom: 20px; flex: 1; }
+  .test-card-meta { display: flex; align-items: center; gap: 16px; font-size: 13px; color: #a898c2; font-weight: 600; padding-top: 16px; border-top: 1px solid #f0e8fb; }
+  .test-card-meta span { display: inline-flex; align-items: center; gap: 5px; }
+  .test-card-meta svg { width: 14px; height: 14px; color: #a855f7; }
+  .test-card-badge { position: absolute; top: 16px; right: 16px; padding: 4px 10px; border-radius: 999px; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; }
+  .test-card-badge.custom { background: linear-gradient(135deg,#f59e0b,#fbbf24); }
+
+  /* Пусто */
+  .catalog-empty { max-width: 500px; margin: 40px auto 80px; padding: 48px 32px; text-align: center; background: #fff; border: 2px dashed #e0d4f5; border-radius: 22px; }
+  .catalog-empty svg { width: 56px; height: 56px; color: #a855f7; margin-bottom: 16px; }
+  .catalog-empty h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+  .catalog-empty p { font-size: 15px; color: #7e6b94; }
+
+  /* Счётчик */
+  .catalog-count { max-width: 1300px; margin: 0 auto; padding: 0 48px 16px; font-size: 14px; color: #7e6b94; font-weight: 600; }
+  .catalog-count b { color: #5d2b9e; }
+
+  /* Модальное окно авторизации */
   .mt-modal-overlay { position: fixed; inset: 0; background: rgba(46,26,77,.35); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 1000; animation: mt-fade-in .3s ease; }
   .mt-modal-overlay.open { display: flex; }
   @keyframes mt-fade-in { from { opacity: 0; } to { opacity: 1; } }
@@ -54,7 +101,6 @@
   .mt-modal-tab.active { color: #5d2b9e; }
   .mt-modal-tab-indicator { position: absolute; top: 5px; left: 5px; width: calc(50% - 5px); height: calc(100% - 10px); background: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(93,43,158,.12); transition: transform .35s; z-index: 1; }
   .mt-modal-tabs[data-active="register"] .mt-modal-tab-indicator { transform: translateX(100%); }
-
   .mt-mform { display: none; flex-direction: column; gap: 16px; }
   .mt-mform.active { display: flex; }
   .mt-mfield { display: flex; flex-direction: column; gap: 7px; }
@@ -65,7 +111,6 @@
   .mt-mfield input.mt-error,
   .mt-mform input.mt-error,
   .mt-modal input.mt-error { border-color: #e0395a !important; background: #fff2f5 !important; animation: mt-shake .4s; }
-
   .mt-mrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: -4px; }
   .mt-mcheckbox { display: flex; align-items: center; gap: 9px; font-size: 13px; color: #6b5b82; cursor: pointer; user-select: none; line-height: 1.4; }
   .mt-mcheckbox input { display: none; }
@@ -81,15 +126,12 @@
   .mt-mcheckbox.mt-error input:checked + span::after { border-color: #e0395a !important; }
   .mt-mcheckbox.mt-error,
   .mt-mcheckbox.mt-error a { color: #e0395a; }
-
   @keyframes mt-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
-
   .mt-mforgot { font-size: 13px; color: #8b3ddb; text-decoration: none; font-weight: 600; cursor: pointer; }
   .mt-mforgot:hover { color: #5d2b9e; text-decoration: underline; }
   .mt-msubmit { display: block; width: 100%; padding: 15px; margin-top: 6px; border: none; border-radius: 12px; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; box-shadow: 0 8px 20px rgba(124,47,212,.35); transition: transform .2s; }
   .mt-msubmit:hover:not(:disabled) { transform: translateY(-2px); }
   .mt-msubmit:disabled { opacity: .6; cursor: not-allowed; }
-
   .mt-message { display: none !important; }
   .mt-form-alert { display: none; padding: 12px 14px; border-radius: 11px; font-size: 13px; line-height: 1.5; text-align: center; font-weight: 500; }
   .mt-form-alert.show { display: block; }
@@ -104,7 +146,6 @@
   .mt-mguest-btn svg { transition: transform .2s; }
   .mt-mguest-btn:hover svg { transform: translateX(3px); }
   .mt-mguest-hint { margin: 8px 0 0; text-align: center; font-size: 12px; color: #a898c2; line-height: 1.4; }
-
   .mt-mcode-header { text-align: center; margin-bottom: 6px; }
   .mt-mcode-icon { width: 60px; height: 60px; margin: 0 auto 14px; border-radius: 50%; background: #f5efff; display: flex; align-items: center; justify-content: center; }
   .mt-mcode-title { font-size: 18px; font-weight: 700; margin: 0 0 8px; }
@@ -126,358 +167,32 @@
   .mt-mfooter-link { color: #8b3ddb; font-weight: 700; text-decoration: none; margin-left: 4px; cursor: pointer; }
   .mt-mfooter-link:hover { color: #5d2b9e; text-decoration: underline; }
 
-  /* ═════════ БАННЕР РЕКЛАМЫ ═════════ */
-  .ad-banner { max-width: 100%; margin: 0 auto; padding: 20px 48px 0; }
-  .ad-banner-inner {
-    background: linear-gradient(135deg,#f5efff,#ece3fa);
-    border: 2px dashed #d9c7f2;
-    border-radius: 20px;
-    padding: 28px 32px;
-    text-align: center;
-    color: #7c2fd4;
-    font-weight: 600;
-    font-size: 14px;
-    min-height: 110px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .ad-banner-inner::before { content: '📢'; font-size: 28px; margin-right: 12px; }
-
-  /* ═════════ HERO КАТАЛОГА ═════════ */
-  .catalog-hero { padding: 40px 48px 0; }
-  .catalog-hero-inner { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 360px; gap: 28px; align-items: stretch; }
-  .catalog-hero-title h1 { font-size: clamp(32px, 4vw, 54px); font-weight: 900; letter-spacing: -2px; line-height: 1.1; color: #2e1a4d; margin-bottom: 14px; }
-  .catalog-hero-title h1 em { font-style: normal; background: linear-gradient(135deg,#7c2fd4,#a855f7); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .catalog-hero-title p { color: #7e6b94; font-size: 17px; max-width: 560px; }
-  .catalog-hero-title .catalog-count { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 8px 16px; background: #f5efff; border-radius: 999px; color: #5d2b9e; font-size: 14px; font-weight: 700; }
-
-  .rating-card { background: linear-gradient(135deg,#2a1550,#4b1e8c); border-radius: 22px; padding: 28px 26px; color: #fff; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
-  .rating-card::before { content: ''; position: absolute; top: -40%; right: -30%; width: 260px; height: 260px; background: radial-gradient(circle, rgba(168,85,247,.45), transparent 70%); border-radius: 50%; pointer-events: none; }
-  .rating-icon { font-size: 34px; margin-bottom: 10px; position: relative; }
-  .rating-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; position: relative; }
-  .rating-card p { font-size: 14px; color: #c4a9e8; line-height: 1.55; position: relative; }
-
-  /* ═════════ ТОП РЕЙТИНГА ═════════ */
-  .top-section { padding: 40px 48px 0; }
-  .top-inner { max-width: 1300px; margin: 0 auto; }
-  .top-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 22px; flex-wrap: wrap; gap: 12px; }
-  .top-head h2 { font-size: clamp(22px, 2.5vw, 30px); font-weight: 800; letter-spacing: -.7px; }
-  .top-head h2 span { font-size: 24px; margin-right: 6px; }
-  .top-head p { font-size: 14px; color: #7e6b94; }
-  .top-head .btn-all-top { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: #f5efff; color: #5d2b9e; border-radius: 12px; font-size: 14px; font-weight: 700; transition: all .2s; }
-  .top-head .btn-all-top:hover { background: #ece3fa; }
-  .top-head .btn-all-top svg { width: 15px; height: 15px; }
-  .top-head .btn-all-top .top-caret { transition: transform .25s; }
-  .top-head .btn-all-top.open .top-caret { transform: rotate(180deg); }
-
-  .podium-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px; }
-  .podium-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 20px; padding: 26px 22px; text-align: center; position: relative; transition: all .25s; }
-  .podium-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(93,43,158,.1); }
-  .podium-card.top-1 { border-color: #fbbf24; background: linear-gradient(180deg,#fffbeb,#fff); }
-  .podium-card.top-2 { border-color: #cbd5e1; background: linear-gradient(180deg,#f8fafc,#fff); }
-  .podium-card.top-3 { border-color: #d97706; background: linear-gradient(180deg,#fff7ed,#fff); }
-  .podium-medal { font-size: 40px; line-height: 1; margin-bottom: 10px; }
-  .podium-avatar { width: 62px; height: 62px; border-radius: 50%; margin: 0 auto 12px; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; font-weight: 800; font-size: 24px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; box-shadow: 0 8px 20px rgba(124,47,212,.3); }
-  .podium-name { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
-  .podium-meta { font-size: 13px; color: #a898c2; margin-bottom: 10px; }
-  .podium-score { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #f5efff; border-radius: 999px; font-size: 13px; font-weight: 800; color: #5d2b9e; }
-  .podium-score svg { width: 14px; height: 14px; color: #fbbf24; }
-
-  /* Список 4–10 — скрыт по умолчанию */
-  .top-list {
-    background: #fff;
-    border: 2px solid #f0e8fb;
-    border-radius: 20px;
-    overflow: hidden;
-    display: none;
-  }
-  .top-list.open { display: block; animation: q-in .35s cubic-bezier(.16,1,.3,1); }
-  @keyframes q-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-  .top-list-head { display: grid; grid-template-columns: 60px 1fr 160px 120px; gap: 16px; padding: 14px 24px; background: #faf7ff; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: #a898c2; border-bottom: 1px solid #f0e8fb; }
-  .top-list-row { display: grid; grid-template-columns: 60px 1fr 160px 120px; gap: 16px; padding: 14px 24px; align-items: center; border-bottom: 1px solid #faf7ff; transition: background .15s; }
-  .top-list-row:last-child { border-bottom: none; }
-  .top-list-row:hover { background: #faf7ff; }
-  .top-list-place { font-size: 15px; font-weight: 800; color: #7c2fd4; }
-  .top-list-user { display: flex; align-items: center; gap: 12px; min-width: 0; }
-  .top-list-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; font-weight: 800; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; text-transform: uppercase; }
-  .top-list-name { font-size: 14px; font-weight: 700; color: #2e1a4d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .top-list-badges { display: flex; gap: 4px; flex-wrap: wrap; }
-  .top-mini-badge { font-size: 11px; padding: 3px 8px; border-radius: 999px; background: #f5efff; color: #7c2fd4; font-weight: 700; }
-  .top-list-score { font-size: 14px; font-weight: 800; color: #2e1a4d; text-align: right; }
-
-  /* Кнопка «Как попасть в рейтинг» + раскрывающийся блок */
-  .rating-how-wrap { margin-top: 20px; text-align: center; }
-  .rating-how-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 13px 24px; border-radius: 14px;
-    background: #f5efff; color: #5d2b9e;
-    font-size: 14px; font-weight: 800;
-    transition: all .2s;
-  }
-  .rating-how-btn:hover { background: #ece3fa; transform: translateY(-1px); }
-  .rating-how-btn svg { width: 16px; height: 16px; }
-  .rating-how-btn .rating-how-caret { transition: transform .25s; }
-  .rating-how-btn.open .rating-how-caret { transform: rotate(180deg); }
-
-  .rating-how-body {
-    display: none;
-    margin: 18px auto 0;
-    max-width: 1000px;
-    background: #fff;
-    border: 2px solid #f0e8fb;
-    border-radius: 20px;
-    padding: 28px 26px 22px;
-    text-align: left;
-  }
-  .rating-how-body.open { display: block; animation: q-in .35s cubic-bezier(.16,1,.3,1); }
-  .rating-how-title { font-size: 18px; font-weight: 800; margin-bottom: 6px; text-align: center; }
-  .rating-how-sub { font-size: 14px; color: #7e6b94; text-align: center; margin-bottom: 22px; }
-  .rating-how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .rating-how-card { background: #faf7ff; border: 2px solid #f0e8fb; border-radius: 16px; padding: 22px 18px 18px; position: relative; text-align: center; }
-  .rating-how-num { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; box-shadow: 0 4px 12px rgba(124,47,212,.3); }
-  .rating-how-emoji { font-size: 30px; margin: 4px 0 10px; }
-  .rating-how-card h4 { font-size: 15px; font-weight: 800; margin-bottom: 6px; }
-  .rating-how-card p { font-size: 13px; color: #7e6b94; line-height: 1.5; }
-
-  /* ═════════ ПОДБОРКИ ═════════ */
-  .collections-section { padding: 40px 48px 0; }
-  .collections-inner { max-width: 1300px; margin: 0 auto; }
-  .collections-title { font-size: 20px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-  .collections-title span { font-size: 22px; }
-  .collections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .collection-card { background: linear-gradient(135deg,#f5efff,#ece3fa); border: 2px solid #f0e8fb; border-radius: 18px; padding: 22px 24px; display: flex; flex-direction: column; gap: 8px; transition: all .2s; position: relative; overflow: hidden; min-height: 140px; }
-  .collection-card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(93,43,158,.12); }
-  .collection-card .collection-emoji { font-size: 26px; }
-  .collection-card h3 { font-size: 16px; font-weight: 800; color: #2e1a4d; padding-right: 44px; }
-  .collection-card p { font-size: 13px; color: #6b5b82; flex: 1; line-height: 1.5; padding-right: 44px; }
-  .collection-card .collection-arrow { position: absolute; bottom: 18px; right: 20px; width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; display: flex; align-items: center; justify-content: center; }
-  .collection-card .collection-arrow svg { width: 16px; height: 16px; }
-
-  /* ═════════ ВЫБОР КАТЕГОРИИ ═════════ */
-  .cats-section { padding: 32px 48px 0; }
-  .cats-inner { max-width: 1300px; margin: 0 auto; }
-  .cats-title { font-size: 18px; font-weight: 800; letter-spacing: -.3px; margin-bottom: 14px; color: #2e1a4d; }
-  .cats-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; }
-  .cats-row::-webkit-scrollbar { height: 6px; }
-  .cats-row::-webkit-scrollbar-thumb { background: #ece3fa; border-radius: 3px; }
-  .cat-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 999px; background: #fff; border: 2px solid #ece3fa; font-size: 14px; font-weight: 700; color: #6b5b82; transition: all .2s; white-space: nowrap; flex-shrink: 0; }
-  .cat-btn:hover { border-color: #c9a9f0; color: #5d2b9e; }
-  .cat-btn.active { background: linear-gradient(135deg,#7c2fd4,#a855f7); border-color: transparent; color: #fff; box-shadow: 0 6px 18px rgba(124,47,212,.3); }
-  .cat-btn .cat-emoji { font-size: 16px; }
-
-  .subcats-row { display: none; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
-  .subcats-row.show { display: flex; }
-  .subcat-btn { padding: 8px 16px; border-radius: 10px; background: #faf7ff; border: 1.5px solid #ece3fa; font-size: 13px; font-weight: 600; color: #6b5b82; transition: all .2s; }
-  .subcat-btn:hover { border-color: #c9a9f0; color: #5d2b9e; }
-  .subcat-btn.active { background: #f5efff; border-color: #a855f7; color: #5d2b9e; }
-
-  /* ═════════ ПОИСК ═════════ */
-  .search-section { padding: 32px 48px 0; }
-  .search-inner { max-width: 1300px; margin: 0 auto; }
-  .search-row { display: flex; gap: 12px; align-items: stretch; }
-  .search-wrap { position: relative; flex: 1; }
-  .search-input { width: 100%; padding: 18px 22px 18px 54px; border: 2px solid #ece3fa; background: #faf7ff; border-radius: 16px; font-size: 16px; color: #2e1a4d; outline: none; transition: all .25s; }
-  .search-input::placeholder { color: #b3a4c9; }
-  .search-input:focus { border-color: #a855f7; background: #fff; box-shadow: 0 0 0 5px rgba(168,85,247,.12); }
-  .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #a855f7; pointer-events: none; }
-  .search-clear { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border-radius: 50%; background: #f0e8fb; color: #7c2fd4; display: none; align-items: center; justify-content: center; font-size: 16px; transition: all .2s; }
-  .search-clear:hover { background: #a855f7; color: #fff; }
-  .search-clear.show { display: flex; }
-
-  .btn-random { display: inline-flex; align-items: center; gap: 10px; padding: 18px 26px; border-radius: 16px; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; font-size: 15px; font-weight: 700; box-shadow: 0 8px 22px rgba(124,47,212,.3); transition: transform .2s; white-space: nowrap; }
-  .btn-random:hover { transform: translateY(-2px); }
-
-  .search-hints { position: absolute; top: calc(100% + 8px); left: 0; right: 0; background: #fff; border: 2px solid #ece3fa; border-radius: 16px; padding: 12px; box-shadow: 0 20px 50px rgba(93,43,158,.15); z-index: 50; display: none; max-height: 420px; overflow-y: auto; }
-  .search-hints.show { display: block; }
-  .search-hints-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; color: #a898c2; padding: 8px 12px 6px; }
-  .search-hint-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; transition: background .15s; text-align: left; width: 100%; }
-  .search-hint-item:hover { background: #f5efff; }
-  .search-hint-emoji { font-size: 20px; flex-shrink: 0; width: 34px; height: 34px; background: #f5efff; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-  .search-hint-text { flex: 1; min-width: 0; }
-  .search-hint-title { font-size: 14px; font-weight: 600; color: #2e1a4d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .search-hint-cat { font-size: 12px; color: #a898c2; margin-top: 2px; }
-  .search-hint-item mark { background: #f5efff; color: #7c2fd4; font-weight: 800; padding: 0 2px; border-radius: 3px; }
-  .search-hint-empty { padding: 20px 12px; font-size: 14px; color: #a898c2; text-align: center; }
-
-  /* ═════════ ФИЛЬТРЫ-СЕЛЕКТЫ ═════════ */
-  .filters-section { padding: 20px 48px 0; }
-  .filters-inner { max-width: 1300px; margin: 0 auto; }
-  .filters-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
-
-  .select-wrap { position: relative; }
-  .select-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 12px 18px; border-radius: 14px;
-    background: #fff; border: 2px solid #ece3fa;
-    font-size: 14px; font-weight: 700; color: #4b3b63;
-    transition: all .2s; white-space: nowrap;
-  }
-  .select-btn:hover { border-color: #c9a9f0; }
-  .select-btn.open { border-color: #a855f7; background: #f5efff; }
-  .select-btn .select-icon { width: 18px; height: 18px; color: #a855f7; flex-shrink: 0; }
-  .select-btn .select-value { color: #5d2b9e; }
-  .select-btn .select-caret { width: 14px; height: 14px; color: #a898c2; transition: transform .2s; flex-shrink: 0; }
-  .select-btn.open .select-caret { transform: rotate(180deg); }
-
-  .select-dropdown {
-    position: absolute;
-    top: calc(100% + 6px);
-    left: 0;
-    min-width: 220px;
-    background: #fff;
-    border: 2px solid #ece3fa;
-    border-radius: 14px;
-    padding: 8px;
-    box-shadow: 0 20px 50px rgba(93,43,158,.15);
-    z-index: 40;
-    display: none;
-    max-height: 320px;
-    overflow-y: auto;
-  }
-  .select-dropdown.open { display: block; }
-  .select-option {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #4b3b63;
-    text-align: left;
-    transition: background .15s;
-  }
-  .select-option:hover { background: #f5efff; color: #5d2b9e; }
-  .select-option.active { background: #f5efff; color: #5d2b9e; font-weight: 800; }
-  .select-option .select-check { width: 16px; height: 16px; color: #a855f7; opacity: 0; flex-shrink: 0; }
-  .select-option.active .select-check { opacity: 1; }
-
-  /* ═════════ СЕТКА КАРТОЧЕК ═════════ */
-  .cards-section { padding: 32px 48px 60px; }
-  .cards-inner { max-width: 1300px; margin: 0 auto; }
-  .cards-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
-  .cards-head h2 { font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
-  .cards-head .cards-count { font-size: 14px; color: #a898c2; font-weight: 600; }
-
-  .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-
-  .test-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 20px; padding: 24px 22px 22px; display: flex; flex-direction: column; transition: all .25s; position: relative; overflow: hidden; }
-  .test-card:hover { border-color: #c9a9f0; transform: translateY(-4px); box-shadow: 0 18px 40px rgba(93,43,158,.1); }
-  .test-card-badges { position: absolute; top: 14px; right: 14px; display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; max-width: 60%; }
-  .badge { display: inline-flex; align-items: center; gap: 3px; padding: 4px 9px; border-radius: 999px; font-size: 10px; font-weight: 800; letter-spacing: .3px; text-transform: uppercase; white-space: nowrap; }
-  .badge.hit { background: #fff1f2; color: #e0395a; }
-  .badge.new { background: #ecfdf5; color: #059669; }
-  .badge.fast { background: #fef3c7; color: #b45309; }
-  .badge.hard { background: #ede9fe; color: #5b21b6; }
-
-  .test-card-emoji { font-size: 36px; line-height: 1; margin-bottom: 14px; display: inline-block; }
-  .test-card-title { font-size: 16px; font-weight: 800; line-height: 1.3; color: #2e1a4d; margin-bottom: 8px; letter-spacing: -.2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 42px; }
-  .test-card-desc { font-size: 13.5px; color: #7e6b94; line-height: 1.55; margin-bottom: 16px; flex: 1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .test-card-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; font-size: 12px; color: #a898c2; font-weight: 600; flex-wrap: wrap; }
-  .test-card-meta span { display: inline-flex; align-items: center; gap: 4px; }
-  .test-card-meta svg { width: 14px; height: 14px; }
-  .test-card-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px 18px; border-radius: 12px; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; font-size: 14px; font-weight: 700; box-shadow: 0 6px 16px rgba(124,47,212,.25); transition: transform .2s; }
-  .test-card-btn:hover { transform: translateY(-2px); }
-  .test-card-btn svg { width: 15px; height: 15px; }
-  .test-card.disclaimer-card { border-color: #fde68a; }
-  .test-card-disclaimer { font-size: 11.5px; color: #92400e; background: #fef3c7; padding: 8px 10px; border-radius: 8px; margin-bottom: 12px; line-height: 1.45; }
-
-  .empty-state { display: none; padding: 80px 20px; text-align: center; }
-  .empty-state.show { display: block; }
-  .empty-state-emoji { font-size: 60px; margin-bottom: 16px; }
-  .empty-state h3 { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
-  .empty-state p { font-size: 15px; color: #7e6b94; max-width: 400px; margin: 0 auto 20px; }
-  .empty-state button { padding: 12px 24px; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; border-radius: 12px; font-size: 14px; font-weight: 700; box-shadow: 0 6px 18px rgba(124,47,212,.3); }
-
-  /* ═════════ ФУТЕР ═════════ */
-  .site-footer { padding: 36px 24px; background: #fff; border-top: 1px solid #f0e8fb; text-align: center; font-size: 14px; color: #a898c2; }
-  .site-footer .logo { display: inline-block; margin-bottom: 8px; }
-
-  /* ═════════ FAB ПОДДЕРЖКИ ═════════ */
-  .support-fab { position: fixed; right: 24px; bottom: 24px; width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 26px rgba(124,47,212,.45); cursor: pointer; transition: all .25s; z-index: 200; }
-  .support-fab:hover { transform: scale(1.08); }
-  .support-fab svg { width: 26px; height: 26px; }
-  .support-fab::after { content: ''; position: absolute; top: 8px; right: 8px; width: 10px; height: 10px; background: #22c55e; border-radius: 50%; border: 2px solid #fff; }
-  .support-popup { position: fixed; right: 24px; bottom: 96px; width: 320px; max-width: calc(100vw - 48px); background: #fff; border-radius: 18px; padding: 22px; box-shadow: 0 20px 50px rgba(93,43,158,.25); border: 1px solid #f0e8fb; z-index: 199; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all .25s; }
-  .support-popup.open { opacity: 1; visibility: visible; transform: translateY(0); }
-  .support-popup h4 { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
-  .support-popup p { font-size: 14px; color: #6b5b82; line-height: 1.55; margin-bottom: 12px; }
-  .support-popup .support-status { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: #f0fbf5; color: #1ab86a; font-size: 12px; font-weight: 700; margin-bottom: 12px; }
-  .support-popup .support-status span { width: 6px; height: 6px; border-radius: 50%; background: #1ab86a; }
-  .support-popup .support-link { display: inline-flex; align-items: center; gap: 8px; color: #7c2fd4; font-weight: 700; font-size: 13px; padding: 8px 14px; background: #f5efff; border-radius: 10px; }
-  .support-popup .support-link svg { width: 16px; height: 16px; }
-  .support-close { position: absolute; top: 12px; right: 12px; width: 26px; height: 26px; border-radius: 50%; background: #f5efff; color: #5d2b9e; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-  .support-close:hover { background: #a855f7; color: #fff; }
-
-  /* ═════════ АДАПТИВ ═════════ */
-  @media (max-width: 1100px) {
-    .catalog-hero-inner { grid-template-columns: 1fr; }
-    .top-list-head, .top-list-row { grid-template-columns: 50px 1fr 140px 100px; }
-  }
-  @media (max-width: 900px) {
-    .cards-grid { grid-template-columns: repeat(2, 1fr); }
-    .collections-grid { grid-template-columns: repeat(2, 1fr); }
-    .podium-row { grid-template-columns: 1fr; }
-    .rating-how-grid { grid-template-columns: 1fr; }
+  /* Адаптив */
+  @media (max-width: 1000px) {
+    .catalog-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 720px) {
-    .main-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: #fff; padding: 12px; border-bottom: 1px solid #f0e8fb; box-shadow: 0 12px 24px rgba(93,43,158,.08); }
-    .main-nav.open { display: flex; }
-    .header-inner { position: relative; padding: 12px 16px; gap: 10px; max-width: 100%; justify-content: space-between; }
+    .header-inner { padding: 12px 16px; gap: 10px; }
     .logo { font-size: 20px; }
     .btn { padding: 9px 14px; font-size: 13px; }
+    .btn-back span { display: none; }
+    .btn-back { padding: 9px 12px; }
     .btn-premium span, .btn-login span { display: none; }
     .btn-premium { padding: 9px 14px; }
     .btn-login { padding: 9px 12px; }
-    .header-actions { margin-left: auto; gap: 8px; }
-    .burger { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; color: #5d2b9e; background: #f5efff; flex-shrink: 0; }
-    .burger svg { width: 22px; height: 22px; }
-
-    .ad-banner { padding: 16px 16px 0; }
-    .ad-banner-inner { padding: 22px 18px; min-height: 90px; font-size: 13px; }
-    .ad-banner-inner::before { font-size: 22px; margin-right: 8px; }
-
-    .catalog-hero { padding: 24px 16px 0; }
-    .catalog-hero-title h1 { letter-spacing: -1px; }
-    .catalog-hero-title p { font-size: 15px; }
-    .rating-card { padding: 24px 22px; }
-
-    .top-section { padding: 28px 16px 0; }
-    .top-list-head { display: none; }
-    .top-list-row { grid-template-columns: 40px 1fr 80px; padding: 12px 16px; gap: 10px; }
-    .top-list-badges { display: none; }
-    .rating-how-body { padding: 22px 18px 18px; }
-
-    .collections-section { padding: 28px 16px 0; }
-    .collections-grid { grid-template-columns: 1fr; gap: 14px; }
-
-    .cats-section { padding: 28px 16px 0; }
-    .cat-btn { padding: 10px 15px; font-size: 13px; }
-
-    .search-section { padding: 24px 16px 0; }
+    .catalog-hero { padding: 36px 18px 24px; }
+    .catalog-hero h1 { font-size: 28px; letter-spacing: -.8px; }
+    .catalog-hero p { font-size: 15px; }
+    .catalog-controls { padding: 24px 18px 0; }
     .search-row { flex-direction: column; }
-    .search-input { padding: 16px 18px 16px 48px; font-size: 15px; }
-    .search-icon { left: 16px; }
-    .search-clear { right: 14px; }
-    .btn-random { padding: 16px 22px; font-size: 14px; justify-content: center; }
-
-    .filters-section { padding: 16px 16px 0; }
-    .filters-row { gap: 10px; }
-    .select-wrap { flex: 1; min-width: 160px; }
-    .select-btn { width: 100%; justify-content: space-between; padding: 12px 14px; font-size: 13px; }
-    .select-dropdown { left: 0; right: 0; min-width: auto; width: 100%; }
-
-    .cards-section { padding: 24px 16px 48px; }
-    .cards-grid { grid-template-columns: 1fr; gap: 16px; }
-    .test-card { padding: 20px 18px; }
-
-    .site-footer { padding: 28px 16px; }
-
-    .support-fab { right: 18px; bottom: 18px; width: 52px; height: 52px; }
-    .support-popup { right: 18px; bottom: 84px; }
-
+    .sort-select { width: 100%; }
+    .filter-chips { gap: 8px; margin-bottom: 24px; }
+    .chip { padding: 8px 14px; font-size: 13px; }
+    .catalog-grid { grid-template-columns: 1fr; padding: 0 18px 60px; gap: 18px; }
+    .catalog-count { padding: 0 18px 14px; }
+    .test-card { padding: 22px 20px; }
+  }
+  @media (max-width: 480px) {
     .mt-modal-overlay { padding: 8px; align-items: flex-start; padding-top: 16px; padding-bottom: 16px; }
     .mt-modal { padding: 26px 18px 20px; border-radius: 18px; max-width: 100%; max-height: calc(100vh - 32px); }
     .mt-modal-close { top: 12px; right: 12px; width: 30px; height: 30px; font-size: 20px; }
@@ -504,12 +219,13 @@
     .header-inner { gap: 6px; padding: 10px 12px; }
     .logo { font-size: 18px; }
     .btn { padding: 8px 10px; }
-    .burger { width: 36px; height: 36px; }
     .btn-login { padding: 8px 10px; }
     .btn-premium { padding: 8px 10px; }
-    .test-card-title { font-size: 15px; }
+    .btn-back { padding: 8px 10px; }
     .mt-mcode-inputs { gap: 4px; }
     .mt-mcode-inputs input { width: 34px; height: 42px; font-size: 16px; }
+    .catalog-hero h1 { font-size: 24px; }
+    .test-card h3 { font-size: 17px; }
   }
 </style>
 </head>
@@ -518,11 +234,11 @@
 <header class="site-header">
   <div class="header-inner">
     <a href="./" class="logo">Mind<span>Test</span></a>
-    <nav class="main-nav" id="mainNav">
-      <a href="./">На главную</a>
-      <a href="catalog.html" class="active">Каталог</a>
-    </nav>
     <div class="header-actions">
+      <a href="./" class="btn btn-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>На главную</span>
+      </a>
       <button type="button" class="btn btn-login" id="openAuthBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         <span>Войти</span>
@@ -531,325 +247,35 @@
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
         <span>Premium</span>
       </a>
-      <button class="burger" id="burger" aria-label="Меню">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-      </button>
     </div>
   </div>
 </header>
 
-<!-- ═════════ БАННЕР РЕКЛАМЫ ═════════ -->
-<div class="ad-banner">
-  <div class="ad-banner-inner">Место для рекламного баннера</div>
-</div>
-
-<!-- ═════════ HERO КАТАЛОГА ═════════ -->
 <section class="catalog-hero">
-  <div class="catalog-hero-inner">
-    <div class="catalog-hero-title">
-      <h1>Каталог <em>тестов</em></h1>
-      <p>Психология, знания, логика, интересы — выбери, что тебе по душе, и узнай о себе больше.</p>
-      <div class="catalog-count">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        <span id="catalogCount">0 тестов</span>
-      </div>
-    </div>
-    <div class="rating-card">
-      <div class="rating-icon">🏆</div>
-      <h3>Рейтинг пользователей</h3>
-      <p>Проходи тесты, получай награды и поднимайся в общем рейтинге MindTest.</p>
-    </div>
-  </div>
+  <h1>Все <em>тесты</em> MindTest</h1>
+  <p>Выбирай категорию или ищи по названию — и открывай новое о себе и о мире.</p>
 </section>
 
-<!-- ═════════ ТОП РЕЙТИНГА ═════════ -->
-<section class="top-section">
-  <div class="top-inner">
-    <div class="top-head">
-      <div>
-        <h2><span>🏆</span>Топ пользователей</h2>
-        <p>Обновляется после каждого пройденного теста.</p>
-      </div>
-      <button type="button" class="btn-all-top" id="topToggleBtn">
-        <span id="topToggleText">Смотреть весь рейтинг</span>
-        <svg class="top-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
+<div class="catalog-controls">
+  <div class="search-row">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="searchInput" placeholder="Поиск теста по названию или описанию...">
     </div>
-
-    <!-- Пьедестал — всегда виден -->
-    <div class="podium-row">
-      <div class="podium-card top-2">
-        <div class="podium-medal">🥈</div>
-        <div class="podium-avatar">М</div>
-        <div class="podium-name">Мария</div>
-        <div class="podium-meta">17 лет · 42 теста</div>
-        <div class="podium-score">
-          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          2 480 очков
-        </div>
-      </div>
-      <div class="podium-card top-1">
-        <div class="podium-medal">🥇</div>
-        <div class="podium-avatar">А</div>
-        <div class="podium-name">Артём</div>
-        <div class="podium-meta">18 лет · 51 тест</div>
-        <div class="podium-score">
-          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          3 210 очков
-        </div>
-      </div>
-      <div class="podium-card top-3">
-        <div class="podium-medal">🥉</div>
-        <div class="podium-avatar">К</div>
-        <div class="podium-name">Ксения</div>
-        <div class="podium-meta">16 лет · 38 тестов</div>
-        <div class="podium-score">
-          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          1 940 очков
-        </div>
-      </div>
-    </div>
-
-    <!-- Список 4–10 — скрыт до клика -->
-    <div class="top-list" id="topList">
-      <div class="top-list-head">
-        <span>Место</span>
-        <span>Пользователь</span>
-        <span>Награды</span>
-        <span style="text-align:right;">Очки</span>
-      </div>
-      <div class="top-list-row">
-        <div class="top-list-place">4</div>
-        <div class="top-list-user"><div class="top-list-avatar">Д</div><div class="top-list-name">Даша</div></div>
-        <div class="top-list-badges"><span class="top-mini-badge">🔥 Хит</span><span class="top-mini-badge">🧠 Эрудит</span></div>
-        <div class="top-list-score">1 720</div>
-      </div>
-      <div class="top-list-row">
-        <div class="top-list-place">5</div>
-        <div class="top-list-user"><div class="top-list-avatar">Н</div><div class="top-list-name">Никита</div></div>
-        <div class="top-list-badges"><span class="top-mini-badge">⚡ Быстрый</span></div>
-        <div class="top-list-score">1 510</div>
-      </div>
-      <div class="top-list-row">
-        <div class="top-list-place">6</div>
-        <div class="top-list-user"><div class="top-list-avatar">С</div><div class="top-list-name">София</div></div>
-        <div class="top-list-badges"><span class="top-mini-badge">✨ Творец</span></div>
-        <div class="top-list-score">1 380</div>
-      </div>
-      <div class="top-list-row">
-        <div class="top-list-place">7</div>
-        <div class="top-list-user"><div class="top-list-avatar">И</div><div class="top-list-name">Иван</div></div>
-        <div class="top-list-badges"><span class="top-mini-badge">🧩 Логик</span></div>
-        <div class="top-list-score">1 240</div>
-      </div>
-      <div class="top-list-row">
-        <div class="top-list-place">8</div>
-        <div class="top-list-user"><div class="top-list-avatar">Л</div><div class="top-list-name">Лиза</div></div>
-        <div class="top-list-badges"><span class="top-mini-badge">💜 Оптимист</span></div>
-        <div class="top-list-score">1 120</div>
-      </div>
-      <div class="top-list-row">
-        <div class="top-list-place">9</div>
-        <div class="top-list-user"><div class="top-list-avatar">П</div><div class="top-list-name">Паша</div></div>
-        <div class="top-list-badges"><span class="top-mini-badge">📚 Знаток</span></div>
-        <div class="top-list-score">980</div>
-      </div>
-      <div class="top-list-row">
-        <div class="top-list-place">10</div>
-        <div class="top-list-user"><div class="top-list-avatar">В</div><div class="top-list-name">Вера</div></div>
-        <div class="top-list-badges"><span class="top-mini-badge">🌱 Новичок</span></div>
-        <div class="top-list-score">860</div>
-      </div>
-    </div>
-
-    <!-- Кнопка «Как попасть в рейтинг» + раскрывающийся блок -->
-    <div class="rating-how-wrap">
-      <button type="button" class="rating-how-btn" id="ratingHowBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        Как попасть в рейтинг?
-        <svg class="rating-how-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-      <div class="rating-how-body" id="ratingHowBody">
-        <div class="rating-how-title">Как попасть в рейтинг MindTest</div>
-        <div class="rating-how-sub">Три простых шага — и ты уже в топе.</div>
-        <div class="rating-how-grid">
-          <div class="rating-how-card">
-            <div class="rating-how-num">1</div>
-            <div class="rating-how-emoji">🎯</div>
-            <h4>Выбери тест</h4>
-            <p>Найди интересную тему в каталоге — или доверься случаю.</p>
-          </div>
-          <div class="rating-how-card">
-            <div class="rating-how-num">2</div>
-            <div class="rating-how-emoji">✅</div>
-            <h4>Пройди и получи результат</h4>
-            <p>Отвечай честно — за каждый тест даются очки и награды.</p>
-          </div>
-          <div class="rating-how-card">
-            <div class="rating-how-num">3</div>
-            <div class="rating-how-emoji">🏆</div>
-            <h4>Поднимайся в рейтинге</h4>
-            <p>Чем больше тестов — тем выше ты в общем списке пользователей.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <select class="sort-select" id="sortSelect">
+      <option value="popular">Популярные</option>
+      <option value="new">Новые</option>
+      <option value="alpha">По алфавиту</option>
+      <option value="time">По времени</option>
+    </select>
   </div>
-</section>
-
-<!-- ═════════ ПОДБОРКИ ═════════ -->
-<section class="collections-section">
-  <div class="collections-inner">
-    <h2 class="collections-title"><span>🎁</span> Подборки для тебя</h2>
-    <div class="collections-grid">
-      <a href="#" class="collection-card" data-collection="popular">
-        <div class="collection-emoji">🔥</div>
-        <h3>Популярное сегодня</h3>
-        <p>Тесты, которые чаще всего проходят прямо сейчас.</p>
-        <div class="collection-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </a>
-      <a href="#" class="collection-card" data-collection="newbie">
-        <div class="collection-emoji">🌱</div>
-        <h3>С чего начать</h3>
-        <p>Короткие и понятные тесты для первого знакомства.</p>
-        <div class="collection-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </a>
-      <a href="#" class="collection-card" data-collection="deep">
-        <div class="collection-emoji">🧠</div>
-        <h3>Для глубокого самопознания</h3>
-        <p>Тесты, которые заставляют задуматься всерьёз.</p>
-        <div class="collection-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ═════════ ВЫБОР КАТЕГОРИИ ═════════ -->
-<section class="cats-section">
-  <div class="cats-inner">
-    <div class="cats-title">Выбери категорию</div>
-    <div class="cats-row" id="catsRow"></div>
-    <div class="subcats-row" id="subcatsRow"></div>
-  </div>
-</section>
-
-<!-- ═════════ ФИЛЬТРЫ ═════════ -->
-<section class="filters-section">
-  <div class="filters-inner">
-    <div class="filters-row">
-
-      <!-- Сортировка -->
-      <div class="select-wrap" data-select="sort">
-        <button type="button" class="select-btn" data-toggle>
-          <svg class="select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
-          Сортировка: <span class="select-value">Популярные</span>
-          <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="select-dropdown">
-          <button type="button" class="select-option active" data-value="popular">Популярные<svg class="select-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <button type="button" class="select-option" data-value="new">Новые<svg class="select-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <button type="button" class="select-option" data-value="time">По времени<svg class="select-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <button type="button" class="select-option" data-value="alpha">По алфавиту (А–Я)<svg class="select-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
-        </div>
-      </div>
-
-      <!-- Время -->
-      <div class="select-wrap" data-select="time">
-        <button type="button" class="select-btn" data-toggle>
-          <svg class="select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-          Время: <span class="select-value">Любое</span>
-          <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="select-dropdown">
-          <button type="button" class="select-option active" data-value="all">Любое<svg class="select-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <button type="button" class="select-option" data-value="fast">До 10 минут<svg class="select-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <button type="button" class="select-option" data-value="long">15+ минут<svg class="select-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
-        </div>
-      </div>
-
-      <!-- Сложность -->
-      <div class="select-wrap" data-select="difficulty">
-        <button type="button" class="select-btn" data-toggle>
-          <svg class="select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7 9 9.7 3 15.7"/></svg>
-          Сложность: <span class="select-value">Любая</span>
-          <svg class="select-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="select-dropdown">
-          <button type="button" class="select-option active" data-value="all">Любая<svg class="select-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <button type="button" class="select-option" data-value="easy">Лёгкий<svg class="select-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <button type="button" class="select-option" data-value="medium">Средний<svg class="select-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
-          <button type="button" class="select-option" data-value="hard">Сложный<svg class="select-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ═════════ ПОИСК ═════════ -->
-<section class="search-section">
-  <div class="search-inner">
-    <div class="search-row">
-      <div class="search-wrap">
-        <svg class="search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <input type="text" class="search-input" id="searchInput" placeholder="Найди тест: оптимист, MBTI, IQ, профессия..." autocomplete="off">
-        <button type="button" class="search-clear" id="searchClear" aria-label="Очистить">×</button>
-        <div class="search-hints" id="searchHints"></div>
-      </div>
-      <button type="button" class="btn-random" id="randomBtn">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="M4 20 21 3"/><path d="M21 16v5h-5"/><path d="m15 15 6 6"/><path d="M4 4l5 5"/></svg>
-        Случайный тест
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- ═════════ СЕТКА КАРТОЧЕК ═════════ -->
-<section class="cards-section">
-  <div class="cards-inner">
-    <div class="cards-head">
-      <h2 id="cardsTitle">Все тесты</h2>
-      <span class="cards-count" id="cardsCount"></span>
-    </div>
-    <div class="cards-grid" id="cardsGrid"></div>
-    <div class="empty-state" id="emptyState">
-      <div class="empty-state-emoji">🔍</div>
-      <h3>Ничего не нашлось</h3>
-      <p>Попробуй другой запрос или сбрось фильтры — возможно, тест ждёт тебя в другой категории.</p>
-      <button type="button" id="resetFiltersBtn">Сбросить всё</button>
-    </div>
-  </div>
-</section>
-
-<footer class="site-footer">
-  <div class="logo">Mind<span>Test</span></div>
-  <p>© 2026 MindTest. Все права защищены.</p>
-</footer>
-
-<button class="support-fab" id="supportFab" aria-label="Поддержка">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8v18L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
-</button>
-
-<div class="support-popup" id="supportPopup">
-  <button class="support-close" id="supportClose" aria-label="Закрыть">&times;</button>
-  <h4>Поддержка MindTest</h4>
-  <div class="support-status"><span></span> Онлайн</div>
-  <p>Есть вопрос, идея или что-то не работает? Мы поможем.</p>
-  <p>Ответим в течение <b>двух дней</b>.</p>
-  <a href="./#support" class="support-link" id="supportGoLink">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    Перейти в поддержку
-  </a>
+  <div class="filter-chips" id="filterChips"></div>
 </div>
 
-<!-- ═════════ МОДАЛКА АВТОРИЗАЦИИ ═════════ -->
+<div class="catalog-count" id="catalogCount"></div>
+<div class="catalog-grid" id="catalogGrid"></div>
+
+<!-- Модальное окно авторизации -->
 <div class="mt-modal-overlay" id="authModalOverlay">
   <div class="mt-modal">
     <button class="mt-modal-close" id="authModalClose" aria-label="Закрыть">&times;</button>
@@ -957,413 +383,150 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="tests-data.js"></script>
 
-<!-- ═════════ КАТАЛОГ ═════════ -->
 <script>
 (function() {
-  var state = {
-    category: 'all',
-    subcat: 'all',
-    search: '',
-    sort: 'popular',
-    time: 'all',
-    difficulty: 'all'
-  };
+  // ═══════════════════════════════════════════
+  // КАТЕГОРИИ
+  // ═══════════════════════════════════════════
+  var CATEGORIES = [
+    { id: 'all',    name: 'Все',          icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>' },
+    { id: 'psych',  name: 'Психология',   icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>' },
+    { id: 'hobby',  name: 'Интересы',     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' },
+    { id: 'talent', name: 'Таланты',      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' },
+    { id: 'goals',  name: 'Развитие',     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>' },
+    { id: 'know',   name: 'Знания',       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>' },
+    { id: 'logic',  name: 'Логика и IQ',  icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11H3v10h6V11z"/><path d="M21 3h-6v10h6V3z"/><path d="M9 7H3v2h6V7z"/><path d="M21 15h-6v2h6v-2z"/></svg>' }
+  ];
 
-  var SORT_LABELS = { popular: 'Популярные', new: 'Новые', time: 'По времени', alpha: 'По алфавиту' };
-  var TIME_LABELS = { all: 'Любое', fast: 'До 10 минут', long: '15+ минут' };
-  var DIFF_LABELS = { all: 'Любая', easy: 'Лёгкий', medium: 'Средний', hard: 'Сложный' };
-
-  var SYNONYMS = {
-    'оптимист': ['оптимизм', 'позитив', 'оптимистичный'],
-    'пессимист': ['пессимизм', 'негатив'],
-    'реалист': ['реализм', 'трезвый'],
-    'характер': ['личность', 'темперамент', 'поведение'],
-    'личность': ['характер', 'тип личности', 'mbti'],
-    'mbti': ['тип личности', '16 типов', 'психотип'],
-    'iq': ['интеллект', 'ум', 'логика', 'мышление'],
-    'логика': ['логическое', 'мышление', 'задачи'],
-    'профессия': ['профориентация', 'кем работать', 'карьера'],
-    'любовь': ['чувства', 'отношения', 'симпатия', 'влюблённость'],
-    'зависимость': ['вредные привычки', 'телефон', 'алкоголь'],
-    'тревожность': ['тревога', 'депрессия', 'расстройство', 'психика'],
-    'возраст': ['ментальный возраст', 'сколько лет'],
-    'хобби': ['увлечение', 'занятие', 'интересы'],
-    'кино': ['фильм', 'сериал', 'movie'],
-    'аниме': ['наруто', 'тетрадь смерти', 'персонаж'],
-    'игра': ['игры', 'компьютерные', 'геймер'],
-    'музыка': ['жанр', 'вкус', 'мелодия'],
-    'спорт': ['физический', 'тренировки', 'активность'],
-    'английский': ['english', 'язык', 'уровень'],
-    'математика': ['матан', 'алгебра', 'геометрия'],
-    'программирование': ['код', 'it', 'разработка', 'python'],
-    'ии': ['нейросети', 'ai', 'chatgpt', 'искусственный интеллект']
-  };
-
-  function norm(str) { return (str || '').toLowerCase().replace(/ё/g, 'е').trim(); }
-  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, function(c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
-
-  function expandQuery(q) {
-    var nq = norm(q);
-    var terms = [nq];
-    Object.keys(SYNONYMS).forEach(function(key) {
-      var variants = SYNONYMS[key].slice();
-      variants.push(key);
-      var hasMatch = variants.some(function(v) { return nq.indexOf(norm(v)) !== -1; });
-      if (hasMatch) {
-        variants.forEach(function(v) { if (terms.indexOf(norm(v)) === -1) terms.push(norm(v)); });
-      }
-    });
-    return terms;
-  }
-
-  function fuzzyMatch(text, query) {
-    var t = norm(text), q = norm(query);
-    if (!q) return true;
-    if (t.indexOf(q) !== -1) return true;
-    var ti = 0, qi = 0;
-    while (ti < t.length && qi < q.length) {
-      if (t[ti] === q[qi]) qi++;
-      ti++;
+  // ═══════════════════════════════════════════
+  // ТЕСТЫ
+  // Сейчас здесь только 1 тест — как образец карточки.
+  // Остальные добавим, когда наполним каталог.
+  // ═══════════════════════════════════════════
+  var TESTS = [
+    {
+      id: 'optimist',
+      title: 'Кто ты: оптимист, пессимист или реалист?',
+      desc: 'Узнай, как ты смотришь на мир — сквозь розовые очки, тёмные или обычные.',
+      category: 'psych',
+      questions: 10,
+      time: 5,
+      popular: 100,
+      isNew: true,
+      url: './test-optimist.html'
     }
-    return qi === q.length;
-  }
+  ];
 
-  function matchScore(test, query) {
-    var q = norm(query);
-    if (!q) return 0;
-    var title = norm(test.title);
-    var desc = norm(test.desc);
-    var score = 0;
-    if (title.indexOf(q) === 0) score += 100;
-    else if (title.indexOf(q) !== -1) score += 60;
-    if (desc.indexOf(q) !== -1) score += 20;
-    var terms = expandQuery(q);
-    terms.forEach(function(term) {
-      if (term === q) return;
-      if (title.indexOf(term) !== -1) score += 25;
-      if (desc.indexOf(term) !== -1) score += 8;
-    });
-    return score;
-  }
+  var state = { category: 'all', search: '', sort: 'popular' };
 
-  function getCategoryName(id) { var c = CATEGORIES.find(function(x) { return x.id === id; }); return c ? c.name : ''; }
-  function getSubcatName(catId, subId) { var list = SUBCATEGORIES[catId] || []; var s = list.find(function(x) { return x.id === subId; }); return s ? s.name : ''; }
-  function plural(n, forms) { var n10 = n % 10, n100 = n % 100; if (n10 === 1 && n100 !== 11) return forms[0]; if (n10 >= 2 && n10 <= 4 && (n100 < 10 || n100 >= 20)) return forms[1]; return forms[2]; }
+  // Читаем ?category=... из URL
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var cat = params.get('category');
+    if (cat) {
+      for (var i = 0; i < CATEGORIES.length; i++) {
+        if (CATEGORIES[i].id === cat) { state.category = cat; break; }
+      }
+    }
+  })();
 
-  /* ═════════ КАТЕГОРИИ ═════════ */
-  var catsRow = document.getElementById('catsRow');
-  function renderCategories() {
+  var grid = document.getElementById('catalogGrid');
+  var countEl = document.getElementById('catalogCount');
+  var chipsEl = document.getElementById('filterChips');
+  var searchInput = document.getElementById('searchInput');
+  var sortSelect = document.getElementById('sortSelect');
+
+  function renderChips() {
     var html = '';
     CATEGORIES.forEach(function(c) {
-      html += '<button type="button" class="cat-btn' + (state.category === c.id ? ' active' : '') + '" data-cat="' + c.id + '">';
-      html +=   '<span class="cat-emoji">' + c.emoji + '</span>' + c.name;
-      html += '</button>';
+      var active = state.category === c.id ? ' active' : '';
+      html += '<button type="button" class="chip' + active + '" data-cat="' + c.id + '">' + c.icon + c.name + '</button>';
     });
-    catsRow.innerHTML = html;
-    catsRow.querySelectorAll('.cat-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        state.category = btn.dataset.cat;
-        state.subcat = 'all';
-        renderCategories();
-        renderSubcategories();
-        renderTests();
+    chipsEl.innerHTML = html;
+    chipsEl.querySelectorAll('.chip').forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        state.category = chip.getAttribute('data-cat');
+        renderChips();
+        renderGrid();
       });
     });
   }
 
-  var subcatsRow = document.getElementById('subcatsRow');
-  function renderSubcategories() {
-    var subs = SUBCATEGORIES[state.category];
-    if (!subs) { subcatsRow.classList.remove('show'); subcatsRow.innerHTML = ''; return; }
-    subcatsRow.classList.add('show');
-    var html = '<button type="button" class="subcat-btn' + (state.subcat === 'all' ? ' active' : '') + '" data-sub="all">Все</button>';
-    subs.forEach(function(s) {
-      html += '<button type="button" class="subcat-btn' + (state.subcat === s.id ? ' active' : '') + '" data-sub="' + s.id + '">' + s.name + '</button>';
-    });
-    subcatsRow.innerHTML = html;
-    subcatsRow.querySelectorAll('.subcat-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        state.subcat = btn.dataset.sub;
-        renderSubcategories();
-        renderTests();
-      });
-    });
+  function getCatName(id) {
+    for (var i = 0; i < CATEGORIES.length; i++) if (CATEGORIES[i].id === id) return CATEGORIES[i].name;
+    return '';
+  }
+  function getCatIcon(id) {
+    for (var i = 0; i < CATEGORIES.length; i++) if (CATEGORIES[i].id === id) return CATEGORIES[i].icon;
+    return '';
   }
 
-  /* ═════════ СЕЛЕКТЫ ═════════ */
-  document.querySelectorAll('.select-wrap').forEach(function(wrap) {
-    var key = wrap.dataset.select;
-    var btn = wrap.querySelector('.select-btn');
-    var dropdown = wrap.querySelector('.select-dropdown');
-    var valueEl = wrap.querySelector('.select-value');
-
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var wasOpen = dropdown.classList.contains('open');
-      document.querySelectorAll('.select-dropdown').forEach(function(d) { d.classList.remove('open'); });
-      document.querySelectorAll('.select-btn').forEach(function(b) { b.classList.remove('open'); });
-      if (!wasOpen) {
-        dropdown.classList.add('open');
-        btn.classList.add('open');
-      }
-    });
-
-    dropdown.querySelectorAll('.select-option').forEach(function(opt) {
-      opt.addEventListener('click', function(e) {
-        e.stopPropagation();
-        state[key] = opt.dataset.value;
-        var labelMap = { sort: SORT_LABELS, time: TIME_LABELS, difficulty: DIFF_LABELS };
-        valueEl.textContent = labelMap[key][opt.dataset.value];
-        dropdown.querySelectorAll('.select-option').forEach(function(o) { o.classList.remove('active'); });
-        opt.classList.add('active');
-        dropdown.classList.remove('open');
-        btn.classList.remove('open');
-        renderTests();
-      });
-    });
-  });
-
-  document.addEventListener('click', function() {
-    document.querySelectorAll('.select-dropdown').forEach(function(d) { d.classList.remove('open'); });
-    document.querySelectorAll('.select-btn').forEach(function(b) { b.classList.remove('open'); });
-  });
-
-  /* ═════════ ФИЛЬТРАЦИЯ ═════════ */
-  function getFilteredTests() {
+  function filterAndSort() {
     var list = TESTS.slice();
     if (state.category !== 'all') list = list.filter(function(t) { return t.category === state.category; });
-    if (state.subcat !== 'all' && state.category === 'knowledge') list = list.filter(function(t) { return t.subcat === state.subcat; });
-    if (state.search) {
-      var q = norm(state.search);
+    if (state.search.trim()) {
+      var s = state.search.trim().toLowerCase();
       list = list.filter(function(t) {
-        if (fuzzyMatch(t.title, q)) return true;
-        if (fuzzyMatch(t.desc, q)) return true;
-        var terms = expandQuery(q);
-        for (var i = 0; i < terms.length; i++) {
-          if (terms[i] === q) continue;
-          if (norm(t.title).indexOf(terms[i]) !== -1) return true;
-          if (norm(t.desc).indexOf(terms[i]) !== -1) return true;
-        }
-        return false;
+        return t.title.toLowerCase().indexOf(s) !== -1 || t.desc.toLowerCase().indexOf(s) !== -1;
       });
     }
-    if (state.time === 'fast') list = list.filter(function(t) { return t.time <= 10; });
-    if (state.time === 'long') list = list.filter(function(t) { return t.time >= 15; });
-    if (state.difficulty !== 'all') list = list.filter(function(t) { return t.difficulty === state.difficulty; });
-
-    if (state.sort === 'popular') list.sort(function(a, b) { var aH = a.badges && a.badges.indexOf('hit') !== -1 ? 1 : 0; var bH = b.badges && b.badges.indexOf('hit') !== -1 ? 1 : 0; return bH - aH; });
-    else if (state.sort === 'new') list.sort(function(a, b) { var aN = a.badges && a.badges.indexOf('new') !== -1 ? 1 : 0; var bN = b.badges && b.badges.indexOf('new') !== -1 ? 1 : 0; return bN - aN; });
-    else if (state.sort === 'time') list.sort(function(a, b) { return a.time - b.time; });
-    else if (state.sort === 'alpha') list.sort(function(a, b) { return a.title.localeCompare(b.title, 'ru'); });
-
+    list.sort(function(a, b) {
+      if (state.sort === 'popular') return (b.popular || 0) - (a.popular || 0);
+      if (state.sort === 'new') return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
+      if (state.sort === 'alpha') return a.title.localeCompare(b.title, 'ru');
+      if (state.sort === 'time') return (a.time || 0) - (b.time || 0);
+      return 0;
+    });
     return list;
   }
 
-  /* ═════════ КАРТОЧКИ ═════════ */
-  var cardsGrid = document.getElementById('cardsGrid');
-  var cardsTitle = document.getElementById('cardsTitle');
-  var cardsCount = document.getElementById('cardsCount');
-  var emptyState = document.getElementById('emptyState');
-  var catalogCount = document.getElementById('catalogCount');
+  function renderGrid() {
+    var list = filterAndSort();
+    countEl.innerHTML = list.length === 0 ? '' : 'Найдено тестов: <b>' + list.length + '</b>';
 
-  function difficultyLabel(d) { if (d === 'easy') return 'Лёгкий'; if (d === 'medium') return 'Средний'; if (d === 'hard') return 'Сложный'; return ''; }
-
-  function badgeHtml(b) {
-    var map = { hit: { label: '🔥 Хит', cls: 'hit' }, new: { label: '✨ Новинка', cls: 'new' }, fast: { label: '⚡ Быстрый', cls: 'fast' }, hard: { label: '🎚 Сложный', cls: 'hard' } };
-    if (!map[b]) return '';
-    return '<span class="badge ' + map[b].cls + '">' + map[b].label + '</span>';
-  }
-
-  function renderTests() {
-    var list = getFilteredTests();
-
-    if (state.category === 'all') cardsTitle.textContent = state.search ? 'Результаты поиска' : 'Все тесты';
-    else {
-      cardsTitle.textContent = getCategoryName(state.category);
-      if (state.subcat !== 'all' && state.category === 'knowledge') cardsTitle.textContent += ' · ' + getSubcatName('knowledge', state.subcat);
+    if (list.length === 0) {
+      grid.innerHTML = '<div class="catalog-empty" style="grid-column: 1 / -1;">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>' +
+        '<h3>Ничего не найдено</h3>' +
+        '<p>Попробуй изменить запрос или выбрать другую категорию.</p>' +
+        '</div>';
+      return;
     }
-    cardsCount.textContent = list.length + ' ' + plural(list.length, ['тест', 'теста', 'тестов']);
-
-    if (list.length === 0) { cardsGrid.innerHTML = ''; emptyState.classList.add('show'); return; }
-    emptyState.classList.remove('show');
 
     var html = '';
     list.forEach(function(t) {
-      var badges = (t.badges || []).map(badgeHtml).join('');
-      var isDisclaimer = !!t.disclaimer;
-      html += '<div class="test-card' + (isDisclaimer ? ' disclaimer-card' : '') + '">';
-      if (badges) html += '<div class="test-card-badges">' + badges + '</div>';
-      html +=   '<div class="test-card-emoji">' + t.emoji + '</div>';
-      html +=   '<h3 class="test-card-title">' + escapeHtml(t.title) + '</h3>';
-      html +=   '<p class="test-card-desc">' + escapeHtml(t.desc) + '</p>';
-      if (isDisclaimer) html += '<div class="test-card-disclaimer">⚠️ ' + escapeHtml(t.disclaimer) + '</div>';
+      var badge = t.isNew ? '<span class="test-card-badge">Новинка</span>' : '';
+      html += '<a href="' + t.url + '" class="test-card">';
+      html +=   badge;
+      html +=   '<div class="test-card-head"><div class="test-card-icon">' + getCatIcon(t.category) + '</div></div>';
+      html +=   '<span class="test-card-cat">' + getCatName(t.category) + '</span>';
+      html +=   '<h3>' + t.title + '</h3>';
+      html +=   '<p>' + t.desc + '</p>';
       html +=   '<div class="test-card-meta">';
       html +=     '<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>' + t.time + ' мин</span>';
-      html +=     '<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7 9 9.7 3 15.7"/></svg>' + difficultyLabel(t.difficulty) + '</span>';
+      html +=     '<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11H3v10h6V11z"/><path d="M21 3h-6v10h6V3z"/><path d="M9 7H3v2h6V7z"/><path d="M21 15h-6v2h6v-2z"/></svg>' + t.questions + ' вопросов</span>';
       html +=   '</div>';
-      html +=   '<a href="' + t.href + '" class="test-card-btn">Пройти тест';
-      html +=     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
-      html +=   '</a>';
-      html += '</div>';
+      html += '</a>';
     });
-    cardsGrid.innerHTML = html;
+    grid.innerHTML = html;
   }
 
-  /* ═════════ ПОИСК ═════════ */
-  var searchInput = document.getElementById('searchInput');
-  var searchClear = document.getElementById('searchClear');
-  var searchHints = document.getElementById('searchHints');
-  var hintsTimer = null;
+  searchInput.addEventListener('input', function() { state.search = searchInput.value; renderGrid(); });
+  sortSelect.addEventListener('change', function() { state.sort = sortSelect.value; renderGrid(); });
 
-  function highlightMatch(text, query) {
-    var q = norm(query);
-    if (!q) return escapeHtml(text);
-    var idx = norm(text).indexOf(q);
-    if (idx === -1) return escapeHtml(text);
-    return escapeHtml(text.slice(0, idx)) + '<mark>' + escapeHtml(text.slice(idx, idx + q.length)) + '</mark>' + escapeHtml(text.slice(idx + q.length));
-  }
-
-  function renderHints(query) {
-    var q = norm(query);
-    if (!q || q.length < 2) { searchHints.classList.remove('show'); searchHints.innerHTML = ''; return; }
-    var matches = TESTS
-      .map(function(t) { return { test: t, score: matchScore(t, q) }; })
-      .filter(function(x) { return x.score > 0; })
-      .sort(function(a, b) { return b.score - a.score; })
-      .slice(0, 7);
-
-    var html = '';
-    if (matches.length === 0) html += '<div class="search-hint-empty">Ничего не нашлось 😔<br>Попробуй другое слово</div>';
-    else {
-      html += '<div class="search-hints-label">Найденные тесты</div>';
-      matches.forEach(function(m) {
-        html += '<button type="button" class="search-hint-item" data-test-id="' + m.test.id + '">';
-        html +=   '<div class="search-hint-emoji">' + m.test.emoji + '</div>';
-        html +=   '<div class="search-hint-text">';
-        html +=     '<div class="search-hint-title">' + highlightMatch(m.test.title, q) + '</div>';
-        html +=     '<div class="search-hint-cat">' + getCategoryName(m.test.category) + '</div>';
-        html +=   '</div>';
-        html += '</button>';
-      });
-    }
-    searchHints.innerHTML = html;
-    searchHints.classList.add('show');
-    searchHints.querySelectorAll('.search-hint-item').forEach(function(item) {
-      item.addEventListener('click', function() {
-        var id = item.dataset.testId;
-        var test = TESTS.find(function(t) { return t.id === id; });
-        if (test) window.location.href = test.href;
-      });
-    });
-  }
-
-  searchInput.addEventListener('input', function() {
-    state.search = searchInput.value;
-    searchClear.classList.toggle('show', !!state.search);
-    clearTimeout(hintsTimer);
-    hintsTimer = setTimeout(function() { renderHints(state.search); renderTests(); }, 120);
-  });
-  searchInput.addEventListener('focus', function() { if (state.search.length >= 2) renderHints(state.search); });
-  document.addEventListener('click', function(e) {
-    if (!searchHints.contains(e.target) && e.target !== searchInput) searchHints.classList.remove('show');
-  });
-  searchClear.addEventListener('click', function() {
-    searchInput.value = ''; state.search = '';
-    searchClear.classList.remove('show'); searchHints.classList.remove('show');
-    renderTests();
-  });
-
-  document.getElementById('randomBtn').addEventListener('click', function() {
-    var list = getFilteredTests();
-    if (list.length === 0) list = TESTS;
-    var t = list[Math.floor(Math.random() * list.length)];
-    window.location.href = t.href;
-  });
-
-  document.querySelectorAll('.collection-card').forEach(function(card) {
-    card.addEventListener('click', function(e) {
-      e.preventDefault();
-      var type = card.dataset.collection;
-      if (type === 'popular') { state = { category: 'all', subcat: 'all', search: '', sort: 'popular', time: 'all', difficulty: 'all' }; }
-      else if (type === 'newbie') { state = { category: 'all', subcat: 'all', search: '', sort: 'time', time: 'fast', difficulty: 'all' }; }
-      else if (type === 'deep') { state = { category: 'psychology', subcat: 'all', search: '', sort: 'popular', time: 'all', difficulty: 'all' }; }
-      searchInput.value = ''; searchClear.classList.remove('show');
-      updateSelectsFromState();
-      renderCategories(); renderSubcategories(); renderTests();
-      document.querySelector('.cards-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
-
-  document.getElementById('resetFiltersBtn').addEventListener('click', function() {
-    state = { category: 'all', subcat: 'all', search: '', sort: 'popular', time: 'all', difficulty: 'all' };
-    searchInput.value = ''; searchClear.classList.remove('show');
-    updateSelectsFromState();
-    renderCategories(); renderSubcategories(); renderTests();
-  });
-
-  function updateSelectsFromState() {
-    var labelMaps = { sort: SORT_LABELS, time: TIME_LABELS, difficulty: DIFF_LABELS };
-    document.querySelectorAll('.select-wrap').forEach(function(wrap) {
-      var key = wrap.dataset.select;
-      var valueEl = wrap.querySelector('.select-value');
-      var dropdown = wrap.querySelector('.select-dropdown');
-      valueEl.textContent = labelMaps[key][state[key]];
-      dropdown.querySelectorAll('.select-option').forEach(function(o) {
-        o.classList.toggle('active', o.dataset.value === state[key]);
-      });
-    });
-  }
-
-  /* ═════════ КНОПКА «КАК ПОПАСТЬ В РЕЙТИНГ» ═════════ */
-  var ratingHowBtn = document.getElementById('ratingHowBtn');
-  var ratingHowBody = document.getElementById('ratingHowBody');
-  if (ratingHowBtn && ratingHowBody) {
-    ratingHowBtn.addEventListener('click', function() {
-      var isOpen = ratingHowBody.classList.toggle('open');
-      ratingHowBtn.classList.toggle('open', isOpen);
-    });
-  }
-
-  /* ═════════ КНОПКА «СМОТРЕТЬ ВЕСЬ РЕЙТИНГ» ═════════ */
-  var topToggleBtn = document.getElementById('topToggleBtn');
-  var topToggleText = document.getElementById('topToggleText');
-  var topList = document.getElementById('topList');
-  if (topToggleBtn && topList) {
-    topToggleBtn.addEventListener('click', function() {
-      var isOpen = topList.classList.toggle('open');
-      topToggleBtn.classList.toggle('open', isOpen);
-      topToggleText.textContent = isOpen ? 'Свернуть рейтинг' : 'Смотреть весь рейтинг';
-    });
-  }
-
-  catalogCount.textContent = TESTS.length + ' ' + plural(TESTS.length, ['тест', 'теста', 'тестов']);
-  renderCategories();
-  renderSubcategories();
-  renderTests();
+  renderChips();
+  renderGrid();
 })();
 </script>
 
-<!-- ═════════ АВТОРИЗАЦИЯ ═════════ -->
 <script>
 (function() {
-  if (!window.supabase) {
-    console.error('⚠️ Supabase SDK не загрузился');
-    var b = document.getElementById('openAuthBtn');
-    if (b) b.addEventListener('click', function(e){
-      e.preventDefault();
-      alert('Авторизация временно недоступна. Проверьте интернет и обновите страницу.');
-    });
-    return;
-  }
-
-  var SUPABASE_URL = 'https://cszvilntdxbaryiqtxsk.supabase.co';
-  var SUPABASE_KEY = 'sb_publishable_CLkaXW763H_rrgAoibZ_NA_JckeKwZm';
-  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  var SESSION_KEY = 'mindtest_user';
-  var HOME_URL = './';
-
+  if (!window.supabase) return;
+  var sb = window.supabase.createClient(
+    'https://cszvilntdxbaryiqtxsk.supabase.co',
+    'sb_publishable_CLkaXW763H_rrgAoibZ_NA_JckeKwZm'
+  );
   var overlay = document.getElementById('authModalOverlay');
   var closeM = document.getElementById('authModalClose');
   var tabsBox = document.getElementById('authModalTabs');
@@ -1378,7 +541,6 @@
   var mfooter = document.getElementById('mm-footer');
   var mfooterText = document.getElementById('mm-footer-text');
   var mfooterLink = document.getElementById('mm-footer-link');
-
   var pendingUser = { username: '', email: '', password: '' };
   var resetEmail = '';
   var resendTimer = null, resendResetTimer = null;
@@ -1397,8 +559,6 @@
     if (msg.indexOf('rate limit') !== -1 || msg.indexOf('too many') !== -1) return 'Слишком часто. Подождите';
     return msg;
   }
-
-  function goHome() { window.location.href = HOME_URL; }
 
   function openModal() { overlay.classList.add('open'); document.body.style.overflow = 'hidden'; showMform('login'); }
   function closeModal() { overlay.classList.remove('open'); document.body.style.overflow = ''; }
@@ -1427,15 +587,8 @@
     if (isTab) {
       tabsBox.setAttribute('data-active', name);
       tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.tab === name); });
-      if (name === 'login') {
-        mfooterText.textContent = 'Нет аккаунта?';
-        mfooterLink.textContent = 'Зарегистрироваться';
-        mfooterLink.setAttribute('data-switch', 'register');
-      } else {
-        mfooterText.textContent = 'Уже есть аккаунт?';
-        mfooterLink.textContent = 'Войти';
-        mfooterLink.setAttribute('data-switch', 'login');
-      }
+      if (name === 'login') { mfooterText.textContent = 'Нет аккаунта?'; mfooterLink.textContent = 'Зарегистрироваться'; mfooterLink.setAttribute('data-switch', 'register'); }
+      else { mfooterText.textContent = 'Уже есть аккаунт?'; mfooterLink.textContent = 'Войти'; mfooterLink.setAttribute('data-switch', 'login'); }
     }
   }
   tabs.forEach(function(t){ t.addEventListener('click', function(){ clearAlerts(); showMform(t.dataset.tab); }); });
@@ -1448,8 +601,7 @@
 
   var loginBtn = document.getElementById('mm-login-btn');
   mforms.login.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    clearAlerts();
+    e.preventDefault(); clearAlerts();
     var fd = new FormData(mforms.login);
     var emailIn = mforms.login.querySelector('input[name="email"]');
     var passIn = mforms.login.querySelector('input[name="password"]');
@@ -1459,16 +611,15 @@
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { markError(emailIn); hasErr = true; }
     if (!password) { markError(passIn); hasErr = true; }
     if (hasErr) return;
-
     loginBtn.disabled = true; loginBtn.textContent = 'Проверяем…';
     try {
       var res = await sb.auth.signInWithPassword({ email: email, password: password });
       if (res.error) throw new Error(translateError(res.error.message));
       var u = res.data.user;
       var user = { email: u.email, username: (u.user_metadata && u.user_metadata.username) || u.email };
-      try { localStorage.setItem(SESSION_KEY, JSON.stringify(user)); localStorage.removeItem('mindtest_is_guest'); } catch(e){}
+      try { localStorage.setItem('mindtest_user', JSON.stringify(user)); localStorage.removeItem('mindtest_is_guest'); } catch(e){}
       loginBtn.textContent = '✓ Успех!';
-      setTimeout(goHome, 600);
+      setTimeout(function(){ window.location.href = './'; }, 600);
     } catch (err2) {
       markError(passIn); markError(emailIn);
       loginBtn.disabled = false; loginBtn.textContent = 'Войти';
@@ -1481,9 +632,7 @@
   termsCb.addEventListener('change', function(){ if (termsCb.checked) termsLb.classList.remove('mt-error'); });
 
   mforms.register.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    clearAlerts();
-    termsLb.classList.remove('mt-error');
+    e.preventDefault(); clearAlerts(); termsLb.classList.remove('mt-error');
     var fd = new FormData(mforms.register);
     var userIn = mforms.register.querySelector('input[name="username"]');
     var emailIn = mforms.register.querySelector('input[name="email"]');
@@ -1497,7 +646,6 @@
     if (!password || password.length < 6) { markError(passIn); hasErr = true; }
     if (!termsCb.checked) { termsLb.classList.add('mt-error'); hasErr = true; }
     if (hasErr) return;
-
     pendingUser = { username: username, email: email, password: password };
     regBtn.disabled = true; regBtn.textContent = 'Отправляем код…';
     try {
@@ -1507,8 +655,7 @@
       if (d && d.user && Array.isArray(d.user.identities) && d.user.identities.length === 0) {
         var loginEmailIn = mforms.login.querySelector('input[name="email"]');
         var loginPassIn = mforms.login.querySelector('input[name="password"]');
-        loginEmailIn.value = email;
-        loginPassIn.value = '';
+        loginEmailIn.value = email; loginPassIn.value = '';
         showMform('login');
         var la = document.getElementById('mm-login-alert');
         la.className = 'mt-form-alert show info';
@@ -1518,16 +665,11 @@
         return;
       }
       document.getElementById('mm-code-email').textContent = email;
-      clearMCode();
-      document.getElementById('mm-code-status').textContent = '';
-      showMform('code');
-      startMResend();
+      clearMCode(); document.getElementById('mm-code-status').textContent = '';
+      showMform('code'); startMResend();
       setTimeout(function(){ document.querySelector('[data-mm-code]').focus(); }, 100);
-    } catch (err2) {
-      markError(emailIn);
-    } finally {
-      regBtn.disabled = false; regBtn.textContent = 'Создать аккаунт';
-    }
+    } catch (err2) { markError(emailIn); }
+    finally { regBtn.disabled = false; regBtn.textContent = 'Создать аккаунт'; }
   });
 
   var mCodeInputs = document.querySelectorAll('[data-mm-code]');
@@ -1563,16 +705,15 @@
       var res3 = await sb.auth.verifyOtp({ email: pendingUser.email, token: entered, type: 'signup' });
       if (res3.error) throw new Error(translateError(res3.error.message));
       var user = { email: pendingUser.email, username: pendingUser.username };
-      try { localStorage.setItem(SESSION_KEY, JSON.stringify(user)); localStorage.removeItem('mindtest_is_guest'); } catch(e){}
+      try { localStorage.setItem('mindtest_user', JSON.stringify(user)); localStorage.removeItem('mindtest_is_guest'); } catch(e){}
       mCodeStatus.textContent = '✓ Email подтверждён!';
       mCodeStatus.className = 'mt-mcode-status success';
       mCodeBtn.textContent = '✓ Успех!';
-      setTimeout(goHome, 900);
+      setTimeout(function(){ window.location.href = './'; }, 900);
     } catch (err2) {
       mCodeStatus.textContent = err2.message;
       mCodeStatus.className = 'mt-mcode-status error';
-      clearMCode();
-      mCodeInputs[0].focus();
+      clearMCode(); mCodeInputs[0].focus();
       mCodeBtn.disabled = false; mCodeBtn.textContent = 'Подтвердить';
     }
   });
@@ -1624,14 +765,10 @@
       document.querySelectorAll('[data-mm-reset]').forEach(function(i){ i.value=''; i.classList.remove('filled'); });
       document.getElementById('mm-reset-status').textContent = '';
       mforms.reset.reset();
-      showMform('reset');
-      startMResetTimer();
+      showMform('reset'); startMResetTimer();
       setTimeout(function(){ document.querySelector('[data-mm-reset]').focus(); }, 100);
-    } catch (err2) {
-      markError(emailIn);
-    } finally {
-      mForgotBtn.disabled = false; mForgotBtn.textContent = 'Отправить код';
-    }
+    } catch (err2) { markError(emailIn); }
+    finally { mForgotBtn.disabled = false; mForgotBtn.textContent = 'Отправить код'; }
   });
 
   var mResetInputs = document.querySelectorAll('[data-mm-reset]');
@@ -1701,26 +838,5 @@
   document.getElementById('mm-back-to-forgot').addEventListener('click', function(e){ e.preventDefault(); showMform('forgot'); });
 })();
 </script>
-
-<!-- ═════════ ПОДДЕРЖКА И БУРГЕР ═════════ -->
-<script>
-(function() {
-  var fab = document.getElementById('supportFab');
-  var popup = document.getElementById('supportPopup');
-  var closeBtn = document.getElementById('supportClose');
-  fab.addEventListener('click', function(e) { e.stopPropagation(); popup.classList.toggle('open'); });
-  closeBtn.addEventListener('click', function() { popup.classList.remove('open'); });
-  document.addEventListener('click', function(e) {
-    if (!popup.contains(e.target) && e.target !== fab && !fab.contains(e.target)) popup.classList.remove('open');
-  });
-  document.getElementById('supportGoLink').addEventListener('click', function() { popup.classList.remove('open'); });
-
-  var burger = document.getElementById('burger');
-  var nav = document.getElementById('mainNav');
-  burger.addEventListener('click', function() { nav.classList.toggle('open'); });
-})();
-</script>
-
-<script src="/header.js"></script>
 </body>
 </html>
