@@ -27,14 +27,12 @@
   .btn-back:hover { background: #f5efff; border-color: #7c2fd4; transform: translateY(-2px); }
   .btn-back svg { width: 16px; height: 16px; }
 
-  /* Контейнер страницы — пошире для экрана вопросов */
   .test-wrap { max-width: 900px; margin: 0 auto; padding: 32px 24px 80px; }
 
   /* INTRO */
   .intro-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 28px; overflow: hidden; box-shadow: 0 20px 50px rgba(93,43,158,.08); animation: q-in .5s cubic-bezier(.16,1,.3,1); max-width: 780px; margin: 0 auto; }
   @keyframes q-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* Картинка интро — пропорция под твою картинку 1312×1225 */
   .intro-hero {
     width: 100%;
     aspect-ratio: 1312 / 1225;
@@ -107,7 +105,6 @@
   /* RESULT */
   .result-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 28px; overflow: hidden; box-shadow: 0 25px 60px rgba(93,43,158,.12); animation: q-in .5s cubic-bezier(.16,1,.3,1); max-width: 780px; margin: 0 auto; }
 
-  /* Картинка результата — пропорция под твою картинку 1110×1137 */
   .result-hero {
     width: 100%;
     aspect-ratio: 1110 / 1137;
@@ -142,7 +139,6 @@
   .result-desc { font-size: 16px; color: #4b3b63; line-height: 1.8; margin-bottom: 40px; }
   .result-desc p + p { margin-top: 14px; }
 
-  /* Блок с радаром и полосками — больше места радару */
   .result-chart { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: center; padding: 36px 26px; background: #faf7ff; border: 2px solid #f0e8fb; border-radius: 22px; margin-bottom: 36px; }
   .result-radar { display: flex; align-items: center; justify-content: center; }
   .result-radar svg { width: 100%; max-width: 400px; height: auto; display: block; }
@@ -158,6 +154,17 @@
   .result-bar-side.lft { background: linear-gradient(90deg,#7c2fd4,#a855f7); }
   .result-bar-side.rgt { background: linear-gradient(90deg,#c9a9f0,#e2d4fa); }
   .result-bar-percent { font-size: 12px; color: #a898c2; font-weight: 700; margin-top: 4px; text-align: right; }
+
+  /* ═════════ ЗНАМЕНИТОСТИ ═════════ */
+  .result-famous { margin-bottom: 36px; }
+  .result-famous-title { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 800; color: #2e1a4d; margin-bottom: 20px; letter-spacing: -.3px; }
+  .result-famous-title svg { width: 22px; height: 22px; color: #a855f7; }
+  .result-famous-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .result-famous-card { background: #faf7ff; border: 2px solid #f0e8fb; border-radius: 16px; padding: 22px 16px 18px; text-align: center; transition: all .2s; }
+  .result-famous-card:hover { border-color: #c9a9f0; transform: translateY(-3px); box-shadow: 0 10px 24px rgba(93,43,158,.08); }
+  .result-famous-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #7c2fd4, #a855f7); color: #fff; font-size: 22px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; text-transform: uppercase; box-shadow: 0 6px 16px rgba(124, 47, 212, 0.25); }
+  .result-famous-name { font-size: 14px; font-weight: 800; color: #2e1a4d; margin-bottom: 4px; line-height: 1.3; }
+  .result-famous-note { font-size: 12px; color: #7e6b94; line-height: 1.4; }
 
   .result-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .btn-res { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 17px 22px; border-radius: 14px; font-size: 15px; font-weight: 700; transition: all .2s; border: 2px solid transparent; }
@@ -206,6 +213,11 @@
     .result-actions { grid-template-columns: 1fr; }
     .premium-rec { padding: 28px 22px; border-radius: 20px; }
     .result-type-big { font-size: 64px; }
+    .result-famous-grid { grid-template-columns: 1fr; gap: 10px; }
+    .result-famous-card { display: flex; align-items: center; gap: 14px; text-align: left; padding: 16px; }
+    .result-famous-avatar { margin: 0; flex-shrink: 0; width: 46px; height: 46px; font-size: 18px; }
+    .result-famous-title { font-size: 16px; margin-bottom: 14px; }
+    .result-famous-title svg { width: 20px; height: 20px; }
   }
   @media (max-width: 480px) {
     .q-num { font-size: 11px; padding: 4px 10px; }
@@ -502,6 +514,28 @@
     });
     html +=     '</div>';
     html +=   '</div>';
+
+    /* ═════════ БЛОК ЗНАМЕНИТОСТЕЙ ═════════ */
+    if (data.famous && data.famous.length) {
+      html +=   '<div class="result-famous">';
+      html +=     '<div class="result-famous-title">';
+      html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+      html +=       'Известные представители типа';
+      html +=     '</div>';
+      html +=     '<div class="result-famous-grid">';
+      data.famous.forEach(function(person) {
+        var letter = (person.name || '?').charAt(0).toUpperCase();
+        html += '<div class="result-famous-card">';
+        html +=   '<div class="result-famous-avatar">' + escapeHtml(letter) + '</div>';
+        html +=   '<div>';
+        html +=     '<div class="result-famous-name">' + escapeHtml(person.name) + '</div>';
+        html +=     '<div class="result-famous-note">' + escapeHtml(person.note) + '</div>';
+        html +=   '</div>';
+        html += '</div>';
+      });
+      html +=     '</div>';
+      html +=   '</div>';
+    }
 
     html +=   '<div class="result-actions">';
     html +=     '<button type="button" class="btn-res primary" id="againBtn">';
