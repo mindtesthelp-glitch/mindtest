@@ -33,8 +33,29 @@
   .intro-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 28px; overflow: hidden; box-shadow: 0 20px 50px rgba(93,43,158,.08); animation: q-in .5s cubic-bezier(.16,1,.3,1); }
   @keyframes q-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
-  .intro-hero { width: 100%; aspect-ratio: 16 / 9; max-height: 460px; background: linear-gradient(135deg, #2a1550, #4b1e8c); display: flex; align-items: center; justify-content: center; color: #fff; position: relative; overflow: hidden; }
-  .intro-hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(168,85,247,.45), transparent 70%); border-radius: 50%; pointer-events: none; z-index: 1; }
+  /* Квадратная картинка — aspect-ratio 1:1 */
+  .intro-hero {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-height: 620px;
+    background: linear-gradient(135deg, #2a1550, #4b1e8c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .intro-hero::before {
+    content: '';
+    position: absolute;
+    top: -40%; right: -20%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(168,85,247,.45), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+  }
   .intro-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; z-index: 2; }
   .intro-hero-placeholder { position: relative; z-index: 2; text-align: center; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
   .intro-hero-placeholder svg { width: 64px; height: 64px; opacity: .5; }
@@ -85,8 +106,30 @@
 
   /* RESULT */
   .result-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 28px; overflow: hidden; box-shadow: 0 25px 60px rgba(93,43,158,.12); animation: q-in .5s cubic-bezier(.16,1,.3,1); }
-  .result-hero { width: 100%; aspect-ratio: 16 / 9; max-height: 460px; background: linear-gradient(135deg, #2a1550, #4b1e8c); display: flex; align-items: center; justify-content: center; color: #fff; position: relative; overflow: hidden; }
-  .result-hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(168,85,247,.45), transparent 70%); border-radius: 50%; pointer-events: none; z-index: 1; }
+
+  /* Квадратная картинка — aspect-ratio 1:1 */
+  .result-hero {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-height: 620px;
+    background: linear-gradient(135deg, #2a1550, #4b1e8c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .result-hero::before {
+    content: '';
+    position: absolute;
+    top: -40%; right: -20%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(168,85,247,.45), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+  }
   .result-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; z-index: 2; }
   .result-hero-placeholder { position: relative; z-index: 2; text-align: center; padding: 20px; }
   .result-type-big { font-size: 84px; font-weight: 900; letter-spacing: -3px; background: linear-gradient(135deg,#e9d5ff,#a855f7); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
@@ -151,7 +194,7 @@
     .btn-back span { display: none; }
     .btn-back { padding: 9px 12px; }
     .test-wrap { padding: 22px 16px 60px; }
-    .intro-hero, .result-hero { max-height: 280px; }
+    .intro-hero, .result-hero { max-height: 480px; }
     .intro-body { padding: 28px 22px 28px; }
     .q-card { padding: 28px 20px 24px; border-radius: 20px; }
     .q-title { font-size: 19px; margin-bottom: 22px; }
@@ -166,7 +209,6 @@
     .result-type-big { font-size: 64px; }
   }
   @media (max-width: 480px) {
-    .intro-hero { aspect-ratio: 4 / 3; }
     .q-num { font-size: 11px; padding: 4px 10px; }
     .q-title { font-size: 17px; }
     .q-answer { font-size: 13.5px; padding: 14px 14px; }
@@ -185,7 +227,7 @@
     <a href="./" class="logo">Mind<span>Test</span></a>
     <div class="header-actions">
       <a href="catalog.html" class="btn btn-back">
-        svg += '<svg viewBox="-80 -60 520 500" xmlns="http://www.w3.org/2000/svg">';
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         <span>К тестам</span>
       </a>
     </div>
@@ -579,7 +621,7 @@
     });
 
     var svg = '';
-    svg += '<svg viewBox="0 0 ' + size + ' ' + size + '" xmlns="http://www.w3.org/2000/svg">';
+    svg += '<svg viewBox="-80 -60 520 500" xmlns="http://www.w3.org/2000/svg">';
     svg +=   gridLines;
     svg +=   axesLines;
     svg +=   '<polygon points="' + polyPoints + '" fill="rgba(168,85,247,.35)" stroke="#7c2fd4" stroke-width="2.5" stroke-linejoin="round"/>';
