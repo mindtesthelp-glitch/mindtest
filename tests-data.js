@@ -53,7 +53,7 @@ const TESTS = [
     type: 'result',
     age: '12+',
     badges: ['hit'],
-    href: '#'
+    href: 'test-mbti.html'
   },
   {
     id: 'hard-character',
