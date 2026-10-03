@@ -141,8 +141,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 12px;
   }
-  .ad-banner-inner::before { content: '📢'; font-size: 28px; margin-right: 12px; }
+  .ad-banner-inner svg { width: 28px; height: 28px; }
 
   /* ═════════ HERO КАТАЛОГА ═════════ */
   .catalog-hero { padding: 40px 48px 0; }
@@ -151,10 +152,12 @@
   .catalog-hero-title h1 em { font-style: normal; background: linear-gradient(135deg,#7c2fd4,#a855f7); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
   .catalog-hero-title p { color: #7e6b94; font-size: 17px; max-width: 560px; }
   .catalog-hero-title .catalog-count { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 8px 16px; background: #f5efff; border-radius: 999px; color: #5d2b9e; font-size: 14px; font-weight: 700; }
+  .catalog-hero-title .catalog-count svg { width: 16px; height: 16px; }
 
   .rating-card { background: linear-gradient(135deg,#2a1550,#4b1e8c); border-radius: 22px; padding: 28px 26px; color: #fff; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
   .rating-card::before { content: ''; position: absolute; top: -40%; right: -30%; width: 260px; height: 260px; background: radial-gradient(circle, rgba(168,85,247,.45), transparent 70%); border-radius: 50%; pointer-events: none; }
-  .rating-icon { font-size: 34px; margin-bottom: 10px; position: relative; }
+  .rating-icon-box { width: 56px; height: 56px; border-radius: 14px; background: rgba(255,255,255,.12); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; position: relative; color: #fff; }
+  .rating-icon-box svg { width: 32px; height: 32px; }
   .rating-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; position: relative; }
   .rating-card p { font-size: 14px; color: #c4a9e8; line-height: 1.55; position: relative; }
 
@@ -162,8 +165,8 @@
   .top-section { padding: 40px 48px 0; }
   .top-inner { max-width: 1300px; margin: 0 auto; }
   .top-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 22px; flex-wrap: wrap; gap: 12px; }
-  .top-head h2 { font-size: clamp(22px, 2.5vw, 30px); font-weight: 800; letter-spacing: -.7px; }
-  .top-head h2 span { font-size: 24px; margin-right: 6px; }
+  .top-head h2 { font-size: clamp(22px, 2.5vw, 30px); font-weight: 800; letter-spacing: -.7px; display: flex; align-items: center; gap: 10px; }
+  .top-head h2 .top-head-icon { width: 32px; height: 32px; color: #7c2fd4; }
   .top-head p { font-size: 14px; color: #7e6b94; }
   .top-head .btn-all-top { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: #f5efff; color: #5d2b9e; border-radius: 12px; font-size: 14px; font-weight: 700; transition: all .2s; }
   .top-head .btn-all-top:hover { background: #ece3fa; }
@@ -174,40 +177,37 @@
   .podium-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px; }
   .podium-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 20px; padding: 26px 22px; text-align: center; position: relative; transition: all .25s; }
   .podium-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(93,43,158,.1); }
-  .podium-card.top-1 { border-color: #fbbf24; background: linear-gradient(180deg,#fffbeb,#fff); }
-  .podium-card.top-2 { border-color: #cbd5e1; background: linear-gradient(180deg,#f8fafc,#fff); }
-  .podium-card.top-3 { border-color: #d97706; background: linear-gradient(180deg,#fff7ed,#fff); }
-  .podium-medal { font-size: 40px; line-height: 1; margin-bottom: 10px; }
+  .podium-card.top-1 { border-color: #a855f7; background: linear-gradient(180deg,#f5efff,#fff); }
+  .podium-card.top-2 { border-color: #c9a9f0; background: linear-gradient(180deg,#faf7ff,#fff); }
+  .podium-card.top-3 { border-color: #d9c7f2; background: linear-gradient(180deg,#fdfbff,#fff); }
+  .podium-medal { width: 64px; height: 72px; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; }
+  .podium-medal svg { width: 100%; height: 100%; }
+  .podium-medal-gold { color: #7c2fd4; }
+  .podium-medal-silver { color: #a855f7; }
+  .podium-medal-bronze { color: #c9a9f0; }
   .podium-avatar { width: 62px; height: 62px; border-radius: 50%; margin: 0 auto 12px; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; font-weight: 800; font-size: 24px; display: flex; align-items: center; justify-content: center; text-transform: uppercase; box-shadow: 0 8px 20px rgba(124,47,212,.3); }
   .podium-name { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
   .podium-meta { font-size: 13px; color: #a898c2; margin-bottom: 10px; }
   .podium-score { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #f5efff; border-radius: 999px; font-size: 13px; font-weight: 800; color: #5d2b9e; }
   .podium-score svg { width: 14px; height: 14px; color: #fbbf24; }
 
-  /* Список 4–10 — скрыт по умолчанию */
-  .top-list {
-    background: #fff;
-    border: 2px solid #f0e8fb;
-    border-radius: 20px;
-    overflow: hidden;
-    display: none;
-  }
+  .top-list { background: #fff; border: 2px solid #f0e8fb; border-radius: 20px; overflow: hidden; display: none; }
   .top-list.open { display: block; animation: q-in .35s cubic-bezier(.16,1,.3,1); }
   @keyframes q-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  .top-list-head { display: grid; grid-template-columns: 60px 1fr 160px 120px; gap: 16px; padding: 14px 24px; background: #faf7ff; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: #a898c2; border-bottom: 1px solid #f0e8fb; }
-  .top-list-row { display: grid; grid-template-columns: 60px 1fr 160px 120px; gap: 16px; padding: 14px 24px; align-items: center; border-bottom: 1px solid #faf7ff; transition: background .15s; }
+  .top-list-head { display: grid; grid-template-columns: 60px 1fr 200px 120px; gap: 16px; padding: 14px 24px; background: #faf7ff; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: #a898c2; border-bottom: 1px solid #f0e8fb; }
+  .top-list-row { display: grid; grid-template-columns: 60px 1fr 200px 120px; gap: 16px; padding: 14px 24px; align-items: center; border-bottom: 1px solid #faf7ff; transition: background .15s; }
   .top-list-row:last-child { border-bottom: none; }
   .top-list-row:hover { background: #faf7ff; }
   .top-list-place { font-size: 15px; font-weight: 800; color: #7c2fd4; }
   .top-list-user { display: flex; align-items: center; gap: 12px; min-width: 0; }
   .top-list-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; font-weight: 800; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; text-transform: uppercase; }
   .top-list-name { font-size: 14px; font-weight: 700; color: #2e1a4d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .top-list-badges { display: flex; gap: 4px; flex-wrap: wrap; }
-  .top-mini-badge { font-size: 11px; padding: 3px 8px; border-radius: 999px; background: #f5efff; color: #7c2fd4; font-weight: 700; }
+  .top-list-badges { display: flex; gap: 5px; flex-wrap: wrap; }
+  .top-mini-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 3px 9px 3px 6px; border-radius: 999px; background: #f5efff; color: #7c2fd4; font-weight: 700; }
+  .top-mini-badge svg { width: 12px; height: 12px; }
   .top-list-score { font-size: 14px; font-weight: 800; color: #2e1a4d; text-align: right; }
 
-  /* Кнопка «Как попасть в рейтинг» + раскрывающийся блок */
   .rating-how-wrap { margin-top: 20px; text-align: center; }
   .rating-how-btn {
     display: inline-flex; align-items: center; gap: 10px;
@@ -237,7 +237,8 @@
   .rating-how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .rating-how-card { background: #faf7ff; border: 2px solid #f0e8fb; border-radius: 16px; padding: 22px 18px 18px; position: relative; text-align: center; }
   .rating-how-num { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; box-shadow: 0 4px 12px rgba(124,47,212,.3); }
-  .rating-how-emoji { font-size: 30px; margin: 4px 0 10px; }
+  .rating-how-icon { width: 44px; height: 44px; border-radius: 12px; background: #f5efff; color: #7c2fd4; display: flex; align-items: center; justify-content: center; margin: 4px auto 12px; }
+  .rating-how-icon svg { width: 22px; height: 22px; }
   .rating-how-card h4 { font-size: 15px; font-weight: 800; margin-bottom: 6px; }
   .rating-how-card p { font-size: 13px; color: #7e6b94; line-height: 1.5; }
 
@@ -245,11 +246,12 @@
   .collections-section { padding: 40px 48px 0; }
   .collections-inner { max-width: 1300px; margin: 0 auto; }
   .collections-title { font-size: 20px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-  .collections-title span { font-size: 22px; }
+  .collections-title .collections-title-icon { width: 26px; height: 26px; color: #7c2fd4; }
   .collections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .collection-card { background: linear-gradient(135deg,#f5efff,#ece3fa); border: 2px solid #f0e8fb; border-radius: 18px; padding: 22px 24px; display: flex; flex-direction: column; gap: 8px; transition: all .2s; position: relative; overflow: hidden; min-height: 140px; }
+  .collection-card { background: linear-gradient(135deg,#f5efff,#ece3fa); border: 2px solid #f0e8fb; border-radius: 18px; padding: 22px 24px; display: flex; flex-direction: column; gap: 8px; transition: all .2s; position: relative; overflow: hidden; min-height: 160px; }
   .collection-card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(93,43,158,.12); }
-  .collection-card .collection-emoji { font-size: 26px; }
+  .collection-icon { width: 44px; height: 44px; border-radius: 12px; background: #fff; color: #7c2fd4; display: flex; align-items: center; justify-content: center; }
+  .collection-icon svg { width: 24px; height: 24px; }
   .collection-card h3 { font-size: 16px; font-weight: 800; color: #2e1a4d; padding-right: 44px; }
   .collection-card p { font-size: 13px; color: #6b5b82; flex: 1; line-height: 1.5; padding-right: 44px; }
   .collection-card .collection-arrow { position: absolute; bottom: 18px; right: 20px; width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; display: flex; align-items: center; justify-content: center; }
@@ -262,10 +264,11 @@
   .cats-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; }
   .cats-row::-webkit-scrollbar { height: 6px; }
   .cats-row::-webkit-scrollbar-thumb { background: #ece3fa; border-radius: 3px; }
-  .cat-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 999px; background: #fff; border: 2px solid #ece3fa; font-size: 14px; font-weight: 700; color: #6b5b82; transition: all .2s; white-space: nowrap; flex-shrink: 0; }
+  .cat-btn { display: inline-flex; align-items: center; gap: 9px; padding: 11px 18px; border-radius: 999px; background: #fff; border: 2px solid #ece3fa; font-size: 14px; font-weight: 700; color: #6b5b82; transition: all .2s; white-space: nowrap; flex-shrink: 0; }
   .cat-btn:hover { border-color: #c9a9f0; color: #5d2b9e; }
   .cat-btn.active { background: linear-gradient(135deg,#7c2fd4,#a855f7); border-color: transparent; color: #fff; box-shadow: 0 6px 18px rgba(124,47,212,.3); }
-  .cat-btn .cat-emoji { font-size: 16px; }
+  .cat-btn .cat-icon { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; flex-shrink: 0; }
+  .cat-btn .cat-icon svg { width: 18px; height: 18px; display: block; }
 
   .subcats-row { display: none; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
   .subcats-row.show { display: flex; }
@@ -282,7 +285,8 @@
   .search-input::placeholder { color: #b3a4c9; }
   .search-input:focus { border-color: #a855f7; background: #fff; box-shadow: 0 0 0 5px rgba(168,85,247,.12); }
   .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #a855f7; pointer-events: none; }
-  .search-clear { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border-radius: 50%; background: #f0e8fb; color: #7c2fd4; display: none; align-items: center; justify-content: center; font-size: 16px; transition: all .2s; }
+  .search-clear { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border-radius: 50%; background: #f0e8fb; color: #7c2fd4; display: none; align-items: center; justify-content: center; transition: all .2s; }
+  .search-clear svg { width: 14px; height: 14px; }
   .search-clear:hover { background: #a855f7; color: #fff; }
   .search-clear.show { display: flex; }
 
@@ -294,7 +298,8 @@
   .search-hints-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; color: #a898c2; padding: 8px 12px 6px; }
   .search-hint-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; transition: background .15s; text-align: left; width: 100%; }
   .search-hint-item:hover { background: #f5efff; }
-  .search-hint-emoji { font-size: 20px; flex-shrink: 0; width: 34px; height: 34px; background: #f5efff; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .search-hint-icon { flex-shrink: 0; width: 34px; height: 34px; background: #f5efff; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #7c2fd4; }
+  .search-hint-icon svg { width: 18px; height: 18px; }
   .search-hint-text { flex: 1; min-width: 0; }
   .search-hint-title { font-size: 14px; font-weight: 600; color: #2e1a4d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .search-hint-cat { font-size: 12px; color: #a898c2; margin-top: 2px; }
@@ -366,13 +371,15 @@
   .test-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 20px; padding: 24px 22px 22px; display: flex; flex-direction: column; transition: all .25s; position: relative; overflow: hidden; }
   .test-card:hover { border-color: #c9a9f0; transform: translateY(-4px); box-shadow: 0 18px 40px rgba(93,43,158,.1); }
   .test-card-badges { position: absolute; top: 14px; right: 14px; display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; max-width: 60%; }
-  .badge { display: inline-flex; align-items: center; gap: 3px; padding: 4px 9px; border-radius: 999px; font-size: 10px; font-weight: 800; letter-spacing: .3px; text-transform: uppercase; white-space: nowrap; }
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 9px 4px 7px; border-radius: 999px; font-size: 10px; font-weight: 800; letter-spacing: .3px; text-transform: uppercase; white-space: nowrap; }
+  .badge svg { width: 11px; height: 11px; }
   .badge.hit { background: #fff1f2; color: #e0395a; }
   .badge.new { background: #ecfdf5; color: #059669; }
   .badge.fast { background: #fef3c7; color: #b45309; }
   .badge.hard { background: #ede9fe; color: #5b21b6; }
 
-  .test-card-emoji { font-size: 36px; line-height: 1; margin-bottom: 14px; display: inline-block; }
+  .test-card-icon { width: 54px; height: 54px; border-radius: 14px; background: linear-gradient(135deg,#f5efff,#ece3fa); color: #7c2fd4; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .test-card-icon svg { width: 28px; height: 28px; }
   .test-card-title { font-size: 16px; font-weight: 800; line-height: 1.3; color: #2e1a4d; margin-bottom: 8px; letter-spacing: -.2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 42px; }
   .test-card-desc { font-size: 13.5px; color: #7e6b94; line-height: 1.55; margin-bottom: 16px; flex: 1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .test-card-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; font-size: 12px; color: #a898c2; font-weight: 600; flex-wrap: wrap; }
@@ -382,11 +389,13 @@
   .test-card-btn:hover { transform: translateY(-2px); }
   .test-card-btn svg { width: 15px; height: 15px; }
   .test-card.disclaimer-card { border-color: #fde68a; }
-  .test-card-disclaimer { font-size: 11.5px; color: #92400e; background: #fef3c7; padding: 8px 10px; border-radius: 8px; margin-bottom: 12px; line-height: 1.45; }
+  .test-card-disclaimer { display: flex; gap: 8px; font-size: 11.5px; color: #92400e; background: #fef3c7; padding: 8px 10px; border-radius: 8px; margin-bottom: 12px; line-height: 1.45; }
+  .test-card-disclaimer svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px; }
 
   .empty-state { display: none; padding: 80px 20px; text-align: center; }
   .empty-state.show { display: block; }
-  .empty-state-emoji { font-size: 60px; margin-bottom: 16px; }
+  .empty-state-icon { width: 72px; height: 72px; margin: 0 auto 16px; color: #a855f7; opacity: .5; }
+  .empty-state-icon svg { width: 100%; height: 100%; }
   .empty-state h3 { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
   .empty-state p { font-size: 15px; color: #7e6b94; max-width: 400px; margin: 0 auto 20px; }
   .empty-state button { padding: 12px 24px; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; border-radius: 12px; font-size: 14px; font-weight: 700; box-shadow: 0 6px 18px rgba(124,47,212,.3); }
@@ -414,7 +423,7 @@
   /* ═════════ АДАПТИВ ═════════ */
   @media (max-width: 1100px) {
     .catalog-hero-inner { grid-template-columns: 1fr; }
-    .top-list-head, .top-list-row { grid-template-columns: 50px 1fr 140px 100px; }
+    .top-list-head, .top-list-row { grid-template-columns: 50px 1fr 160px 100px; }
   }
   @media (max-width: 900px) {
     .cards-grid { grid-template-columns: repeat(2, 1fr); }
@@ -437,7 +446,7 @@
 
     .ad-banner { padding: 16px 16px 0; }
     .ad-banner-inner { padding: 22px 18px; min-height: 90px; font-size: 13px; }
-    .ad-banner-inner::before { font-size: 22px; margin-right: 8px; }
+    .ad-banner-inner svg { width: 22px; height: 22px; }
 
     .catalog-hero { padding: 24px 16px 0; }
     .catalog-hero-title h1 { letter-spacing: -1px; }
@@ -540,7 +549,10 @@
 
 <!-- ═════════ БАННЕР РЕКЛАМЫ ═════════ -->
 <div class="ad-banner">
-  <div class="ad-banner-inner">Место для рекламного баннера</div>
+  <div class="ad-banner-inner">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+    <span>Место для рекламного баннера</span>
+  </div>
 </div>
 
 <!-- ═════════ HERO КАТАЛОГА ═════════ -->
@@ -550,12 +562,14 @@
       <h1>Каталог <em>тестов</em></h1>
       <p>Психология, знания, логика, интересы — выбери, что тебе по душе, и узнай о себе больше.</p>
       <div class="catalog-count">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
         <span id="catalogCount">0 тестов</span>
       </div>
     </div>
     <div class="rating-card">
-      <div class="rating-icon">🏆</div>
+      <div class="rating-icon-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+      </div>
       <h3>Рейтинг пользователей</h3>
       <p>Проходи тесты, получай награды и поднимайся в общем рейтинге MindTest.</p>
     </div>
@@ -567,7 +581,10 @@
   <div class="top-inner">
     <div class="top-head">
       <div>
-        <h2><span>🏆</span>Топ пользователей</h2>
+        <h2>
+          <svg class="top-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+          Топ пользователей
+        </h2>
         <p>Обновляется после каждого пройденного теста.</p>
       </div>
       <button type="button" class="btn-all-top" id="topToggleBtn">
@@ -576,10 +593,15 @@
       </button>
     </div>
 
-    <!-- Пьедестал — всегда виден -->
     <div class="podium-row">
       <div class="podium-card top-2">
-        <div class="podium-medal">🥈</div>
+        <div class="podium-medal podium-medal-silver">
+          <svg viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 4 L20 18 M32 4 L28 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="24" cy="34" r="15" fill="currentColor"/>
+            <text x="24" y="40.5" text-anchor="middle" font-size="18" font-weight="900" fill="#fff" font-family="Inter, sans-serif">2</text>
+          </svg>
+        </div>
         <div class="podium-avatar">М</div>
         <div class="podium-name">Мария</div>
         <div class="podium-meta">17 лет · 42 теста</div>
@@ -589,7 +611,13 @@
         </div>
       </div>
       <div class="podium-card top-1">
-        <div class="podium-medal">🥇</div>
+        <div class="podium-medal podium-medal-gold">
+          <svg viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 4 L20 18 M32 4 L28 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="24" cy="34" r="15" fill="currentColor"/>
+            <text x="24" y="40.5" text-anchor="middle" font-size="18" font-weight="900" fill="#fff" font-family="Inter, sans-serif">1</text>
+          </svg>
+        </div>
         <div class="podium-avatar">А</div>
         <div class="podium-name">Артём</div>
         <div class="podium-meta">18 лет · 51 тест</div>
@@ -599,7 +627,13 @@
         </div>
       </div>
       <div class="podium-card top-3">
-        <div class="podium-medal">🥉</div>
+        <div class="podium-medal podium-medal-bronze">
+          <svg viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 4 L20 18 M32 4 L28 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="24" cy="34" r="15" fill="currentColor"/>
+            <text x="24" y="40.5" text-anchor="middle" font-size="18" font-weight="900" fill="#fff" font-family="Inter, sans-serif">3</text>
+          </svg>
+        </div>
         <div class="podium-avatar">К</div>
         <div class="podium-name">Ксения</div>
         <div class="podium-meta">16 лет · 38 тестов</div>
@@ -610,7 +644,6 @@
       </div>
     </div>
 
-    <!-- Список 4–10 — скрыт до клика -->
     <div class="top-list" id="topList">
       <div class="top-list-head">
         <span>Место</span>
@@ -621,48 +654,62 @@
       <div class="top-list-row">
         <div class="top-list-place">4</div>
         <div class="top-list-user"><div class="top-list-avatar">Д</div><div class="top-list-name">Даша</div></div>
-        <div class="top-list-badges"><span class="top-mini-badge">🔥 Хит</span><span class="top-mini-badge">🧠 Эрудит</span></div>
+        <div class="top-list-badges">
+          <span class="top-mini-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>Хит</span>
+          <span class="top-mini-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>Эрудит</span>
+        </div>
         <div class="top-list-score">1 720</div>
       </div>
       <div class="top-list-row">
         <div class="top-list-place">5</div>
         <div class="top-list-user"><div class="top-list-avatar">Н</div><div class="top-list-name">Никита</div></div>
-        <div class="top-list-badges"><span class="top-mini-badge">⚡ Быстрый</span></div>
+        <div class="top-list-badges">
+          <span class="top-mini-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Быстрый</span>
+        </div>
         <div class="top-list-score">1 510</div>
       </div>
       <div class="top-list-row">
         <div class="top-list-place">6</div>
         <div class="top-list-user"><div class="top-list-avatar">С</div><div class="top-list-name">София</div></div>
-        <div class="top-list-badges"><span class="top-mini-badge">✨ Творец</span></div>
+        <div class="top-list-badges">
+          <span class="top-mini-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 15.09 8.26 22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Творец</span>
+        </div>
         <div class="top-list-score">1 380</div>
       </div>
       <div class="top-list-row">
         <div class="top-list-place">7</div>
         <div class="top-list-user"><div class="top-list-avatar">И</div><div class="top-list-name">Иван</div></div>
-        <div class="top-list-badges"><span class="top-mini-badge">🧩 Логик</span></div>
+        <div class="top-list-badges">
+          <span class="top-mini-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v6h6V3"/><path d="M9 21v-6h6v6"/></svg>Логик</span>
+        </div>
         <div class="top-list-score">1 240</div>
       </div>
       <div class="top-list-row">
         <div class="top-list-place">8</div>
         <div class="top-list-user"><div class="top-list-avatar">Л</div><div class="top-list-name">Лиза</div></div>
-        <div class="top-list-badges"><span class="top-mini-badge">💜 Оптимист</span></div>
+        <div class="top-list-badges">
+          <span class="top-mini-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Оптимист</span>
+        </div>
         <div class="top-list-score">1 120</div>
       </div>
       <div class="top-list-row">
         <div class="top-list-place">9</div>
         <div class="top-list-user"><div class="top-list-avatar">П</div><div class="top-list-name">Паша</div></div>
-        <div class="top-list-badges"><span class="top-mini-badge">📚 Знаток</span></div>
+        <div class="top-list-badges">
+          <span class="top-mini-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Знаток</span>
+        </div>
         <div class="top-list-score">980</div>
       </div>
       <div class="top-list-row">
         <div class="top-list-place">10</div>
         <div class="top-list-user"><div class="top-list-avatar">В</div><div class="top-list-name">Вера</div></div>
-        <div class="top-list-badges"><span class="top-mini-badge">🌱 Новичок</span></div>
+        <div class="top-list-badges">
+          <span class="top-mini-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>Новичок</span>
+        </div>
         <div class="top-list-score">860</div>
       </div>
     </div>
 
-    <!-- Кнопка «Как попасть в рейтинг» + раскрывающийся блок -->
     <div class="rating-how-wrap">
       <button type="button" class="rating-how-btn" id="ratingHowBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -675,19 +722,25 @@
         <div class="rating-how-grid">
           <div class="rating-how-card">
             <div class="rating-how-num">1</div>
-            <div class="rating-how-emoji">🎯</div>
+            <div class="rating-how-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
             <h4>Выбери тест</h4>
             <p>Найди интересную тему в каталоге — или доверься случаю.</p>
           </div>
           <div class="rating-how-card">
             <div class="rating-how-num">2</div>
-            <div class="rating-how-emoji">✅</div>
+            <div class="rating-how-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
             <h4>Пройди и получи результат</h4>
             <p>Отвечай честно — за каждый тест даются очки и награды.</p>
           </div>
           <div class="rating-how-card">
             <div class="rating-how-num">3</div>
-            <div class="rating-how-emoji">🏆</div>
+            <div class="rating-how-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            </div>
             <h4>Поднимайся в рейтинге</h4>
             <p>Чем больше тестов — тем выше ты в общем списке пользователей.</p>
           </div>
@@ -701,10 +754,15 @@
 <!-- ═════════ ПОДБОРКИ ═════════ -->
 <section class="collections-section">
   <div class="collections-inner">
-    <h2 class="collections-title"><span>🎁</span> Подборки для тебя</h2>
+    <h2 class="collections-title">
+      <svg class="collections-title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+      Подборки для тебя
+    </h2>
     <div class="collections-grid">
       <a href="#" class="collection-card" data-collection="popular">
-        <div class="collection-emoji">🔥</div>
+        <div class="collection-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+        </div>
         <h3>Популярное сегодня</h3>
         <p>Тесты, которые чаще всего проходят прямо сейчас.</p>
         <div class="collection-arrow">
@@ -712,7 +770,9 @@
         </div>
       </a>
       <a href="#" class="collection-card" data-collection="newbie">
-        <div class="collection-emoji">🌱</div>
+        <div class="collection-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+        </div>
         <h3>С чего начать</h3>
         <p>Короткие и понятные тесты для первого знакомства.</p>
         <div class="collection-arrow">
@@ -720,7 +780,9 @@
         </div>
       </a>
       <a href="#" class="collection-card" data-collection="deep">
-        <div class="collection-emoji">🧠</div>
+        <div class="collection-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+        </div>
         <h3>Для глубокого самопознания</h3>
         <p>Тесты, которые заставляют задуматься всерьёз.</p>
         <div class="collection-arrow">
@@ -745,7 +807,6 @@
   <div class="filters-inner">
     <div class="filters-row">
 
-      <!-- Сортировка -->
       <div class="select-wrap" data-select="sort">
         <button type="button" class="select-btn" data-toggle>
           <svg class="select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
@@ -760,7 +821,6 @@
         </div>
       </div>
 
-      <!-- Время -->
       <div class="select-wrap" data-select="time">
         <button type="button" class="select-btn" data-toggle>
           <svg class="select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -774,7 +834,6 @@
         </div>
       </div>
 
-      <!-- Сложность -->
       <div class="select-wrap" data-select="difficulty">
         <button type="button" class="select-btn" data-toggle>
           <svg class="select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7 9 9.7 3 15.7"/></svg>
@@ -800,7 +859,9 @@
       <div class="search-wrap">
         <svg class="search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         <input type="text" class="search-input" id="searchInput" placeholder="Найди тест: оптимист, MBTI, IQ, профессия..." autocomplete="off">
-        <button type="button" class="search-clear" id="searchClear" aria-label="Очистить">×</button>
+        <button type="button" class="search-clear" id="searchClear" aria-label="Очистить">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
         <div class="search-hints" id="searchHints"></div>
       </div>
       <button type="button" class="btn-random" id="randomBtn">
@@ -820,7 +881,9 @@
     </div>
     <div class="cards-grid" id="cardsGrid"></div>
     <div class="empty-state" id="emptyState">
-      <div class="empty-state-emoji">🔍</div>
+      <div class="empty-state-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      </div>
       <h3>Ничего не нашлось</h3>
       <p>Попробуй другой запрос или сбрось фильтры — возможно, тест ждёт тебя в другой категории.</p>
       <button type="button" id="resetFiltersBtn">Сбросить всё</button>
@@ -962,6 +1025,32 @@
 <!-- ═════════ КАТАЛОГ ═════════ -->
 <script>
 (function() {
+  /* ═════════ БЕЗОПАСНЫЕ ДАННЫЕ (fallback) ═════════ */
+  var CATEGORIES_SAFE = (typeof CATEGORIES !== 'undefined' && Array.isArray(CATEGORIES) && CATEGORIES.length)
+    ? CATEGORIES
+    : [
+        { id: 'all',        name: 'Все тесты' },
+        { id: 'psychology', name: 'Психология и характер' },
+        { id: 'interests',  name: 'Интересы и хобби' },
+        { id: 'talents',    name: 'Таланты и способности' },
+        { id: 'growth',     name: 'Развитие и цели' },
+        { id: 'knowledge',  name: 'Знания и эрудиция' },
+        { id: 'logic',      name: 'Логика и IQ' }
+      ];
+  var SUBCATEGORIES_SAFE = (typeof SUBCATEGORIES !== 'undefined' && SUBCATEGORIES) ? SUBCATEGORIES : {};
+  var TESTS_SAFE = (typeof TESTS !== 'undefined' && Array.isArray(TESTS)) ? TESTS : [];
+
+  /* ═════════ SVG-ИКОНКИ ═════════ */
+  var ICONS = {
+    'all':         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.287 1.288L3 12l5.8 1.9a2 2 0 0 1 1.288 1.287L12 21l1.9-5.8a2 2 0 0 1 1.287-1.288L21 12l-5.8-1.9a2 2 0 0 1-1.288-1.287Z"/></svg>',
+    'psychology':  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>',
+    'interests':   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+    'talents':     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+    'growth':      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>',
+    'knowledge':   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+    'logic':       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>'
+  };
+
   var state = {
     category: 'all',
     subcat: 'all',
@@ -1003,6 +1092,7 @@
 
   function norm(str) { return (str || '').toLowerCase().replace(/ё/g, 'е').trim(); }
   function escapeHtml(s) { return String(s).replace(/[&<>"']/g, function(c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function getIcon(id) { return ICONS[id] || ICONS['all']; }
 
   function expandQuery(q) {
     var nq = norm(q);
@@ -1048,17 +1138,17 @@
     return score;
   }
 
-  function getCategoryName(id) { var c = CATEGORIES.find(function(x) { return x.id === id; }); return c ? c.name : ''; }
-  function getSubcatName(catId, subId) { var list = SUBCATEGORIES[catId] || []; var s = list.find(function(x) { return x.id === subId; }); return s ? s.name : ''; }
+  function getCategoryName(id) { var c = CATEGORIES_SAFE.find(function(x) { return x.id === id; }); return c ? c.name : ''; }
+  function getSubcatName(catId, subId) { var list = SUBCATEGORIES_SAFE[catId] || []; var s = list.find(function(x) { return x.id === subId; }); return s ? s.name : ''; }
   function plural(n, forms) { var n10 = n % 10, n100 = n % 100; if (n10 === 1 && n100 !== 11) return forms[0]; if (n10 >= 2 && n10 <= 4 && (n100 < 10 || n100 >= 20)) return forms[1]; return forms[2]; }
 
   /* ═════════ КАТЕГОРИИ ═════════ */
   var catsRow = document.getElementById('catsRow');
   function renderCategories() {
     var html = '';
-    CATEGORIES.forEach(function(c) {
+    CATEGORIES_SAFE.forEach(function(c) {
       html += '<button type="button" class="cat-btn' + (state.category === c.id ? ' active' : '') + '" data-cat="' + c.id + '">';
-      html +=   '<span class="cat-emoji">' + c.emoji + '</span>' + c.name;
+      html +=   '<span class="cat-icon">' + getIcon(c.id) + '</span>' + c.name;
       html += '</button>';
     });
     catsRow.innerHTML = html;
@@ -1075,7 +1165,7 @@
 
   var subcatsRow = document.getElementById('subcatsRow');
   function renderSubcategories() {
-    var subs = SUBCATEGORIES[state.category];
+    var subs = SUBCATEGORIES_SAFE[state.category];
     if (!subs) { subcatsRow.classList.remove('show'); subcatsRow.innerHTML = ''; return; }
     subcatsRow.classList.add('show');
     var html = '<button type="button" class="subcat-btn' + (state.subcat === 'all' ? ' active' : '') + '" data-sub="all">Все</button>';
@@ -1132,7 +1222,7 @@
 
   /* ═════════ ФИЛЬТРАЦИЯ ═════════ */
   function getFilteredTests() {
-    var list = TESTS.slice();
+    var list = TESTS_SAFE.slice();
     if (state.category !== 'all') list = list.filter(function(t) { return t.category === state.category; });
     if (state.subcat !== 'all' && state.category === 'knowledge') list = list.filter(function(t) { return t.subcat === state.subcat; });
     if (state.search) {
@@ -1171,9 +1261,14 @@
   function difficultyLabel(d) { if (d === 'easy') return 'Лёгкий'; if (d === 'medium') return 'Средний'; if (d === 'hard') return 'Сложный'; return ''; }
 
   function badgeHtml(b) {
-    var map = { hit: { label: '🔥 Хит', cls: 'hit' }, new: { label: '✨ Новинка', cls: 'new' }, fast: { label: '⚡ Быстрый', cls: 'fast' }, hard: { label: '🎚 Сложный', cls: 'hard' } };
+    var map = {
+      hit:  { label: 'Хит',     cls: 'hit',  svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>' },
+      new:  { label: 'Новинка', cls: 'new',  svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.287 1.288L3 12l5.8 1.9a2 2 0 0 1 1.288 1.287L12 21l1.9-5.8a2 2 0 0 1 1.287-1.288L21 12l-5.8-1.9a2 2 0 0 1-1.288-1.287Z"/></svg>' },
+      fast: { label: 'Быстрый', cls: 'fast', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' },
+      hard: { label: 'Сложный', cls: 'hard', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7 9 9.7 3 15.7"/></svg>' }
+    };
     if (!map[b]) return '';
-    return '<span class="badge ' + map[b].cls + '">' + map[b].label + '</span>';
+    return '<span class="badge ' + map[b].cls + '">' + map[b].svg + map[b].label + '</span>';
   }
 
   function renderTests() {
@@ -1195,10 +1290,12 @@
       var isDisclaimer = !!t.disclaimer;
       html += '<div class="test-card' + (isDisclaimer ? ' disclaimer-card' : '') + '">';
       if (badges) html += '<div class="test-card-badges">' + badges + '</div>';
-      html +=   '<div class="test-card-emoji">' + t.emoji + '</div>';
+      html +=   '<div class="test-card-icon">' + getIcon(t.category) + '</div>';
       html +=   '<h3 class="test-card-title">' + escapeHtml(t.title) + '</h3>';
       html +=   '<p class="test-card-desc">' + escapeHtml(t.desc) + '</p>';
-      if (isDisclaimer) html += '<div class="test-card-disclaimer">⚠️ ' + escapeHtml(t.disclaimer) + '</div>';
+      if (isDisclaimer) {
+        html += '<div class="test-card-disclaimer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' + escapeHtml(t.disclaimer) + '</div>';
+      }
       html +=   '<div class="test-card-meta">';
       html +=     '<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>' + t.time + ' мин</span>';
       html +=     '<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7 9 9.7 3 15.7"/></svg>' + difficultyLabel(t.difficulty) + '</span>';
@@ -1228,19 +1325,19 @@
   function renderHints(query) {
     var q = norm(query);
     if (!q || q.length < 2) { searchHints.classList.remove('show'); searchHints.innerHTML = ''; return; }
-    var matches = TESTS
+    var matches = TESTS_SAFE
       .map(function(t) { return { test: t, score: matchScore(t, q) }; })
       .filter(function(x) { return x.score > 0; })
       .sort(function(a, b) { return b.score - a.score; })
       .slice(0, 7);
 
     var html = '';
-    if (matches.length === 0) html += '<div class="search-hint-empty">Ничего не нашлось 😔<br>Попробуй другое слово</div>';
+    if (matches.length === 0) html += '<div class="search-hint-empty">Ничего не нашлось<br>Попробуй другое слово</div>';
     else {
       html += '<div class="search-hints-label">Найденные тесты</div>';
       matches.forEach(function(m) {
         html += '<button type="button" class="search-hint-item" data-test-id="' + m.test.id + '">';
-        html +=   '<div class="search-hint-emoji">' + m.test.emoji + '</div>';
+        html +=   '<div class="search-hint-icon">' + getIcon(m.test.category) + '</div>';
         html +=   '<div class="search-hint-text">';
         html +=     '<div class="search-hint-title">' + highlightMatch(m.test.title, q) + '</div>';
         html +=     '<div class="search-hint-cat">' + getCategoryName(m.test.category) + '</div>';
@@ -1253,7 +1350,7 @@
     searchHints.querySelectorAll('.search-hint-item').forEach(function(item) {
       item.addEventListener('click', function() {
         var id = item.dataset.testId;
-        var test = TESTS.find(function(t) { return t.id === id; });
+        var test = TESTS_SAFE.find(function(t) { return t.id === id; });
         if (test) window.location.href = test.href;
       });
     });
@@ -1277,7 +1374,8 @@
 
   document.getElementById('randomBtn').addEventListener('click', function() {
     var list = getFilteredTests();
-    if (list.length === 0) list = TESTS;
+    if (list.length === 0) list = TESTS_SAFE;
+    if (list.length === 0) return;
     var t = list[Math.floor(Math.random() * list.length)];
     window.location.href = t.href;
   });
@@ -1338,7 +1436,7 @@
     });
   }
 
-  catalogCount.textContent = TESTS.length + ' ' + plural(TESTS.length, ['тест', 'теста', 'тестов']);
+  catalogCount.textContent = TESTS_SAFE.length + ' ' + plural(TESTS_SAFE.length, ['тест', 'теста', 'тестов']);
   renderCategories();
   renderSubcategories();
   renderTests();
