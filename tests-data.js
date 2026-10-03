@@ -184,7 +184,7 @@ const TESTS = [
     type: 'result',
     age: '14+',
     badges: ['hit'],
-    href: '#'
+    href: 'test-love.html'
   },
   {
     id: 'addiction',
