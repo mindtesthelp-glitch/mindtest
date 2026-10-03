@@ -35,7 +35,7 @@
 
   .intro-hero { width: 100%; aspect-ratio: 16 / 9; max-height: 460px; background: linear-gradient(135deg, #2a1550, #4b1e8c); display: flex; align-items: center; justify-content: center; color: #fff; position: relative; overflow: hidden; }
   .intro-hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(168,85,247,.45), transparent 70%); border-radius: 50%; pointer-events: none; z-index: 1; }
-  .intro-hero img { width: 100%; height: 100%; object-fit: cover; display: block; position: relative; z-index: 2; }
+  .intro-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; z-index: 2; }
   .intro-hero-placeholder { position: relative; z-index: 2; text-align: center; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
   .intro-hero-placeholder svg { width: 64px; height: 64px; opacity: .5; }
   .intro-hero-placeholder p { font-size: 13px; opacity: .55; }
@@ -87,7 +87,7 @@
   .result-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 28px; overflow: hidden; box-shadow: 0 25px 60px rgba(93,43,158,.12); animation: q-in .5s cubic-bezier(.16,1,.3,1); }
   .result-hero { width: 100%; aspect-ratio: 16 / 9; max-height: 460px; background: linear-gradient(135deg, #2a1550, #4b1e8c); display: flex; align-items: center; justify-content: center; color: #fff; position: relative; overflow: hidden; }
   .result-hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(168,85,247,.45), transparent 70%); border-radius: 50%; pointer-events: none; z-index: 1; }
-  .result-hero img { width: 100%; height: 100%; object-fit: cover; display: block; position: relative; z-index: 2; }
+  .result-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; z-index: 2; }
   .result-hero-placeholder { position: relative; z-index: 2; text-align: center; padding: 20px; }
   .result-type-big { font-size: 84px; font-weight: 900; letter-spacing: -3px; background: linear-gradient(135deg,#e9d5ff,#a855f7); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
 
