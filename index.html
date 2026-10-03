@@ -41,7 +41,6 @@
   .hero h1 em { font-style: normal; background: linear-gradient(135deg,#7c2fd4,#a855f7); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
   .hero-subtitle { font-size: clamp(16px, 2vw, 20px); color: #7e6b94; max-width: 720px; margin: 0 auto 10px; }
 
-  /* Плашка «Новые тесты — 2 раза в неделю» */
   .hero-update-badge {
     display: inline-flex;
     align-items: center;
@@ -93,13 +92,15 @@
   .catalog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; max-width: 1300px; margin: 0 auto; }
   .catalog-card { padding: 34px; background: #fff; border-radius: 20px; border: 2px solid #f0e8fb; transition: all .25s; cursor: pointer; }
   .catalog-card:hover { border-color: #a855f7; transform: translateY(-4px); }
-  .catalog-emoji { font-size: 40px; margin-bottom: 14px; display: block; }
+  .catalog-icon { width: 56px; height: 56px; border-radius: 16px; background: linear-gradient(135deg,#f5efff,#ece3fa); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: #7c2fd4; }
+  .catalog-icon svg { width: 28px; height: 28px; }
   .catalog-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 6px; }
   .catalog-card p { font-size: 15px; color: #7e6b94; }
 
   .about-text { max-width: 1100px; margin: 0 auto; text-align: center; font-size: 18px; line-height: 1.8; color: #4b3b63; }
   .about-text p + p { margin-top: 18px; }
-  .about-highlight { display: inline-block; margin-top: 32px; padding: 20px 30px; background: #f5efff; border-left: 4px solid #a855f7; border-radius: 14px; text-align: left; font-size: 16px; color: #5d2b9e; font-weight: 500; }
+  .about-highlight { display: inline-flex; align-items: flex-start; gap: 12px; margin-top: 32px; padding: 20px 30px; background: #f5efff; border-left: 4px solid #a855f7; border-radius: 14px; text-align: left; font-size: 16px; color: #5d2b9e; font-weight: 500; }
+  .about-highlight-icon { width: 22px; height: 22px; flex-shrink: 0; color: #a855f7; margin-top: 1px; }
 
   .premium-section { background: linear-gradient(135deg,#2a1550,#4b1e8c); color: #fff; position: relative; overflow: hidden; }
   .premium-section::before { content: ''; position: absolute; top: -50%; right: -20%; width: 700px; height: 700px; background: radial-gradient(circle, rgba(168,85,247,.4), transparent 70%); border-radius: 50%; pointer-events: none; }
@@ -118,7 +119,6 @@
   .premium-cta { text-align: center; }
   .premium-cta .btn-premium { padding: 16px 36px; font-size: 16px; background: #fff; color: #5d2b9e; }
 
-  /* «Новое» бейдж для новых карточек */
   .premium-card.is-new { border-color: rgba(168,85,247,.5); background: rgba(168,85,247,.12); position: relative; }
   .premium-card-new-label {
     position: absolute;
@@ -409,12 +409,30 @@
     <h2 class="section-title">Каталог тестов</h2>
     <p class="section-subtitle">Выбирай категорию — про себя или про мир вокруг.</p>
     <div class="catalog-grid">
-      <a href="catalog.html" class="catalog-card"><span class="catalog-emoji">🧠</span><h3>Психология и характер</h3><p>Кто ты на самом деле</p></a>
-      <a href="catalog.html" class="catalog-card"><span class="catalog-emoji">💜</span><h3>Интересы и хобби</h3><p>Что тебя по-настоящему увлекает</p></a>
-      <a href="catalog.html" class="catalog-card"><span class="catalog-emoji">✨</span><h3>Таланты и способности</h3><p>Твои сильные стороны</p></a>
-      <a href="catalog.html" class="catalog-card"><span class="catalog-emoji">🚀</span><h3>Развитие и цели</h3><p>Куда двигаться дальше</p></a>
-      <a href="catalog.html" class="catalog-card"><span class="catalog-emoji">📚</span><h3>Знания и эрудиция</h3><p>История, наука, культура</p></a>
-      <a href="catalog.html" class="catalog-card"><span class="catalog-emoji">🧩</span><h3>Логика и IQ</h3><p>Проверь свой ум</p></a>
+      <a href="catalog.html" class="catalog-card">
+        <div class="catalog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div>
+        <h3>Психология и характер</h3><p>Кто ты на самом деле</p>
+      </a>
+      <a href="catalog.html" class="catalog-card">
+        <div class="catalog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <h3>Интересы и хобби</h3><p>Что тебя по-настоящему увлекает</p>
+      </a>
+      <a href="catalog.html" class="catalog-card">
+        <div class="catalog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <h3>Таланты и способности</h3><p>Твои сильные стороны</p>
+      </a>
+      <a href="catalog.html" class="catalog-card">
+        <div class="catalog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
+        <h3>Развитие и цели</h3><p>Куда двигаться дальше</p>
+      </a>
+      <a href="catalog.html" class="catalog-card">
+        <div class="catalog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <h3>Знания и эрудиция</h3><p>История, наука, культура</p>
+      </a>
+      <a href="catalog.html" class="catalog-card">
+        <div class="catalog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></div>
+        <h3>Логика и IQ</h3><p>Проверь свой ум</p>
+      </a>
     </div>
   </div>
 </section>
@@ -428,7 +446,10 @@
       <p>За каждый пройденный тест ты получаешь <b>личные награды</b> — например, «Оптимист», «Эрудит», «Творец». Они собираются в твоём профиле и показывают, какие стороны тебя уже раскрыты.</p>
       <p>Все зарегистрированные пользователи попадают в <b>общий рейтинг</b> — чем больше тестов ты проходишь, тем выше поднимаешься. Результатами можно делиться с друзьями.</p>
       <p><b>Новые тесты выходят 2 раза в неделю</b> — так что заходи почаще, чтобы не пропустить свежие.</p>
-      <div class="about-highlight">💜 Если тебе интересна платформа — пройди пару тестов и расскажи о нас друзьям. Это лучшая поддержка для нас.</div>
+      <div class="about-highlight">
+        <svg class="about-highlight-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span>Если тебе интересна платформа — пройди пару тестов и расскажи о нас друзьям. Это лучшая поддержка для нас.</span>
+      </div>
     </div>
   </div>
 </section>
@@ -446,7 +467,6 @@
       <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div><h3>Приоритет в рейтинге</h3><p>Premium-профили отмечаются особой меткой и видны в топе рейтинга.</p></div>
       <div class="premium-card"><div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>Приоритетная поддержка</h3><p>Ответ от команды MindTest — в первую очередь.</p></div>
 
-      <!-- Ранний доступ к тестам (Новое) -->
       <div class="premium-card is-new">
         <span class="premium-card-new-label">Новое</span>
         <div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
@@ -454,7 +474,6 @@
         <p>Проходи новые тесты на 2–3 дня раньше всех, пока они ещё не в общем каталоге.</p>
       </div>
 
-      <!-- НОВОЕ: Расширенная статистика -->
       <div class="premium-card is-new">
         <span class="premium-card-new-label">Новое</span>
         <div class="premium-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="13" width="3" height="5"/><rect x="12" y="9" width="3" height="9"/><rect x="17" y="5" width="3" height="13"/></svg></div>
@@ -979,11 +998,8 @@
         var res2 = await sb.auth.signUp({ email: email, password: password, options: { data: { username: username } } });
         if (res2.error) throw new Error(translateError(res2.error.message));
 
-        // 🔍 Проверка: если email уже зарегистрирован, Supabase вернёт "фейковый успех"
-        // с пустым массивом identities — реальный пользователь не создан, письмо не отправлено.
         var d = res2.data;
         if (d && d.user && Array.isArray(d.user.identities) && d.user.identities.length === 0) {
-          // Подставляем email в форму входа
           var loginEmailIn = mforms.login.querySelector('input[name="email"]');
           var loginPassIn = mforms.login.querySelector('input[name="password"]');
           loginEmailIn.value = email;
