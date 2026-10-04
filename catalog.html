@@ -153,6 +153,9 @@
   .catalog-hero-title p { color: #7e6b94; font-size: 17px; max-width: 560px; }
   .catalog-hero-title .catalog-count { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 8px 16px; background: #f5efff; border-radius: 999px; color: #5d2b9e; font-size: 14px; font-weight: 700; }
   .catalog-hero-title .catalog-count svg { width: 16px; height: 16px; }
+   .catalog-jump-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; padding: 12px 22px; border-radius: 14px; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; font-size: 15px; font-weight: 700; box-shadow: 0 8px 20px rgba(124,47,212,.3); transition: transform .2s; }
+  .catalog-jump-btn:hover { transform: translateY(-2px); }
+  .catalog-jump-btn svg { width: 18px; height: 18px; }
 
   .rating-card { background: linear-gradient(135deg,#2a1550,#4b1e8c); border-radius: 22px; padding: 28px 26px; color: #fff; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
   .rating-card::before { content: ''; position: absolute; top: -40%; right: -30%; width: 260px; height: 260px; background: radial-gradient(circle, rgba(168,85,247,.45), transparent 70%); border-radius: 50%; pointer-events: none; }
@@ -575,6 +578,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
         <span id="catalogCount">0 тестов</span>
       </div>
+     <a href="#tests" class="catalog-jump-btn">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+  Сразу к тестам
+</a>
     </div>
     <div class="rating-card">
       <div class="rating-icon-box">
