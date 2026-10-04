@@ -61,7 +61,7 @@ const TESTS = [
     category: 'psychology',
     desc: 'Проверь, насколько с тобой легко — или сложно — уживаться другим.',
     emoji: '🌪️',
-    time: 10,
+    time: 7,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
