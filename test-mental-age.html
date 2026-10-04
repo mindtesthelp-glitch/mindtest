@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Какой у тебя ментальный возраст? — MindTest</title>
-<link rel="icon" type="image/png" href="./favicon.svg">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -83,6 +83,9 @@
 
   .q-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 24px; padding: 48px 44px 40px; box-shadow: 0 20px 50px rgba(93,43,158,.08); animation: q-in .35s cubic-bezier(.16,1,.3,1); }
   .q-num { display: inline-block; padding: 5px 12px; border-radius: 999px; background: #f5efff; color: #7c2fd4; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 18px; }
+  .q-hint { display: inline-flex; align-items: center; gap: 6px; margin-left: 8px; padding: 4px 10px; border-radius: 999px; background: #ecfdf5; color: #059669; font-size: 11px; font-weight: 700; letter-spacing: .3px; text-transform: none; }
+  .q-hint svg { width: 12px; height: 12px; }
+  .q-counter { display: block; margin-top: 4px; font-size: 13px; font-weight: 700; color: #7c2fd4; }
   .q-title { font-size: 24px; font-weight: 800; letter-spacing: -.5px; line-height: 1.35; margin-bottom: 30px; color: #2e1a4d; }
   .q-answers { display: flex; flex-direction: column; gap: 13px; }
   .q-answer { display: flex; align-items: flex-start; gap: 14px; padding: 20px 22px; background: #faf7ff; border: 2px solid #ece3fa; border-radius: 16px; font-size: 15.5px; font-weight: 500; color: #4b3b63; text-align: left; transition: all .2s; line-height: 1.5; }
@@ -91,6 +94,24 @@
   .q-answer.selected { border-color: #a855f7; background: #f5efff; }
   .q-answer.selected .q-radio { border-color: #a855f7; }
   .q-answer.selected .q-radio::after { content: ''; position: absolute; inset: 4px; border-radius: 50%; background: linear-gradient(135deg,#7c2fd4,#a855f7); }
+
+  /* Мультивыбор — квадратный чекбокс */
+  .q-answer--multi .q-radio { border-radius: 6px; }
+  .q-answer--multi.selected .q-radio { background: linear-gradient(135deg,#7c2fd4,#a855f7); }
+  .q-answer--multi.selected .q-radio::after {
+    content: '';
+    position: absolute;
+    left: 5.5px; top: 2px;
+    width: 5px; height: 10px;
+    border: solid #fff;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+    background: none;
+    border-radius: 0;
+    inset: auto;
+  }
+  .q-answer--multi.is-locked { opacity: .45; cursor: not-allowed; }
+  .q-answer--multi.is-locked:hover { border-color: #ece3fa; background: #faf7ff; transform: none; }
 
   .test-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; gap: 14px; }
   .btn-nav { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 30px; border-radius: 14px; font-size: 16px; font-weight: 700; transition: all .2s; min-height: 56px; }
@@ -133,7 +154,6 @@
   .result-body { padding: 44px 48px 40px; }
   .result-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: #f5efff; color: #7c2fd4; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; margin-bottom: 16px; }
 
-  /* Огромная цифра возраста */
   .age-display { text-align: center; margin-bottom: 32px; }
   .age-number { font-size: clamp(80px, 14vw, 140px); font-weight: 900; letter-spacing: -6px; line-height: .9; background: linear-gradient(135deg,#7c2fd4,#a855f7); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
   .age-suffix { display: block; font-size: 22px; font-weight: 700; color: #a855f7; margin-top: 6px; letter-spacing: 1px; }
@@ -142,7 +162,6 @@
   .result-desc { font-size: 16px; color: #4b3b63; line-height: 1.8; margin-bottom: 40px; }
   .result-desc p + p { margin-top: 14px; }
 
-  /* Шкала возрастов */
   .age-scale-wrap { padding: 32px 28px 24px; background: #faf7ff; border: 2px solid #f0e8fb; border-radius: 22px; margin-bottom: 36px; }
   .age-scale-title { font-size: 15px; font-weight: 800; color: #2e1a4d; margin-bottom: 22px; text-align: center; letter-spacing: -.2px; }
   .age-scale-bar { position: relative; height: 14px; border-radius: 999px; overflow: visible; display: flex; margin-bottom: 12px; }
@@ -172,7 +191,6 @@
   .age-scale-cat { font-size: 10px; text-align: center; color: #7e6b94; font-weight: 700; line-height: 1.3; }
   .age-scale-cat.is-active { color: #5d2b9e; font-weight: 800; }
 
-  /* ═════════ ЗНАМЕНИТОСТИ ═════════ */
   .result-famous { margin-bottom: 36px; }
   .result-famous-title { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 800; color: #2e1a4d; margin-bottom: 20px; letter-spacing: -.3px; }
   .result-famous-title svg { width: 22px; height: 22px; color: #a855f7; }
@@ -240,6 +258,7 @@
     .q-title { font-size: 17px; }
     .q-answer { font-size: 13.5px; padding: 14px 14px; }
     .q-answer .q-radio { width: 20px; height: 20px; }
+    .q-answer--multi.selected .q-radio::after { left: 5px; top: 1.5px; width: 4px; height: 9px; }
     .test-nav { flex-direction: column-reverse; align-items: stretch; }
     .btn-nav { width: 100%; }
     .result-title { font-size: 24px; }
@@ -286,7 +305,7 @@
   var state = {
     screen: 'intro',
     current: 0,
-    answers: [],
+    answers: [],   // массив массивов: answers[qIdx] = [idx1, idx2, ...]
     age: 0,
     category: null
   };
@@ -325,7 +344,7 @@
   function renderIntro() {
     state.screen = 'intro';
     state.current = 0;
-    state.answers = new Array(MENTAL_AGE_QUESTIONS.length).fill(null);
+    state.answers = MENTAL_AGE_QUESTIONS.map(function() { return []; });
     state.age = 0;
     state.category = null;
 
@@ -383,6 +402,9 @@
     var q = MENTAL_AGE_QUESTIONS[state.current];
     var total = MENTAL_AGE_QUESTIONS.length;
     var pct = ((state.current) / total) * 100;
+    var isMulti = !!q.multi;
+    var limit = q.multi || 1;
+    var selected = state.answers[state.current] || [];
 
     var html = '';
     html += '<div class="test-topbar">';
@@ -392,11 +414,22 @@
     html += '<div class="test-progress"><div class="test-progress-fill" style="width:' + pct + '%"></div></div>';
     html += '<div class="q-card">';
     html +=   '<span class="q-num">Вопрос ' + (state.current + 1) + '</span>';
+    if (isMulti) {
+      html += '<span class="q-hint">' +
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
+                'Можно выбрать до ' + limit +
+              '</span>';
+    }
     html +=   '<h2 class="q-title">' + escapeHtml(q.q) + '</h2>';
+    if (isMulti) {
+      html += '<span class="q-counter" id="qCounter">Выбрано: ' + selected.length + ' / ' + limit + '</span>';
+    }
     html +=   '<div class="q-answers">';
     q.a.forEach(function(ans, idx) {
-      var sel = state.answers[state.current] === idx ? ' selected' : '';
-      html += '<button type="button" class="q-answer' + sel + '" data-idx="' + idx + '">';
+      var isSelected = selected.indexOf(idx) !== -1;
+      var isLocked = isMulti && !isSelected && selected.length >= limit;
+      var classes = 'q-answer' + (isMulti ? ' q-answer--multi' : '') + (isSelected ? ' selected' : '') + (isLocked ? ' is-locked' : '');
+      html += '<button type="button" class="' + classes + '" data-idx="' + idx + '">';
       html +=   '<span class="q-radio"></span>';
       html +=   '<span>' + escapeHtml(ans.t) + '</span>';
       html += '</button>';
@@ -409,7 +442,8 @@
     html +=     'Назад';
     html +=   '</button>';
     var isLast = state.current === total - 1;
-    html +=   '<button type="button" class="btn-nav btn-next" id="nextBtn"' + (state.answers[state.current] === null ? ' disabled' : '') + '>';
+    var noAnswer = selected.length === 0;
+    html +=   '<button type="button" class="btn-nav btn-next" id="nextBtn"' + (noAnswer ? ' disabled' : '') + '>';
     html +=     (isLast ? 'Завершить' : 'Далее');
     html +=     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
     html +=   '</button>';
@@ -417,14 +451,37 @@
 
     root.innerHTML = html;
 
+    var nextBtn = document.getElementById('nextBtn');
+    var counter = document.getElementById('qCounter');
+
     root.querySelectorAll('.q-answer').forEach(function(el) {
       el.addEventListener('click', function() {
         var idx = parseInt(el.getAttribute('data-idx'), 10);
-        state.answers[state.current] = idx;
-        root.querySelectorAll('.q-answer').forEach(function(a) { a.classList.remove('selected'); });
-        el.classList.add('selected');
-        var nextBtn = document.getElementById('nextBtn');
-        if (nextBtn) nextBtn.disabled = false;
+        var arr = state.answers[state.current];
+
+        if (isMulti) {
+          var pos = arr.indexOf(idx);
+          if (pos === -1) {
+            if (arr.length >= limit) return;
+            arr.push(idx);
+          } else {
+            arr.splice(pos, 1);
+          }
+          root.querySelectorAll('.q-answer').forEach(function(a) {
+            var i = parseInt(a.getAttribute('data-idx'), 10);
+            var sel = arr.indexOf(i) !== -1;
+            var locked = !sel && arr.length >= limit;
+            a.classList.toggle('selected', sel);
+            a.classList.toggle('is-locked', locked);
+          });
+          if (counter) counter.textContent = 'Выбрано: ' + arr.length + ' / ' + limit;
+          if (nextBtn) nextBtn.disabled = arr.length === 0;
+        } else {
+          state.answers[state.current] = [idx];
+          root.querySelectorAll('.q-answer').forEach(function(a) { a.classList.remove('selected'); });
+          el.classList.add('selected');
+          if (nextBtn) nextBtn.disabled = false;
+        }
       });
     });
 
@@ -435,10 +492,9 @@
       });
     }
 
-    var nextBtn = document.getElementById('nextBtn');
     if (nextBtn) {
       nextBtn.addEventListener('click', function() {
-        if (state.answers[state.current] === null) return;
+        if (state.answers[state.current].length === 0) return;
         if (state.current < total - 1) {
           state.current++;
           renderQuestion();
@@ -453,9 +509,14 @@
   function calculateAge() {
     var sum = 0;
     var count = 0;
-    state.answers.forEach(function(ansIdx, qIdx) {
-      if (ansIdx === null) return;
-      sum += MENTAL_AGE_QUESTIONS[qIdx].a[ansIdx].v;
+    state.answers.forEach(function(arr, qIdx) {
+      if (!arr || arr.length === 0) return;
+      var q = MENTAL_AGE_QUESTIONS[qIdx];
+      var localSum = 0;
+      arr.forEach(function(idx) {
+        localSum += q.a[idx].v;
+      });
+      sum += localSum / arr.length;
       count++;
     });
     if (count === 0) return 0;
@@ -496,7 +557,6 @@
     data.desc.forEach(function(p) { html += '<p>' + escapeHtml(p) + '</p>'; });
     html +=   '</div>';
 
-    /* Шкала возрастов */
     html +=   '<div class="age-scale-wrap">';
     html +=     '<div class="age-scale-title">Где ты на шкале возрастов</div>';
     var markerPct = ((age - 5) / (80 - 5)) * 100;
@@ -520,7 +580,6 @@
     html +=     '</div>';
     html +=   '</div>';
 
-    /* Знаменитости */
     if (data.famous && data.famous.length) {
       html +=   '<div class="result-famous">';
       html +=     '<div class="result-famous-title">';
@@ -583,7 +642,6 @@
 
     root.innerHTML = html;
 
-    /* Анимация маркера на шкале */
     setTimeout(function() {
       var marker = document.getElementById('ageMarker');
       if (marker) marker.style.left = markerPct + '%';
