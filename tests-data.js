@@ -87,7 +87,7 @@ const TESTS = [
     category: 'psychology',
     desc: 'Интроверт, амбиверт или экстраверт? Узнай свой уровень.',
     emoji: '🗣️',
-    time: 6,
+    time: 5,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
