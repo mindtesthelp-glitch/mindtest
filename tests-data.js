@@ -79,7 +79,7 @@ const TESTS = [
     type: 'result',
     age: '12+',
     badges: ['fast'],
-    href: '#'
+    href: 'test-how-you-seen.html'
   },
   {
     id: 'social-level',
