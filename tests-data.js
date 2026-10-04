@@ -205,7 +205,7 @@ const TESTS = [
     category: 'psychology',
     desc: 'Сколько лет твоей душе? Возможно, это не то, что ты думаешь.',
     emoji: '🕰️',
-    time: 8,
+    time: 6,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
