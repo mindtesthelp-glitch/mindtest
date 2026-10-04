@@ -100,12 +100,12 @@ const TESTS = [
     category: 'psychology',
     desc: 'Проверь, готов(а) ли ты мыслить как предприниматель.',
     emoji: '💼',
-    time: 12,
+    time: 10,
     difficulty: 'medium',
     type: 'result',
     age: '14+',
     badges: [],
-    href: '#'
+    href: 'test-biz.html'
   },
   {
     id: 'optimist-pessimist-realist',
