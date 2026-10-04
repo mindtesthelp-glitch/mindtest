@@ -66,7 +66,7 @@ const TESTS = [
     type: 'result',
     age: '12+',
     badges: [],
-    href: '#'
+    href: 'test-hard-character.html'
   },
   {
     id: 'how-others-see',
