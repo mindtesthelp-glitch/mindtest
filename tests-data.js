@@ -70,11 +70,11 @@ const TESTS = [
   },
   {
     id: 'how-others-see',
-    title: 'Как тебя видят окружающие: тест на 10 вопросов',
+    title: 'Как тебя видят окружающие: тест на 27 вопросов',
     category: 'psychology',
     desc: 'Ты уверен(а), что знаешь, каким тебя видят другие? Проверим.',
     emoji: '👀',
-    time: 8,
+    time: 7,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
