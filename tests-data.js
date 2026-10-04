@@ -210,7 +210,7 @@ const TESTS = [
     type: 'result',
     age: '12+',
     badges: ['fast', 'hit'],
-    href: '#'
+    href: 'test-mental-age.html'
   },
   {
     id: 'ability-to-love',
