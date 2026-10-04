@@ -87,12 +87,12 @@ const TESTS = [
     category: 'psychology',
     desc: 'Интроверт, амбиверт или экстраверт? Узнай свой уровень.',
     emoji: '🗣️',
-    time: 10,
+    time: 6,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
     badges: [],
-    href: '#'
+    href: 'test-social.html'
   },
   {
     id: 'entrepreneur-mind',
