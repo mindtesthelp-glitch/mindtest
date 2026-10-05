@@ -139,13 +139,13 @@ const TESTS = [
     category: 'psychology',
     desc: 'Настроение, тревога, стресс, сон — 8 сфер твоего состояния.',
     emoji: '🧩',
-    time: 15,
+    time: 10,
     difficulty: 'hard',
     type: 'result',
     age: '14+',
     badges: ['hard'],
     disclaimer: 'Этот тест не является медицинским диагнозом. Если тебе плохо — обратись к психологу или врачу. Ты не один(а).',
-    href: '#'
+    href: 'test-mood.html'
   },
   {
     id: 'emotional-intelligence',
