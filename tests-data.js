@@ -124,14 +124,14 @@ const TESTS = [
     id: 'famous-person',
     title: 'На какую знаменитость ты похож? Тест на характер и типаж',
     category: 'psychology',
-    desc: 'Ответь на 12 вопросов — и узнай, какая звезда ближе всего к тебе.',
+    desc: 'Ответь на 27 вопросов — и узнай, какая звезда ближе всего к тебе.',
     emoji: '⭐',
-    time: 12,
+    time: 6,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
     badges: [],
-    href: '#'
+    href: 'test-famous.html'
   },
   {
     id: 'mental-disorders',
