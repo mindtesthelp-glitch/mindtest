@@ -97,19 +97,18 @@
   /* Мультивыбор */
   .q-answer--multi .q-radio { border-radius: 6px; }
   .q-answer--multi.selected .q-radio { background: linear-gradient(135deg,#7c2fd4,#a855f7); }
-  .q-answer--multi.selected .q-radio::after {
+    .q-answer--multi.selected .q-radio::after {
     content: '';
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 5px;
-    height: 10px;
+    width: 4px;
+    height: 9px;
     border: solid #fff;
-    border-width: 0 2.5px 2.5px 0;
-    transform: translate(-50%, -55%) rotate(45deg);
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -60%) rotate(45deg);
     background: none;
     border-radius: 0;
-    inset: auto;
   }
   .q-answer--multi.is-locked { opacity: .45; cursor: not-allowed; }
   .q-answer--multi.is-locked:hover { border-color: #ece3fa; background: #faf7ff; transform: none; }
@@ -247,7 +246,6 @@
     .q-title { font-size: 17px; }
     .q-answer { font-size: 13.5px; padding: 14px 14px; }
     .q-answer .q-radio { width: 20px; height: 20px; }
-    .q-answer--multi.selected .q-radio::after { width: 4px; height: 9px; border-width: 0 2px 2px 0; }
     .test-nav { flex-direction: column-reverse; align-items: stretch; }
     .btn-nav { width: 100%; }
     .result-title { font-size: 20px; }
