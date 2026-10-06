@@ -308,19 +308,19 @@
   function scrollTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
   function determineType(scores) {
-    var best = ADDICTION_TYPES[0];
-    var bestDiff = Infinity;
-    ADDICTION_TYPES.forEach(function(t) {
-      var diff = 0;
-      ADDICTION_SCALES.forEach(function(s) {
-        var userVal = scores[s.id] || 0;
-        var typeVal = t.profile ? (t.profile[s.id] || 0) : 0;
-        diff += Math.abs(userVal - typeVal);
-      });
-      if (diff < bestDiff) { bestDiff = diff; best = t; }
+  var best = ADDICTION_TYPES[0];
+  var bestDiff = Infinity;
+  ADDICTION_TYPES.forEach(function(t) {
+    var diff = 0;
+    ['digital', 'chemical', 'behavioral', 'emotional'].forEach(function(scaleId) {
+      var userVal = scores[scaleId] || 0;
+      var typeVal = (t.profile && t.profile[scaleId]) || 0;
+      diff += Math.abs(userVal - typeVal);
     });
-    return best;
-  }
+    if (diff < bestDiff) { bestDiff = diff; best = t; }
+  });
+  return best;
+}
 
   /* ═════════ INTRO ═════════ */
   function renderIntro() {
@@ -527,36 +527,40 @@
     }
   }
 
-  function calculateScores() {
-    var raw = {}, maxs = {};
-    ADDICTION_SCALES.forEach(function(s) { raw[s.id] = 0; maxs[s.id] = 0; });
 
-    state.answers.forEach(function(arr, qIdx) {
-      if (!arr || arr.length === 0) return;
-      var q = ADDICTION_ALL_QUESTIONS[qIdx];
-      if (q.type === 'order') {
-        raw[q.scale] += q.a[arr[0]].v; maxs[q.scale] += 3;
-      } else if (q.multi) {
-        var localSum = 0;
-        arr.forEach(function(idx) { localSum += q.a[idx].v; });
-        raw[q.scale] += localSum / arr.length; maxs[q.scale] += 3;
-      } else {
-        raw[q.scale] += q.a[arr[0]].v; maxs[q.scale] += 3;
-      }
-    });
+    });  function calculateScores() {
+  var raw = {}, maxs = {};
+  ADDICTION_SCALES.forEach(function(s) { raw[s.id] = 0; maxs[s.id] = 0; });
 
-    var scores = {};
-    var sum = 0;
-    var count = 0;
-    ADDICTION_SCALES.forEach(function(s) {
-      scores[s.id] = maxs[s.id] > 0 ? Math.round((raw[s.id] / maxs[s.id]) * 100) : 0;
-      sum += scores[s.id];
-      count++;
-    });
-    var total = count > 0 ? Math.round(sum / count) : 0;
-    return { scores: scores, total: total };
-  }
+  state.answers.forEach(function(arr, qIdx) {
+    if (!arr || arr.length === 0) return;
+    var q = ADDICTION_ALL_QUESTIONS[qIdx];
+    if (q.type === 'order') {
+      raw[q.scale] += q.a[arr[0]].v; maxs[q.scale] += 3;
+    } else if (q.multi) {
+      var localSum = 0;
+      arr.forEach(function(idx) { localSum += q.a[idx].v; });
+      raw[q.scale] += localSum / arr.length; maxs[q.scale] += 3;
+    } else {
+      raw[q.scale] += q.a[arr[0]].v; maxs[q.scale] += 3;
+    }
+  });
 
+  var scores = {};
+  var sum = 0;
+  var count = 0;
+  // Считаем 4 основные шкалы
+  ADDICTION_SCALES.forEach(function(s) {
+    if (s.id === 'overall') return; // пропускаем «Общую»
+    scores[s.id] = maxs[s.id] > 0 ? Math.round((raw[s.id] / maxs[s.id]) * 100) : 0;
+    sum += scores[s.id];
+    count++;
+  });
+  // «Общая» = среднее по 4 шкалам
+  scores.overall = count > 0 ? Math.round(sum / count) : 0;
+  var total = scores.overall;
+  return { scores: scores, total: total };
+}
   function finishTest() {
     var res = calculateScores();
     state.scores = res.scores;
