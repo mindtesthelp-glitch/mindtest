@@ -192,12 +192,12 @@ const TESTS = [
     category: 'psychology',
     desc: 'Узнай, есть ли у тебя склонность к зависимости — и от чего.',
     emoji: '🔗',
-    time: 12,
+    time: 7,
     difficulty: 'medium',
     type: 'result',
     age: '16+',
     badges: [],
-    href: '#'
+    href: 'test-addiction.html'
   },
   {
     id: 'mental-age',
