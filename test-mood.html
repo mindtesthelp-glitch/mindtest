@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/header.css">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; padding: 0; margin: 0; }
   html { scroll-behavior: smooth; }
   body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif; background: #faf7ff; color: #2e1a4d; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
   a { text-decoration: none; color: inherit; }
@@ -137,13 +137,7 @@
   /* RESULT */
   .result-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 28px; overflow: hidden; box-shadow: 0 25px 60px rgba(93,43,158,.12); animation: q-in .5s cubic-bezier(.16,1,.3,1); max-width: 780px; margin: 0 auto; }
 
-  .result-hero { width: 100%; aspect-ratio: 1110 / 1137; background: linear-gradient(135deg, #2a1550, #4b1e8c); display: flex; align-items: center; justify-content: center; color: #fff; position: relative; overflow: hidden; }
-  .result-hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(168,85,247,.45), transparent 70%); border-radius: 50%; pointer-events: none; z-index: 1; }
-  .result-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; z-index: 2; }
-  .result-hero-placeholder { position: relative; z-index: 2; text-align: center; padding: 20px; }
-  .result-type-big { font-size: 32px; font-weight: 900; letter-spacing: -1.5px; background: linear-gradient(135deg,#e9d5ff,#a855f7); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.2; }
-
-  .result-body { padding: 44px 48px 40px; }
+  .result-body { padding: 56px 48px 40px; }
   .result-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: #f5efff; color: #7c2fd4; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; margin-bottom: 16px; }
 
   .score-display { text-align: center; margin-bottom: 24px; }
@@ -230,14 +224,13 @@
     .q-answer--order .q-order-num { left: 14px; width: 28px; height: 28px; font-size: 13px; }
     .btn-nav { padding: 13px 20px; font-size: 14px; }
     .btn-nav svg { width: 18px; height: 18px; }
-    .result-body { padding: 28px 22px 26px; }
+    .result-body { padding: 36px 22px 26px; }
     .result-actions { grid-template-columns: 1fr; }
     .premium-rec { padding: 28px 22px; border-radius: 20px; }
     .profile-box { padding: 22px 18px; }
     .profile-grid { grid-template-columns: 1fr; gap: 20px; }
     .profile-radar svg { max-width: 280px; }
     .score-number { letter-spacing: -4px; }
-    .result-type-big { font-size: 26px; }
     .actions-block, .hotline-block { padding: 22px 18px; }
   }
   @media (max-width: 480px) {
@@ -251,7 +244,6 @@
     .btn-nav { width: 100%; }
     .result-title { font-size: 20px; }
     .score-suffix { font-size: 12px; }
-    .result-type-big { font-size: 20px; }
   }
 </style>
 </head>
@@ -685,12 +677,6 @@
 
     var html = '';
     html += '<div class="result-card">';
-    html += '<div class="result-hero">';
-    html +=   '<img src="./mood-' + data.id + '.png" alt="" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'block\';">';
-    html +=   '<div class="result-hero-placeholder" style="display:none;">';
-    html +=     '<div class="result-type-big">' + escapeHtml(data.name) + '</div>';
-    html +=   '</div>';
-    html += '</div>';
     html += '<div class="result-body">';
     html +=   '<span class="result-badge">Твоё состояние сейчас</span>';
     html +=   '<div class="score-display">';
