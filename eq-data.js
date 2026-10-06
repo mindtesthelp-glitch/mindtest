@@ -1,522 +1,873 @@
-/* ═══════════════════════════════════════════════════════════
-   Эмоциональный интеллект (EQ) — данные теста
-   6 шкал, 30 вопросов, 4 варианта ответа
-   Оценки: 0 (низкий EQ) → 3 (высокий EQ)
-   Типы вопросов:
-     обычный (один выбор)
-     multi: N — мультивыбор до N вариантов
-     img: '...' — с картинкой
-     type: 'order' — расстановка по важности
-   ═══════════════════════════════════════════════════════════ */
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тест на эмоциональный интеллект (EQ) — MindTest</title>
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/header.css">
+<style>
+  * { box-sizing: border-box; padding: 0; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif; background: #faf7ff; color: #2e1a4d; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  a { text-decoration: none; color: inherit; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+  svg { flex-shrink: 0; }
 
-const EQ_QUESTIONS = [
-  /* ═══ САМОПОНИМАНИЕ (1-5) ═══ */
-  {
-    q: 'Ты идёшь по улице и понимаешь, что последние 10 минут о чём-то думал(а). О чём обычно?',
-    scale: 'awareness',
-    a: [
-      { t: 'О чём-то приятном или интересном', v: 2 },
-      { t: 'О своих чувствах и переживаниях', v: 3 },
-      { t: 'Обычно не помню, о чём думал(а)', v: 0 },
-      { t: 'О планах и делах', v: 1 }
-    ]
-  },
-  {
-    q: 'Ты весь день чувствуешь, что «что-то не так». Как ты обычно реагируешь?',
-    scale: 'awareness',
-    a: [
-      { t: 'Пытаюсь понять, что именно', v: 3 },
-      { t: 'Не обращаю внимания, пройдёт', v: 0 },
-      { t: 'Замечаю, но не знаю, что делать', v: 1 },
-      { t: 'Примерно догадываюсь, но не точно', v: 2 }
-    ]
-  },
-  {
-    q: 'Друг спрашивает: «Как ты?» — и ты на секунду задумываешься. Что происходит в этот момент?',
-    scale: 'awareness',
-    a: [
-      { t: 'Проверяю, что я чувствую на самом деле', v: 3 },
-      { t: 'Готовлю ответ, чтобы звучал нормально', v: 1 },
-      { t: 'Просто не знаю, что сказать', v: 0 },
-      { t: 'Примерно понимаю своё состояние', v: 2 }
-    ]
-  },
-  {
-    q: 'Ты слушаешь музыку и замечаешь, что у тебя на глазах слёзы. Что это значит для тебя?',
-    scale: 'awareness',
-    a: [
-      { t: 'Что-то важное, хочу понять почему', v: 3 },
-      { t: 'Просто красивая песня, ничего особенного', v: 0 },
-      { t: 'Наверное, устал(а) или накопилось', v: 2 },
-      { t: 'Странно, не понимаю, откуда это', v: 1 }
-    ]
-  },
-  {
-    q: 'Посмотри на картинку. Что, по-твоему, чувствует этот человек?',
-    scale: 'awareness',
-    img: 'eq-q1.png',
-    a: [
-      { t: 'О чём-то важном задумался', v: 3 },
-      { t: 'Просто отдыхает, ничего особенного', v: 1 },
-      { t: 'Что-то сложное, не могу назвать', v: 2 },
-      { t: 'Не могу понять по картинке', v: 0 }
-    ]
-  },
+  .site-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #f0e8fb; }
+  .header-inner { max-width: 100%; margin: 0 auto; padding: 14px 48px; display: flex; align-items: center; gap: 20px; }
+  .logo { font-size: 22px; font-weight: 800; color: #5d2b9e; letter-spacing: -.5px; flex-shrink: 0; }
+  .logo span { color: #a855f7; }
+  .header-actions { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; border-radius: 12px; font-size: 14px; font-weight: 700; transition: all .2s ease; white-space: nowrap; }
+  .btn-back { background: #fff; color: #5d2b9e; border: 2px solid #a855f7; box-shadow: 0 4px 14px rgba(168,85,247,.15); }
+  .btn-back:hover { background: #f5efff; border-color: #7c2fd4; transform: translateY(-2px); }
+  .btn-back svg { width: 16px; height: 16px; }
 
-  /* ═══ САМОКОНТРОЛЬ (6-10) ═══ */
-  {
-    q: 'Ты в очереди, а человек впереди разговаривает по телефону и явно не спешит. Что чувствуешь?',
-    scale: 'control',
-    a: [
-      { t: 'Раздражение, но держусь', v: 2 },
-      { t: 'Замечаю раздражение и отпускаю', v: 3 },
-      { t: 'Ничего, подожду спокойно', v: 1 },
-      { t: 'Закипаю, хочется сказать что-то', v: 0 }
-    ]
-  },
-  {
-    q: 'Ты смотришь видео, и вдруг пропадает интернет. Что делаешь в первую минуту?',
-    scale: 'control',
-    a: [
-      { t: 'Спокойно жду или закрываю', v: 3 },
-      { t: 'Психую, но молча', v: 1 },
-      { t: 'Раздражаюсь и ищу, кого обвинить', v: 0 },
-      { t: 'Вздыхаю, проверяю сеть', v: 2 }
-    ]
-  },
-  {
-    q: 'Кто-то случайно толкнул тебя в толпе. Не извинился. Первая реакция?',
-    scale: 'control',
-    a: [
-      { t: 'Замечаю злость, но не реагирую', v: 3 },
-      { t: 'Раздражаюсь, но про себя', v: 2 },
-      { t: 'Могу сказать что-то резкое', v: 0 },
-      { t: 'Не обращаю внимания, бывает', v: 1 }
-    ]
-  },
-  {
-    q: 'Друг сказал что-то, что тебя задело. Ты замечаешь это:',
-    scale: 'control',
-    a: [
-      { t: 'Сразу, и понимаю, почему', v: 3 },
-      { t: 'Только потом, когда прокручу', v: 2 },
-      { t: 'Обычно не замечаю, что задело', v: 0 },
-      { t: 'Замечаю, но не понимаю причину', v: 1 }
-    ]
-  },
-  {
-    q: 'Расставь по важности: что ты делаешь, когда сильно злишься. Первое — самое важное:',
-    scale: 'control',
-    type: 'order',
-    a: [
-      { t: 'Замечаю, что со мной происходит', v: 3 },
-      { t: 'Делаю паузу, дышу', v: 2 },
-      { t: 'Отвлекаюсь на что-то другое', v: 1 },
-      { t: 'Продолжаю злиться внутри', v: 0 }
-    ]
-  },
+  .test-wrap { max-width: 900px; margin: 0 auto; padding: 32px 24px 80px; }
 
-  /* ═══ МОТИВАЦИЯ (11-15) ═══ */
-  {
-    q: 'Ты видишь человека, который делает что-то классное — играет, рисует, готовит. Что чувствуешь?',
-    scale: 'motivation',
-    a: [
-      { t: 'Интерес, хочу попробовать тоже', v: 3 },
-      { t: 'Восхищаюсь, но не для меня', v: 1 },
-      { t: 'Завидую, у меня так не получится', v: 0 },
-      { t: 'Приятно смотреть, ничего больше', v: 2 }
-    ]
-  },
-  {
-    q: 'Есть дело, которое надо закончить, но хочется бросить. Что происходит?',
-    scale: 'motivation',
-    a: [
-      { t: 'Напоминаю себе, зачем начал(а)', v: 3 },
-      { t: 'Заставляю, но через силу', v: 1 },
-      { t: 'Бросаю, не могу себя пересилить', v: 0 },
-      { t: 'Делаю паузу, потом возвращаюсь', v: 2 }
-    ]
-  },
-  {
-    q: 'Тебе предложили попробовать что-то новое. Ты:',
-    scale: 'motivation',
-    a: [
-      { t: 'Интересно, хочу попробовать', v: 3 },
-      { t: 'Сомневаюсь, но, может, соглашусь', v: 2 },
-      { t: 'Скорее откажусь, не моё', v: 0 },
-      { t: 'Подумаю, но вряд ли', v: 1 }
-    ]
-  },
-  {
-    q: 'Как ты обычно относишься к своим маленьким победам?',
-    scale: 'motivation',
-    a: [
-      { t: 'Замечаю и радуюсь', v: 3 },
-      { t: 'Не считаю их важными', v: 0 },
-      { t: 'Иногда замечаю, иногда нет', v: 2 },
-      { t: 'Редко обращаю внимание', v: 1 }
-    ]
-  },
-  {
-    q: 'Что тебя обычно зажигает делать что-то? Выбери до 2 вариантов:',
-    scale: 'motivation',
-    multi: 2,
-    a: [
-      { t: 'Мне самому(ой) интересно', v: 3 },
-      { t: 'Хочу достичь чего-то важного для себя', v: 3 },
-      { t: 'Надо, чтобы не отставать', v: 0 },
-      { t: 'Жду, что похвалят или заметят', v: 1 }
-    ]
-  },
+  .intro-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 28px; overflow: hidden; box-shadow: 0 20px 50px rgba(93,43,158,.08); animation: q-in .5s cubic-bezier(.16,1,.3,1); max-width: 780px; margin: 0 auto; }
+  @keyframes q-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* ═══ ЭМПАТИЯ (16-20) ═══ */
-  {
-    q: 'Друг говорит «всё нормально», но голос звучит странно. Что делаешь?',
-    scale: 'empathy',
-    a: [
-      { t: 'Спрашиваю мягко: «Точно? Что-то случилось?»', v: 3 },
-      { t: 'Замечаю, но не лезу', v: 1 },
-      { t: 'Верю — сказал(а) же нормально', v: 0 },
-      { t: 'Меняю тему, чтобы не давить', v: 2 }
-    ]
-  },
-  {
-    q: 'Ты видишь, что кто-то рядом притих. Что замечаешь первым?',
-    scale: 'empathy',
-    a: [
-      { t: 'Что-то в лице или позе изменилось', v: 3 },
-      { t: 'Замечаю, но не придаю значения', v: 1 },
-      { t: 'Обычно не замечаю такого', v: 0 },
-      { t: 'Понимаю, что настроение другое', v: 2 }
-    ]
-  },
-  {
-    q: 'Ты смотришь фильм, где герой теряет близкого. Что чувствуешь?',
-    scale: 'empathy',
-    a: [
-      { t: 'Проникаюсь, могу расчувствоваться', v: 3 },
-      { t: 'Понимаю, но не сильно', v: 2 },
-      { t: 'Мне всё равно, это же кино', v: 0 },
-      { t: 'Скорее наблюдаю со стороны', v: 1 }
-    ]
-  },
-  {
-    q: 'Друг рассказал про свою сложную ситуацию. Что ты чаще всего делаешь?',
-    scale: 'empathy',
-    a: [
-      { t: 'Слушаю, стараюсь понять, что он(а) чувствует', v: 3 },
-      { t: 'Сразу предлагаю решения', v: 1 },
-      { t: 'Жду паузу, чтобы рассказать про себя', v: 0 },
-      { t: 'Слушаю, но думаю о своём', v: 2 }
-    ]
-  },
-  {
-    q: 'Посмотри на картинку. Что происходит между этими людьми?',
-    scale: 'empathy',
-    img: 'eq-q2.png',
-    a: [
-      { t: 'Чувствуется тепло, они близки', v: 3 },
-      { t: 'Что-то между ними есть — не пойму что', v: 2 },
-      { t: 'Просто разговаривают, ничего особенного', v: 1 },
-      { t: 'Не могу ничего понять по картинке', v: 0 }
-    ]
-  },
+  .intro-hero { width: 100%; aspect-ratio: 1312 / 1225; background: linear-gradient(135deg, #2a1550, #4b1e8c); display: flex; align-items: center; justify-content: center; color: #fff; position: relative; overflow: hidden; }
+  .intro-hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(168,85,247,.45), transparent 70%); border-radius: 50%; pointer-events: none; z-index: 1; }
+  .intro-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; z-index: 2; }
+  .intro-hero-placeholder { position: relative; z-index: 2; text-align: center; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .intro-hero-placeholder svg { width: 64px; height: 64px; opacity: .5; }
+  .intro-hero-placeholder p { font-size: 13px; opacity: .55; }
 
-  /* ═══ ОБЩЕНИЕ (21-25) ═══ */
-  {
-    q: 'Ты не согласен(на) с чем-то, что сказал(а) близкий. Как говоришь об этом?',
-    scale: 'communication',
-    a: [
-      { t: 'Спокойно объясняю свою точку зрения', v: 3 },
-      { t: 'Молчу, но внутри не согласен(на)', v: 1 },
-      { t: 'Спорю, доказываю', v: 0 },
-      { t: 'Соглашаюсь, чтобы не спорить', v: 2 }
-    ]
-  },
-  {
-    q: 'Ссора с близким человеком. Что обычно делаешь?',
-    scale: 'communication',
-    a: [
-      { t: 'Даю время, потом говорю первой(ым)', v: 3 },
-      { t: 'Делаю вид, что всё нормально', v: 1 },
-      { t: 'Жду, пока он(а) подойдёт', v: 2 },
-      { t: 'Не разговариваю, пока не извинятся', v: 0 }
-    ]
-  },
-  {
-    q: 'Тебе нужна помощь. Что ты обычно делаешь?',
-    scale: 'communication',
-    a: [
-      { t: 'Прямо прошу — это нормально', v: 3 },
-      { t: 'Долго думаю, потом прошу', v: 2 },
-      { t: 'Лучше справлюсь сам(а), чем просить', v: 0 },
-      { t: 'Намекаю, жду, чтобы догадались', v: 1 }
-    ]
-  },
-  {
-    q: 'Тебя не поняли в разговоре. Что делаешь?',
-    scale: 'communication',
-    a: [
-      { t: 'Объясняю по-другому', v: 3 },
-      { t: 'Повторяю то же самое громче', v: 1 },
-      { t: 'Думаю, что они не хотят понять', v: 0 },
-      { t: 'Расстраиваюсь, замолкаю', v: 2 }
-    ]
-  },
-  {
-    q: 'Расставь по важности: что ты сделаешь, если друг чем-то расстроен. Первое — самое важное:',
-    scale: 'communication',
-    type: 'order',
-    a: [
-      { t: 'Дам ему высказаться', v: 3 },
-      { t: 'Спрошу, что случилось', v: 2 },
-      { t: 'Предложу помощь или совет', v: 1 },
-      { t: 'Расскажу похожую историю из своей жизни', v: 0 }
-    ]
-  },
+  .intro-body { padding: 40px 48px 40px; }
+  .intro-cat { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: #f5efff; color: #7c2fd4; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 16px; }
+  .intro-cat svg { width: 14px; height: 14px; }
+  .intro-title { font-size: clamp(26px, 4vw, 38px); font-weight: 900; letter-spacing: -1.2px; line-height: 1.15; color: #2e1a4d; margin-bottom: 12px; }
+  .intro-subtitle { font-size: 17px; color: #7e6b94; line-height: 1.6; margin-bottom: 26px; }
+  .intro-desc { font-size: 16px; color: #4b3b63; line-height: 1.75; margin-bottom: 28px; }
+  .intro-desc p + p { margin-top: 12px; }
 
-  /* ═══ ВОССТАНОВЛЕНИЕ (26-30) ═══ */
-  {
-    q: 'Ты не прошёл(ла) куда-то — конкурс, отбор, важное дело. Что чувствуешь через день?',
-    scale: 'resilience',
-    a: [
-      { t: 'Почти спокойно, иду дальше', v: 3 },
-      { t: 'Ещё сильно болит', v: 1 },
-      { t: 'Всё ещё не могу думать о другом', v: 0 },
-      { t: 'Смешанно — и легче, и всё ещё неприятно', v: 2 }
-    ]
-  },
-  {
-    q: 'Кто-то сказал тебе что-то обидное. Что происходит дальше?',
-    scale: 'resilience',
-    a: [
-      { t: 'Думаю об этом, потом отпускаю', v: 3 },
-      { t: 'Стараюсь не думать, отвлекаюсь', v: 1 },
-      { t: 'Прокручиваю в голове долго', v: 2 },
-      { t: 'Возвращаюсь снова и снова', v: 0 }
-    ]
-  },
-  {
-    q: 'Ты сделал(а) что-то, за что теперь стыдно. Как ты с этим?',
-    scale: 'resilience',
-    a: [
-      { t: 'Понимаю, что это опыт, иду дальше', v: 3 },
-      { t: 'Забываю быстро', v: 1 },
-      { t: 'Долго вспоминаю и корю себя', v: 2 },
-      { t: 'Не могу простить себя', v: 0 }
-    ]
-  },
-  {
-    q: 'Плохое воспоминание всплывает в памяти. Как ты его вспоминаешь?',
-    scale: 'resilience',
-    a: [
-      { t: 'Спокойно, уже не больно', v: 3 },
-      { t: 'С лёгкой грустью', v: 2 },
-      { t: 'Всё ещё неприятно', v: 1 },
-      { t: 'Как будто случилось только что', v: 0 }
-    ]
-  },
-  {
-    q: 'Что ты обычно делаешь, когда тебе плохо? Выбери до 2 вариантов:',
-    scale: 'resilience',
-    multi: 2,
-    a: [
-      { t: 'Говорю с кем-то, кто может выслушать', v: 3 },
-      { t: 'Проживаю это, даю себе время чувствовать', v: 3 },
-      { t: 'Отвлекаюсь на что-нибудь', v: 1 },
-      { t: 'Ничего, жду, когда само пройдёт', v: 0 }
-    ]
+  .intro-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+  .intro-meta-item { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; background: #faf7ff; border: 1.5px solid #f0e8fb; border-radius: 12px; font-size: 15px; font-weight: 600; color: #4b3b63; }
+  .intro-meta-item svg { width: 17px; height: 17px; color: #a855f7; }
+
+  .intro-start-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 20px; border-radius: 16px; background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; font-size: 18px; font-weight: 800; box-shadow: 0 10px 28px rgba(124,47,212,.35); transition: transform .2s; }
+  .intro-start-btn:hover { transform: translateY(-2px); }
+  .intro-start-btn svg { width: 20px; height: 20px; }
+
+  .test-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-size: 15px; color: #7e6b94; font-weight: 600; gap: 12px; }
+  .test-topbar b { color: #5d2b9e; font-weight: 800; }
+  .test-topbar > div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .test-progress { height: 10px; background: #f0e8fb; border-radius: 999px; overflow: hidden; margin-bottom: 36px; }
+  .test-progress-fill { height: 100%; background: linear-gradient(135deg,#7c2fd4,#a855f7); border-radius: 999px; width: 0; transition: width .35s cubic-bezier(.16,1,.3,1); }
+
+  .q-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 24px; padding: 48px 44px 40px; box-shadow: 0 20px 50px rgba(93,43,158,.08); animation: q-in .35s cubic-bezier(.16,1,.3,1); }
+  .q-num { display: inline-block; padding: 5px 12px; border-radius: 999px; background: #f5efff; color: #7c2fd4; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 18px; }
+  .q-hint { display: inline-flex; align-items: center; gap: 6px; margin-left: 8px; padding: 4px 10px; border-radius: 999px; background: #ecfdf5; color: #059669; font-size: 11px; font-weight: 700; letter-spacing: .3px; text-transform: none; }
+  .q-hint svg { width: 12px; height: 12px; }
+  .q-hint--order { background: #eff6ff; color: #2563eb; }
+  .q-counter { display: block; margin-top: 4px; font-size: 13px; font-weight: 700; color: #7c2fd4; }
+
+  .q-image { display: block; width: 100%; max-width: 480px; height: auto; margin: 0 auto 24px; border-radius: 18px; background: #faf7ff; box-shadow: 0 8px 24px rgba(93,43,158,.1); }
+
+  .q-title { font-size: 24px; font-weight: 800; letter-spacing: -.5px; line-height: 1.35; margin-bottom: 30px; color: #2e1a4d; }
+  .q-answers { display: flex; flex-direction: column; gap: 13px; }
+  .q-answer { display: flex; align-items: flex-start; gap: 14px; padding: 20px 22px; background: #faf7ff; border: 2px solid #ece3fa; border-radius: 16px; font-size: 15.5px; font-weight: 500; color: #4b3b63; text-align: left; transition: all .2s; line-height: 1.5; }
+  .q-answer:hover { border-color: #c9a9f0; background: #f5efff; transform: translateY(-1px); }
+  .q-answer .q-radio { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #d9c7f2; background: #fff; flex-shrink: 0; position: relative; transition: all .2s; margin-top: 1px; }
+  .q-answer.selected { border-color: #a855f7; background: #f5efff; }
+  .q-answer.selected .q-radio { border-color: #a855f7; }
+  .q-answer.selected .q-radio::after { content: ''; position: absolute; inset: 4px; border-radius: 50%; background: linear-gradient(135deg,#7c2fd4,#a855f7); }
+
+  .q-answer--multi .q-radio { border-radius: 6px; }
+  .q-answer--multi.selected .q-radio { background: linear-gradient(135deg,#7c2fd4,#a855f7); }
+  .q-answer--multi.selected .q-radio::after {
+    content: '';
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 4px; height: 9px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -60%) rotate(45deg);
+    background: none; border-radius: 0;
   }
-];
+  .q-answer--multi.is-locked { opacity: .45; cursor: not-allowed; }
+  .q-answer--multi.is-locked:hover { border-color: #ece3fa; background: #faf7ff; transform: none; }
 
-const EQ_ALL_QUESTIONS = EQ_QUESTIONS;
-
-/* ═══════════════════════════════════════════════════════════
-   6 шкал EQ
-   ═══════════════════════════════════════════════════════════ */
-
-const EQ_SCALES = [
-  { id: 'awareness',     name: 'Самопонимание',  color: '#a855f7', desc: 'Как ты понимаешь свои эмоции' },
-  { id: 'control',       name: 'Самоконтроль',   color: '#ec4899', desc: 'Как ты управляешь реакциями' },
-  { id: 'motivation',    name: 'Мотивация',      color: '#f59e0b', desc: 'Твой внутренний двигатель' },
-  { id: 'empathy',       name: 'Эмпатия',        color: '#06b6d4', desc: 'Как ты чувствуешь других' },
-  { id: 'communication', name: 'Общение',        color: '#10b981', desc: 'Как ты говоришь и слушаешь' },
-  { id: 'resilience',    name: 'Восстановление', color: '#6366f1', desc: 'Как ты справляешься с плохим' }
-];
-
-/* ═══════════════════════════════════════════════════════════
-   6 уровней EQ
-   Оценка: 0% — низкий, 100% — очень высокий
-   ═══════════════════════════════════════════════════════════ */
-
-const EQ_LEVELS = [
-  {
-    id: 'very-low',
-    min: 0, max: 15,
-    name: 'EQ почти не развит',
-    tagline: 'Ты пока не замечаешь чувства — ни свои, ни чужие',
-    percent: '~5%',
-    desc: [
-      'Эмоциональный интеллект — это навык, а не врождённая черта. Если сейчас тебе сложно понимать свои чувства или замечать чужие — это не «плохо». Это просто точка, из которой можно начать.',
-      'У тебя впереди огромное пространство для роста. И самое приятное: первые шаги дают самый большой эффект. Уже через пару недель наблюдений ты начнёшь замечать то, что раньше проходило мимо.'
-    ],
-    actions: [
-      'Раз в день спрашивай себя: «Что я сейчас чувствую?» — хотя бы одним словом.',
-      'Замечай, когда что-то радует или расстраивает — и останавливайся на секунду.',
-      'Смотри фильмы и думай: что чувствует герой и почему?',
-      'Не осуждай себя за чувства — они все нормальны.'
-    ]
-  },
-  {
-    id: 'forming',
-    min: 16, max: 32,
-    name: 'EQ только формируется',
-    tagline: 'Иногда замечаешь чувства, но чаще они проходят мимо',
-    percent: '~15%',
-    desc: [
-      'Ты уже иногда замечаешь, что с тобой что-то происходит. Но чаще всего эмоции проходят мимо внимания — ты просто действуешь, а потом удивляешься, почему так вышло.',
-      'Это нормальная стадия. Главное — продолжать замечать. Каждый раз, когда ты останавливаешься и спрашиваешь «что со мной?», ты тренируешь этот навык.'
-    ],
-    actions: [
-      'Попробуй называть эмоции точнее — не только «нормально» и «плохо».',
-      'Заведи простой дневник чувств: 2–3 строки вечером.',
-      'Замечай, что тебя цепляет в разговорах и ситуациях.',
-      'Слушай других, прежде чем советовать.'
-    ]
-  },
-  {
-    id: 'below',
-    min: 33, max: 49,
-    name: 'EQ ниже среднего',
-    tagline: 'Что-то понимаешь, но часто реагируешь импульсивно',
-    percent: '~20%',
-    desc: [
-      'Ты уже замечаешь свои и чужие эмоции — но пока не всегда успеваешь с ними что-то сделать. Часто сначала реагируешь, а потом понимаешь, что можно было иначе.',
-      'Это как раз тот уровень, где рост особенно заметен. Небольшие усилия — пауза перед реакцией, вопрос «что я чувствую?» — и ты быстро почувствуешь разницу.'
-    ],
-    actions: [
-      'Перед реакцией делай паузу в 3 секунды — этого уже достаточно.',
-      'Учись говорить «я чувствую…» вместо «ты виноват…».',
-      'Замечай, что стало триггером сильной эмоции.',
-      'Слушай, что чувствуют другие, прежде чем отвечать.'
-    ]
-  },
-  {
-    id: 'middle',
-    min: 50, max: 66,
-    name: 'Средний EQ',
-    tagline: 'База есть — но в сложных ситуациях теряешься',
-    percent: '~30%',
-    desc: [
-      'Ты хорошо понимаешь простые эмоции — радость, грусть, злость. Замечаешь чужие состояния. Но когда становится сложно — смешанные чувства, конфликты, сильный стресс — растеряешься.',
-      'Это уже хороший уровень. Дальше рост идёт через сложные ситуации: конфликты, глубокие разговоры, честность с собой. Именно там EQ закаляется.'
-    ],
-    actions: [
-      'Учись называть сложные эмоции: тоска, обида, раздражение, апатия…',
-      'В конфликтах сначала слушай, потом говори.',
-      'Читай художественную литературу — она тренирует эмпатию.',
-      'Замечай, когда эмоции управляют тобой — и почему.'
-    ]
-  },
-  {
-    id: 'good',
-    min: 67, max: 83,
-    name: 'Развитый EQ',
-    tagline: 'Ты хорошо понимаешь себя и других',
-    percent: '~22%',
-    desc: [
-      'Ты понимаешь свои чувства и умеешь с ними обращаться. Чувствуешь других, слушаешь, поддерживаешь — а это редкий навык. В сложных ситуациях ты не теряешься так, как большинство.',
-      'Есть куда расти — особенно в конфликтах и сильных эмоциях. Но база отличная, и это видно по ответам.'
-    ],
-    actions: [
-      'В конфликтах ищи, что за эмоциями у обоих — а не кто прав.',
-      'Продолжай читать глубокие книги и разговаривать о чувствах.',
-      'Следи, чтобы не «выгореть», помогая другим.',
-      'Не забывай: твои чувства тоже важны.'
-    ]
-  },
-  {
-    id: 'high',
-    min: 84, max: 100,
-    name: 'Очень высокий EQ',
-    tagline: 'Ты чувствуешь людей на глубоком уровне',
-    percent: '~8%',
-    desc: [
-      'Ты понимаешь свои эмоции и легко читаешь чужие. Умеешь поддержать, выстроить контакт, не реагировать импульсивно. Это очень редкий и ценный навык, которым обладают единицы.',
-      'Единственное, за чем стоит следить — чтобы ты не растворялся(ась) в других. Твои чувства тоже важны. Помни об этом.'
-    ],
-    actions: [
-      'Убедись, что уделяешь время себе, не только другим.',
-      'Помни: не все хотят «понимания» — иногда нужна просто поддержка.',
-      'Используй свой EQ для помощи, но без «спасательства».',
-      'Читай философию, психологию — тебе будет интересно.'
-    ]
+  .q-answer--order { padding-left: 60px; position: relative; }
+  .q-answer--order .q-order-num {
+    position: absolute;
+    left: 16px; top: 50%;
+    transform: translateY(-50%);
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 2px solid #d9c7f2;
+    background: #fff;
+    color: #a898c2;
+    font-weight: 800;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s;
   }
-];
-
-/* ═══════════════════════════════════════════════════════════
-   Premium-рекомендации
-   ═══════════════════════════════════════════════════════════ */
-
-const EQ_PREMIUM = {
-  'very-low': {
-    focus: ['Наблюдать за собой', 'Называть чувства', 'Замечать других'],
-    develop: [
-      'Начни с самого простого: раз в день отмечай, что чувствуешь.',
-      'Смотри фильмы и задавай себе вопрос: что чувствует герой?',
-      'Веди короткий дневник: 2–3 строки о том, как прошёл день.',
-      'Не осуждай себя за чувства — они все нормальны.'
-    ],
-    read: ['«Эмоциональный интеллект» — Дэниел Гоулман', '«Язык эмоций» — Марк Брэкетт']
-  },
-  'forming': {
-    focus: ['Точнее называть чувства', 'Замечать триггеры', 'Слушать других'],
-    develop: [
-      'Учись называть эмоции точнее — не «плохо», а «тревожно», «обидно», «устало».',
-      'Замечай, что именно вызывает сильные реакции.',
-      'В разговоре сначала спроси: «что ты чувствуешь?»',
-      'Останавливайся на секунду перед ответом — это меняет всё.'
-    ],
-    read: ['«Эмоциональный интеллект» — Гоулман', '«Ненасильственное общение» — Маршалл Розенберг']
-  },
-  'below': {
-    focus: ['Пауза перед реакцией', 'Слушать без советов', 'Говорить «я чувствую»'],
-    develop: [
-      'Перед реакцией делай паузу 3 секунды — это простое правило меняет многое.',
-      'Заменяй «ты виноват» на «я чувствую, когда…» — это снижает конфликты.',
-      'Учись слушать, не давая советов сразу.',
-      'Замечай, что стало причиной эмоции — часто это не то, что кажется.'
-    ],
-    read: ['«Ненасильственное общение» — Розенберг', '«Как перестать беспокоиться» — Карнеги']
-  },
-  'middle': {
-    focus: ['Сложные эмоции', 'Глубокие разговоры', 'Честность с собой'],
-    develop: [
-      'Учись замечать смешанные чувства — когда и радостно, и грустно одновременно.',
-      'В конфликте сначала попробуй понять, что чувствует другой.',
-      'Читай больше художественной литературы — она развивает эмпатию.',
-      'Задавай себе честные вопросы: «Что я на самом деле чувствую под злостью?»'
-    ],
-    read: ['«Сила уязвимости» — Брене Браун', '«Ненасильственное общение» — Розенберг']
-  },
-  'good': {
-    focus: ['Конфликты', 'Забота о себе', 'Глубина'],
-    develop: [
-      'В конфликтах ищи, что за эмоциями у обоих — а не кто прав.',
-      'Следи за балансом: помогать другим важно, но не в ущерб себе.',
-      'Пробуй сложные разговоры — именно там растёт EQ.',
-      'Читай философию и психологию — тебе будет интересно.'
-    ],
-    read: ['«Сила уязвимости» — Брене Браун', '«Дар несовершенства» — Брене Браун']
-  },
-  'high': {
-    focus: ['Границы', 'Не спасать силой', 'Забота о себе'],
-    develop: [
-      'Помни: не все хотят «понимания» — иногда нужна просто поддержка.',
-      'Учись говорить «нет», когда берёшь слишком много.',
-      'Не растворяйся в других — твои чувства тоже важны.',
-      'Читай философию, чтобы углубить понимание людей.'
-    ],
-    read: ['«Дар несовершенства» — Брене Браун', '«Человек в поисках смысла» — Виктор Франкл']
+  .q-answer--order.selected { border-color: #a855f7; background: #f5efff; }
+  .q-answer--order.selected .q-order-num {
+    background: linear-gradient(135deg,#7c2fd4,#a855f7);
+    border-color: #a855f7;
+    color: #fff;
   }
-};
+  .q-order-hint { font-size: 13px; color: #7e6b94; margin-bottom: 14px; font-weight: 600; }
+
+  .test-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; gap: 14px; }
+  .btn-nav { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 30px; border-radius: 14px; font-size: 16px; font-weight: 700; transition: all .2s; min-height: 56px; }
+  .btn-nav svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .btn-prev { background: #fff; color: #5d2b9e; border: 2px solid #ece3fa; }
+  .btn-prev:hover:not(:disabled) { border-color: #a855f7; background: #f5efff; }
+  .btn-prev:disabled { opacity: .4; cursor: not-allowed; }
+  .btn-next { background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; box-shadow: 0 8px 22px rgba(124,47,212,.35); }
+  .btn-next:hover:not(:disabled) { transform: translateY(-2px); }
+  .btn-next:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+
+  .result-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 28px; overflow: hidden; box-shadow: 0 25px 60px rgba(93,43,158,.12); animation: q-in .5s cubic-bezier(.16,1,.3,1); max-width: 780px; margin: 0 auto; }
+
+  .result-body { padding: 56px 48px 40px; }
+  .result-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: #f5efff; color: #7c2fd4; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; margin-bottom: 16px; }
+
+  .score-display { text-align: center; margin-bottom: 24px; }
+  .score-number { font-size: clamp(72px, 13vw, 130px); font-weight: 900; letter-spacing: -6px; line-height: .9; background: linear-gradient(135deg,#7c2fd4,#ec4899); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
+  .score-of { font-size: clamp(20px, 3vw, 28px); font-weight: 700; color: #a898c2; margin-left: 4px; letter-spacing: -1px; }
+  .score-suffix { display: block; font-size: 14px; font-weight: 700; color: #a855f7; margin-top: 4px; letter-spacing: 1.5px; text-transform: uppercase; }
+  .result-title { font-size: clamp(24px, 3.5vw, 32px); font-weight: 900; letter-spacing: -1px; line-height: 1.25; color: #2e1a4d; margin-bottom: 8px; text-align: center; }
+  .result-tagline { font-size: 17px; color: #a855f7; font-weight: 700; margin-bottom: 12px; text-align: center; }
+  .result-percent-wrap { text-align: center; margin-bottom: 28px; }
+  .result-percent { display: inline-block; max-width: 100%; padding: 8px 18px; background: #faf7ff; border: 1.5px solid #ece3fa; border-radius: 18px; font-size: 14px; font-weight: 600; color: #6b5b82; line-height: 1.5; text-align: center; }
+  .result-percent b { color: #7c2fd4; font-weight: 800; }
+  .result-desc { font-size: 16px; color: #4b3b63; line-height: 1.8; margin-bottom: 32px; }
+  .result-desc p + p { margin-top: 14px; }
+
+  .profile-box { background: #faf7ff; border: 2px solid #f0e8fb; border-radius: 22px; padding: 28px 26px; margin-bottom: 32px; }
+  .profile-box-title { font-size: 16px; font-weight: 800; color: #2e1a4d; margin-bottom: 20px; text-align: center; letter-spacing: -.2px; }
+  .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; }
+  .profile-radar { display: flex; align-items: center; justify-content: center; }
+  .profile-radar svg { width: 100%; max-width: 340px; height: auto; display: block; }
+  .profile-bars { display: flex; flex-direction: column; gap: 11px; }
+  .profile-bar { display: flex; flex-direction: column; gap: 4px; }
+  .profile-bar-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .profile-bar-name { font-size: 12.5px; font-weight: 700; color: #4b3b63; display: inline-flex; align-items: center; gap: 6px; }
+  .profile-bar-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .profile-bar-pct { font-size: 12.5px; font-weight: 800; color: #2e1a4d; }
+  .profile-bar-track { height: 6px; background: #f0e8fb; border-radius: 999px; overflow: hidden; }
+  .profile-bar-fill { height: 100%; border-radius: 999px; width: 0; transition: width .9s cubic-bezier(.16,1,.3,1); }
+
+  /* ═════════ ШКАЛА EQ ═════════ */
+  .eq-scale-wrap { margin-top: 28px; padding: 22px 22px 20px; background: #fff; border: 2px solid #f0e8fb; border-radius: 18px; }
+  .eq-scale-title { font-size: 13px; font-weight: 800; color: #2e1a4d; margin-bottom: 22px; text-align: center; letter-spacing: -.2px; }
+  .eq-scale-track { position: relative; height: 12px; border-radius: 999px; background: linear-gradient(90deg, #f87171 0%, #fb923c 16%, #fbbf24 32%, #34d399 49%, #60a5fa 66%, #a855f7 84%, #7c2fd4 100%); opacity: .55; }
+  .eq-scale-marker { position: absolute; top: 50%; width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 4px solid #7c2fd4; transform: translate(-50%, -50%); box-shadow: 0 4px 14px rgba(124,47,212,.45); transition: left 1s cubic-bezier(.16,1,.3,1); z-index: 2; }
+  .eq-scale-labels { position: relative; height: 18px; margin-top: 8px; }
+  .eq-scale-labels span { position: absolute; transform: translateX(-50%); font-size: 11px; color: #a898c2; font-weight: 700; }
+  .eq-scale-caption { text-align: center; margin-top: 10px; }
+  .eq-scale-caption-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #f5efff; border-radius: 999px; font-size: 12px; font-weight: 800; color: #5d2b9e; }
+  .eq-scale-caption-badge .eq-scale-caption-dot { width: 8px; height: 8px; border-radius: 50%; background: #7c2fd4; }
+
+  .actions-block { background: #fff; border: 2px solid #f0e8fb; border-radius: 20px; padding: 26px 24px; margin-bottom: 32px; }
+  .actions-block-title { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 800; margin-bottom: 18px; color: #2e1a4d; }
+  .actions-block-title svg { width: 22px; height: 22px; color: #a855f7; }
+  .actions-list { display: flex; flex-direction: column; gap: 12px; }
+  .actions-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; background: #faf7ff; border-radius: 12px; font-size: 15px; color: #4b3b63; line-height: 1.55; }
+  .actions-item svg { width: 18px; height: 18px; color: #a855f7; flex-shrink: 0; margin-top: 2px; }
+
+  .result-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .btn-res { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 17px 22px; border-radius: 14px; font-size: 15px; font-weight: 700; transition: all .2s; border: 2px solid transparent; }
+  .btn-res svg { width: 18px; height: 18px; }
+  .btn-res.primary { background: linear-gradient(135deg,#7c2fd4,#a855f7); color: #fff; box-shadow: 0 8px 22px rgba(124,47,212,.3); }
+  .btn-res.primary:hover { transform: translateY(-2px); }
+  .btn-res.outline { background: #fff; color: #5d2b9e; border-color: #ece3fa; }
+  .btn-res.outline:hover { border-color: #a855f7; background: #f5efff; }
+
+  .premium-rec { margin-top: 32px; background: linear-gradient(135deg,#2a1550,#4b1e8c); border-radius: 24px; padding: 40px 44px; color: #fff; position: relative; overflow: hidden; }
+  .premium-rec::before { content: ''; position: absolute; top: -40%; right: -20%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(168,85,247,.4), transparent 70%); border-radius: 50%; pointer-events: none; }
+  .premium-rec-inner { position: relative; z-index: 1; }
+  .premium-rec-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .premium-rec-head-icon { width: 38px; height: 38px; border-radius: 11px; background: rgba(255,255,255,.12); display: flex; align-items: center; justify-content: center; color: #fbbf24; }
+  .premium-rec-head-icon svg { width: 20px; height: 20px; }
+  .premium-rec-head h3 { font-size: 22px; font-weight: 800; letter-spacing: -.3px; }
+  .premium-rec-sub { font-size: 15px; color: #c4a9e8; margin-bottom: 26px; line-height: 1.55; }
+
+  .premium-locked { background: rgba(255,255,255,.06); border: 1px dashed rgba(255,255,255,.22); border-radius: 16px; padding: 30px 26px; text-align: center; }
+  .premium-locked-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: #fbbf24; }
+  .premium-locked-icon svg { width: 26px; height: 26px; }
+  .premium-locked p { font-size: 15px; color: #c4a9e8; margin-bottom: 20px; line-height: 1.6; max-width: 480px; margin-left: auto; margin-right: auto; }
+  .premium-locked .btn-premium-rec { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 12px; background: #fff; color: #5d2b9e; font-size: 15px; font-weight: 800; transition: transform .2s; }
+  .premium-locked .btn-premium-rec:hover { transform: translateY(-2px); }
+  .premium-locked .btn-premium-rec svg { width: 17px; height: 17px; }
+
+  .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); padding: 14px 22px; background: #2e1a4d; color: #fff; border-radius: 14px; font-size: 14px; font-weight: 600; box-shadow: 0 12px 30px rgba(46,26,77,.35); z-index: 9999; opacity: 0; transition: all .3s cubic-bezier(.16,1,.3,1); pointer-events: none; }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+  @media (max-width: 720px) {
+    .header-inner { padding: 12px 16px; gap: 10px; }
+    .logo { font-size: 20px; }
+    .btn { padding: 9px 14px; font-size: 13px; }
+    .btn-back span { display: none; }
+    .btn-back { padding: 9px 12px; }
+    .test-wrap { padding: 22px 16px 60px; }
+    .intro-body { padding: 28px 22px 28px; }
+    .q-card { padding: 28px 20px 24px; border-radius: 20px; }
+    .q-title { font-size: 19px; margin-bottom: 22px; }
+    .q-answer { padding: 15px 16px; font-size: 14px; border-radius: 14px; }
+    .q-answer--order { padding-left: 54px; }
+    .q-answer--order .q-order-num { left: 14px; width: 28px; height: 28px; font-size: 13px; }
+    .btn-nav { padding: 13px 20px; font-size: 14px; }
+    .btn-nav svg { width: 18px; height: 18px; }
+    .result-body { padding: 36px 22px 26px; }
+    .result-actions { grid-template-columns: 1fr; }
+    .premium-rec { padding: 28px 22px; border-radius: 20px; }
+    .profile-box { padding: 22px 18px; }
+    .profile-grid { grid-template-columns: 1fr; gap: 20px; }
+    .profile-radar svg { max-width: 280px; }
+    .score-number { letter-spacing: -4px; }
+    .actions-block { padding: 22px 18px; }
+  }
+  @media (max-width: 480px) {
+    .q-num { font-size: 11px; padding: 4px 10px; }
+    .q-title { font-size: 17px; }
+    .q-answer { font-size: 13.5px; padding: 14px 14px; }
+    .q-answer .q-radio { width: 20px; height: 20px; }
+    .q-answer--multi.selected .q-radio::after { width: 4px; height: 9px; border-width: 0 2px 2px 0; }
+    .q-answer--order { padding-left: 50px; }
+    .test-nav { flex-direction: column-reverse; align-items: stretch; }
+    .btn-nav { width: 100%; }
+    .result-title { font-size: 20px; }
+    .score-suffix { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="./" class="logo">Mind<span>Test</span></a>
+    <div class="header-actions">
+      <a href="catalog.html#tests" class="btn btn-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>К тестам</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="test-wrap">
+  <div id="testRoot"></div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="eq-data.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  var root = document.getElementById('testRoot');
+  var toastEl = document.getElementById('toast');
+
+  function pluralRu(n, forms) {
+    var n10 = n % 10, n100 = n % 100;
+    if (n10 === 1 && n100 !== 11) return forms[0];
+    if (n10 >= 2 && n10 <= 4 && (n100 < 10 || n100 >= 20)) return forms[1];
+    return forms[2];
+  }
+
+  var TEST_TITLE = 'Тест на эмоциональный интеллект';
+  var TEST_SUBTITLE = 'Какой у тебя уровень EQ?';
+  var TEST_DESC = [
+    'Эмоциональный интеллект — это не «ум», а способность понимать свои чувства и чувства других. Это навык, который можно развивать. И он часто важнее, чем IQ.',
+    'Тест покажет, насколько хорошо ты понимаешь себя, умеешь ли управлять реакциями, чувствуешь ли других и как справляешься с плохим. Отвечай честно, ориентируясь на последние недели. Правильных ответов нет.'
+  ];
+  var HERO_IMG = './eq-hero.png';
+
+  var state = {
+    screen: 'intro',
+    current: 0,
+    answers: [],
+    scores: null,
+    total: 0,
+    result: null
+  };
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function(c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function showToast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastEl._t);
+    toastEl._t = setTimeout(function() { toastEl.classList.remove('show'); }, 2400);
+  }
+
+  function scrollTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+  function getResult(score) {
+    for (var i = 0; i < EQ_LEVELS.length; i++) {
+      if (score >= EQ_LEVELS[i].min && score <= EQ_LEVELS[i].max) return EQ_LEVELS[i];
+    }
+    return EQ_LEVELS[EQ_LEVELS.length - 1];
+  }
+
+  /* ═════════ INTRO ═════════ */
+  function renderIntro() {
+    state.screen = 'intro';
+    state.current = 0;
+    state.answers = EQ_ALL_QUESTIONS.map(function() { return []; });
+    state.scores = null;
+    state.total = 0;
+    state.result = null;
+
+    var html = '';
+    html += '<div class="intro-card">';
+    html +=   '<div class="intro-hero">';
+    html +=     '<img src="' + HERO_IMG + '" alt="" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">';
+    html +=     '<div class="intro-hero-placeholder" style="display:none;">';
+    html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>';
+    html +=       '<p>Место для картинки теста</p>';
+    html +=     '</div>';
+    html +=   '</div>';
+    html +=   '<div class="intro-body">';
+    html +=     '<div class="intro-cat">';
+    html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18z"/><path d="M9 10h.01M15 10h.01M9.5 15a3.5 3.5 0 0 0 5 0"/></svg>';
+    html +=       'Психология и характер';
+    html +=     '</div>';
+    html +=     '<h1 class="intro-title">' + escapeHtml(TEST_TITLE) + ': ' + escapeHtml(TEST_SUBTITLE) + '</h1>';
+    html +=     '<p class="intro-subtitle">' + EQ_ALL_QUESTIONS.length + ' ' + pluralRu(EQ_ALL_QUESTIONS.length, ['вопрос', 'вопроса', 'вопросов']) + ' — и честный взгляд на то, как ты чувствуешь себя и других.</p>';
+    html +=     '<div class="intro-desc">';
+    TEST_DESC.forEach(function(p) { html += '<p>' + escapeHtml(p) + '</p>'; });
+    html +=     '</div>';
+    html +=     '<div class="intro-meta">';
+    html +=       '<div class="intro-meta-item">';
+    html +=         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>';
+    html +=         EQ_ALL_QUESTIONS.length + ' ' + pluralRu(EQ_ALL_QUESTIONS.length, ['вопрос', 'вопроса', 'вопросов']);
+    html +=       '</div>';
+    html +=       '<div class="intro-meta-item">';
+    html +=         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>';
+    html +=         '~8 минут';
+    html +=       '</div>';
+    html +=       '<div class="intro-meta-item">';
+    html +=         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7 9 9.7 3 15.7"/></svg>';
+    html +=         'Средняя сложность';
+    html +=       '</div>';
+    html +=     '</div>';
+    html +=     '<button type="button" class="intro-start-btn" id="startBtn">';
+    html +=       'Пройти тест';
+    html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+    html +=     '</button>';
+    html +=   '</div>';
+    html += '</div>';
+
+    root.innerHTML = html;
+    document.getElementById('startBtn').addEventListener('click', function() {
+      state.screen = 'question';
+      state.current = 0;
+      renderQuestion();
+      scrollTop();
+    });
+  }
+
+  /* ═════════ QUESTION ═════════ */
+  function renderQuestion() {
+    var q = EQ_ALL_QUESTIONS[state.current];
+    var total = EQ_ALL_QUESTIONS.length;
+    var pct = ((state.current) / total) * 100;
+    var isMulti = !!q.multi;
+    var isOrder = q.type === 'order';
+    var selected = state.answers[state.current] || [];
+
+    var html = '';
+    html += '<div class="test-topbar">';
+    html +=   '<div>Вопрос <b>' + (state.current + 1) + '</b> из ' + total + '</div>';
+    html +=   '<div>Эмоциональный интеллект</div>';
+    html += '</div>';
+    html += '<div class="test-progress"><div class="test-progress-fill" style="width:' + pct + '%"></div></div>';
+    html += '<div class="q-card">';
+    html +=   '<span class="q-num">Вопрос ' + (state.current + 1) + '</span>';
+    if (isMulti) {
+      html += '<span class="q-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Можно выбрать до ' + q.multi + '</span>';
+    }
+    if (isOrder) {
+      html += '<span class="q-hint q-hint--order"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>Расставь по важности</span>';
+    }
+    html +=   '<h2 class="q-title">' + escapeHtml(q.q) + '</h2>';
+
+    if (q.img) {
+      html += '<img class="q-image" src="./' + q.img + '" alt="" onerror="this.style.display=\'none\';">';
+    }
+
+    if (isOrder) {
+      html += '<div class="q-order-hint">Кликай по вариантам — они пронумеруются 1, 2, 3... Первое место — самое важное.</div>';
+    }
+
+    if (isMulti) {
+      html += '<span class="q-counter" id="qCounter">Выбрано: ' + selected.length + ' / ' + q.multi + '</span>';
+    }
+    if (isOrder) {
+      html += '<span class="q-counter" id="qCounter">Выбрано: ' + selected.length + ' / ' + q.a.length + '</span>';
+    }
+
+    html += '<div class="q-answers">';
+
+    q.a.forEach(function(ans, idx) {
+      var isSelected = selected.indexOf(idx) !== -1;
+      var classes = 'q-answer';
+      if (isMulti) classes += ' q-answer--multi';
+      if (isOrder) classes += ' q-answer--order';
+      if (isSelected) classes += ' selected';
+
+      if (isOrder) {
+        var num = selected.indexOf(idx) + 1;
+        html += '<button type="button" class="' + classes + '" data-idx="' + idx + '">';
+        html +=   '<span class="q-order-num">' + (isSelected ? num : '•') + '</span>';
+        html +=   '<span>' + escapeHtml(ans.t) + '</span>';
+        html += '</button>';
+      } else {
+        var isLocked = isMulti && !isSelected && selected.length >= q.multi;
+        if (isLocked) classes += ' is-locked';
+        html += '<button type="button" class="' + classes + '" data-idx="' + idx + '">';
+        html +=   '<span class="q-radio"></span>';
+        html +=   '<span>' + escapeHtml(ans.t) + '</span>';
+        html += '</button>';
+      }
+    });
+
+    html += '</div>';
+    html += '</div>';
+
+    html += '<div class="test-nav">';
+    html +=   '<button type="button" class="btn-nav btn-prev" id="prevBtn"' + (state.current === 0 ? ' disabled' : '') + '>';
+    html +=     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>';
+    html +=     'Назад';
+    html +=   '</button>';
+    var isLast = state.current === total - 1;
+    var noAnswer = selected.length === 0;
+    html +=   '<button type="button" class="btn-nav btn-next" id="nextBtn"' + (noAnswer ? ' disabled' : '') + '>';
+    html +=     (isLast ? 'Завершить' : 'Далее');
+    html +=     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+    html +=   '</button>';
+    html += '</div>';
+
+    root.innerHTML = html;
+
+    var nextBtn = document.getElementById('nextBtn');
+    var counter = document.getElementById('qCounter');
+
+    root.querySelectorAll('.q-answer').forEach(function(el) {
+      el.addEventListener('click', function() {
+        var idx = parseInt(el.getAttribute('data-idx'), 10);
+        var arr = state.answers[state.current];
+
+        if (isOrder) {
+          var pos = arr.indexOf(idx);
+          if (pos === -1) {
+            arr.push(idx);
+          } else {
+            arr.splice(pos, 1);
+          }
+          root.querySelectorAll('.q-answer--order').forEach(function(a) {
+            var i = parseInt(a.getAttribute('data-idx'), 10);
+            var num = arr.indexOf(i) + 1;
+            a.classList.toggle('selected', num > 0);
+            var numEl = a.querySelector('.q-order-num');
+            if (numEl) numEl.textContent = num > 0 ? num : '•';
+          });
+          if (counter) counter.textContent = 'Выбрано: ' + arr.length + ' / ' + q.a.length;
+          if (nextBtn) nextBtn.disabled = arr.length !== q.a.length;
+        } else if (isMulti) {
+          var posM = arr.indexOf(idx);
+          if (posM === -1) {
+            if (arr.length >= q.multi) return;
+            arr.push(idx);
+          } else {
+            arr.splice(posM, 1);
+          }
+          root.querySelectorAll('.q-answer--multi').forEach(function(a) {
+            var i = parseInt(a.getAttribute('data-idx'), 10);
+            var sel = arr.indexOf(i) !== -1;
+            var locked = !sel && arr.length >= q.multi;
+            a.classList.toggle('selected', sel);
+            a.classList.toggle('is-locked', locked);
+          });
+          if (counter) counter.textContent = 'Выбрано: ' + arr.length + ' / ' + q.multi;
+          if (nextBtn) nextBtn.disabled = arr.length === 0;
+        } else {
+          state.answers[state.current] = [idx];
+          root.querySelectorAll('.q-answer').forEach(function(a) { a.classList.remove('selected'); });
+          el.classList.add('selected');
+          if (nextBtn) nextBtn.disabled = false;
+        }
+      });
+    });
+
+    var prevBtn = document.getElementById('prevBtn');
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function() {
+        if (state.current > 0) { state.current--; renderQuestion(); scrollTop(); }
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function() {
+        if (state.answers[state.current].length === 0) return;
+        if (state.current < total - 1) {
+          state.current++;
+          renderQuestion();
+          scrollTop();
+        } else {
+          finishTest();
+        }
+      });
+    }
+  }
+
+  /* Пересчёт: сырые баллы → шкала 50–150 */
+  function toScaled(raw, max) {
+    if (max <= 0) return 50;
+    return Math.round(50 + (raw / max) * 100);
+  }
+
+  function calculateScores() {
+    var raw = {}, maxs = {};
+    EQ_SCALES.forEach(function(s) { raw[s.id] = 0; maxs[s.id] = 0; });
+
+    state.answers.forEach(function(arr, qIdx) {
+      if (!arr || arr.length === 0) return;
+      var q = EQ_ALL_QUESTIONS[qIdx];
+
+      if (q.type === 'order') {
+        var firstIdx = arr[0];
+        raw[q.scale] += q.a[firstIdx].v;
+        maxs[q.scale] += 3;
+      } else if (q.multi) {
+        var localSum = 0;
+        arr.forEach(function(idx) { localSum += q.a[idx].v; });
+        raw[q.scale] += localSum / arr.length;
+        maxs[q.scale] += 3;
+      } else {
+        raw[q.scale] += q.a[arr[0]].v;
+        maxs[q.scale] += 3;
+      }
+    });
+
+    var scores = {};
+    var sum = 0;
+    var count = 0;
+    EQ_SCALES.forEach(function(s) {
+      scores[s.id] = toScaled(raw[s.id], maxs[s.id]);
+      sum += scores[s.id];
+      count++;
+    });
+    var total = count > 0 ? Math.round(sum / count) : 50;
+    return { scores: scores, total: total };
+  }
+
+  function finishTest() {
+    var res = calculateScores();
+    state.scores = res.scores;
+    state.total = res.total;
+    state.result = getResult(res.total);
+    state.screen = 'result';
+    renderResult();
+    scrollTop();
+  }
+
+  /* ═════════ RADAR (6 лучей, шкала 50–150) ═════════ */
+  function buildRadar(scores) {
+    var size = 400;
+    var cx = size / 2;
+    var cy = size / 2;
+    var R = 130;
+
+    var n = EQ_SCALES.length;
+    var angles = [];
+    for (var i = 0; i < n; i++) angles.push(-90 + (360 / n) * i);
+
+    // Нормализация: 50 → 0, 150 → 1
+    function norm(v) { return Math.max(0, Math.min(1, (v - 50) / 100)); }
+
+    var points = EQ_SCALES.map(function(s, i) {
+      var val = scores[s.id] || 50;
+      var r = R * norm(val);
+      if (r < 4) r = 4;
+      var rad = angles[i] * Math.PI / 180;
+      return {
+        x: cx + r * Math.cos(rad),
+        y: cy + r * Math.sin(rad),
+        color: s.color,
+        angle: angles[i]
+      };
+    });
+
+    var polyPoints = points.map(function(p) { return p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join(' ');
+
+    var gridLines = '';
+    [0.25, 0.5, 0.75, 1.0].forEach(function(level) {
+      var gp = angles.map(function(a) {
+        var rad = a * Math.PI / 180;
+        return (cx + R * level * Math.cos(rad)).toFixed(1) + ',' + (cy + R * level * Math.sin(rad)).toFixed(1);
+      }).join(' ');
+      gridLines += '<polygon points="' + gp + '" fill="none" stroke="#ece3fa" stroke-width="1"/>';
+    });
+
+    var axesLines = '';
+    angles.forEach(function(a) {
+      var rad = a * Math.PI / 180;
+      axesLines += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + R * Math.cos(rad)).toFixed(1) + '" y2="' + (cy + R * Math.sin(rad)).toFixed(1) + '" stroke="#ece3fa" stroke-width="1"/>';
+    });
+
+    var sectors = '';
+    points.forEach(function(p, i) {
+      var prevAngle = (i === 0) ? angles[n - 1] : angles[i - 1];
+      var nextAngle = (i === n - 1) ? angles[0] : angles[i + 1];
+      var midPrev = (prevAngle + angles[i]) / 2;
+      var midNext = (angles[i] + nextAngle) / 2;
+      var r = Math.max(8, R * norm(scores[EQ_SCALES[i].id] || 50) * 0.85);
+      var radPrev = midPrev * Math.PI / 180;
+      var radNext = midNext * Math.PI / 180;
+      var x1 = cx + r * Math.cos(radPrev);
+      var y1 = cy + r * Math.sin(radPrev);
+      var x2 = cx + r * Math.cos(radNext);
+      var y2 = cy + r * Math.sin(radNext);
+      sectors += '<path d="M ' + cx + ' ' + cy + ' L ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' A ' + r.toFixed(1) + ' ' + r.toFixed(1) + ' 0 0 1 ' + x2.toFixed(1) + ' ' + y2.toFixed(1) + ' Z" fill="' + EQ_SCALES[i].color + '" opacity="0.22"/>';
+    });
+
+    var polyStroke = '<polygon points="' + polyPoints + '" fill="none" stroke="#7c2fd4" stroke-width="2" stroke-linejoin="round" opacity="0.85"/>';
+
+    var dots = '';
+    points.forEach(function(p) {
+      dots += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="5" fill="' + p.color + '" stroke="#fff" stroke-width="2"/>';
+    });
+
+    var labels = '';
+    points.forEach(function(p, i) {
+      var rad = p.angle * Math.PI / 180;
+      var lx = cx + (R + 42) * Math.cos(rad);
+      var ly = cy + (R + 30) * Math.sin(rad);
+      var anchor = 'middle';
+      if (Math.abs(Math.cos(rad)) > 0.5) anchor = Math.cos(rad) > 0 ? 'start' : 'end';
+      var dy = 0;
+      if (Math.sin(rad) > 0.5) dy = 16;
+      if (Math.sin(rad) < -0.5) dy = -20;
+
+      labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="13" font-weight="800" fill="#7c2fd4">' + EQ_SCALES[i].name + '</text>';
+      labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy + 15).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#a898c2">' + scores[EQ_SCALES[i].id] + '</text>';
+    });
+
+    var svg = '';
+    svg += '<svg viewBox="-90 -40 580 480" xmlns="http://www.w3.org/2000/svg">';
+    svg +=   gridLines + axesLines + sectors + polyStroke + dots + labels;
+    svg += '</svg>';
+    return svg;
+  }
+
+  /* ═════════ ШКАЛА EQ (50–150) ═════════ */
+  function buildScale(total) {
+    // 50 → 0%, 150 → 100%
+    var pos = ((total - 50) / 100) * 100;
+    if (pos < 1) pos = 1;
+    if (pos > 99) pos = 99;
+
+    var marks = [
+      { val: 50,  label: '50'  },
+      { val: 75,  label: '75'  },
+      { val: 100, label: '100' },
+      { val: 125, label: '125' },
+      { val: 150, label: '150' }
+    ];
+
+    var html = '';
+    html += '<div class="eq-scale-wrap">';
+    html +=   '<div class="eq-scale-title">Где ты на шкале EQ</div>';
+    html +=   '<div class="eq-scale-track">';
+    html +=     '<div class="eq-scale-marker" id="eqScaleMarker" style="left:0%"></div>';
+    html +=   '</div>';
+    html +=   '<div class="eq-scale-labels">';
+    marks.forEach(function(m) {
+      var p = ((m.val - 50) / 100) * 100;
+      html += '<span style="left:' + p + '%">' + m.label + '</span>';
+    });
+    html +=   '</div>';
+    html +=   '<div class="eq-scale-caption"><span class="eq-scale-caption-badge"><span class="eq-scale-caption-dot"></span>Твой EQ: ' + total + ' из 150</span></div>';
+    html += '</div>';
+    return { html: html, pos: pos };
+  }
+
+  /* ═════════ RESULT ═════════ */
+  function renderResult() {
+    var total = state.total;
+    var data = state.result;
+    var scores = state.scores;
+
+    var html = '';
+    html += '<div class="result-card">';
+    html += '<div class="result-body">';
+    html +=   '<span class="result-badge">Твой уровень EQ</span>';
+    html +=   '<div class="score-display">';
+    html +=     '<span class="score-number">' + total + '</span><span class="score-of">/ 150</span>';
+    html +=     '<span class="score-suffix">эмоциональный интеллект</span>';
+    html +=   '</div>';
+    html +=   '<h1 class="result-title">' + escapeHtml(data.name) + '</h1>';
+    html +=   '<p class="result-tagline">' + escapeHtml(data.tagline) + '</p>';
+    html +=   '<div class="result-percent-wrap"><div class="result-percent">Такое бывает примерно у <b>' + escapeHtml(data.percent) + '</b> людей</div></div>';
+    html +=   '<div class="result-desc">';
+    data.desc.forEach(function(p) { html += '<p>' + escapeHtml(p) + '</p>'; });
+    html +=   '</div>';
+
+    html +=   '<div class="profile-box">';
+    html +=     '<div class="profile-box-title">Твой профиль по 6 шкалам EQ</div>';
+    html +=     '<div class="profile-grid">';
+    html +=       '<div class="profile-radar">' + buildRadar(scores) + '</div>';
+    html +=       '<div class="profile-bars">';
+    EQ_SCALES.forEach(function(s) {
+      var val = scores[s.id] || 50;
+      // Полоска = (val - 50) / 100 * 100% ширины
+      var fillPct = Math.max(0, Math.min(100, val - 50));
+      html += '<div class="profile-bar">';
+      html +=   '<div class="profile-bar-head">';
+      html +=     '<span class="profile-bar-name"><span class="profile-bar-dot" style="background:' + s.color + '"></span>' + s.name + '</span>';
+      html +=     '<span class="profile-bar-pct">' + val + '</span>';
+      html +=   '</div>';
+      html +=   '<div class="profile-bar-track"><div class="profile-bar-fill" data-pct="' + fillPct + '" style="background:' + s.color + '"></div></div>';
+      html += '</div>';
+    });
+    html +=       '</div>';
+    html +=     '</div>';
+    var scale = buildScale(total);
+    html +=     scale.html;
+    html +=   '</div>';
+
+    if (data.actions && data.actions.length) {
+      html += '<div class="actions-block">';
+      html +=   '<div class="actions-block-title">';
+      html +=     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.66 0 3.22.45 4.56 1.24"/></svg>';
+      html +=     'Что можно сделать для себя';
+      html +=   '</div>';
+      html +=   '<div class="actions-list">';
+      data.actions.forEach(function(a) {
+        html += '<div class="actions-item">';
+        html +=   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>';
+        html +=   '<span>' + a + '</span>';
+        html += '</div>';
+      });
+      html +=   '</div>';
+      html += '</div>';
+    }
+
+    html +=   '<div class="result-actions">';
+    html +=     '<button type="button" class="btn-res primary" id="againBtn">';
+    html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>';
+    html +=       'Пройти ещё раз';
+    html +=     '</button>';
+    html +=     '<button type="button" class="btn-res outline" id="shareBtn">';
+    html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>';
+    html +=       'Поделиться';
+    html +=     '</button>';
+    html +=     '<button type="button" class="btn-res outline" id="saveBtn">';
+    html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>';
+    html +=       'Сохранить';
+    html +=     '</button>';
+    html +=     '<a href="catalog.html#tests" class="btn-res outline">';
+    html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';
+    html +=       'К тестам';
+    html +=     '</a>';
+    html +=   '</div>';
+    html += '</div>';
+    html += '</div>';
+
+    html += '<div class="premium-rec">';
+    html +=   '<div class="premium-rec-inner">';
+    html +=     '<div class="premium-rec-head">';
+    html +=       '<div class="premium-rec-head-icon">';
+    html +=         '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>';
+    html +=       '</div>';
+    html +=       '<h3>Личные рекомендации</h3>';
+    html +=     '</div>';
+    html +=     '<p class="premium-rec-sub">Что развивать дальше, как углубить свой EQ и что почитать для себя.</p>';
+    html +=     '<div class="premium-locked">';
+    html +=       '<div class="premium-locked-icon">';
+    html +=         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+    html +=       '</div>';
+    html +=       '<p>Этот блок доступен только с Premium-подпиской. Открой персональные советы по своему уровню EQ, подборку книг и конкретные практики для развития.</p>';
+    html +=       '<button type="button" class="btn-premium-rec" id="premiumBtn">';
+    html +=         'Оформить Premium';
+    html +=         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+    html +=       '</button>';
+    html +=     '</div>';
+    html +=   '</div>';
+    html += '</div>';
+
+    root.innerHTML = html;
+
+    setTimeout(function() {
+      var fills = root.querySelectorAll('.profile-bar-fill');
+      fills.forEach(function(el) {
+        var pct = el.getAttribute('data-pct');
+        el.style.width = pct + '%';
+      });
+      var marker = document.getElementById('eqScaleMarker');
+      if (marker) marker.style.left = scale.pos + '%';
+    }, 150);
+
+    document.getElementById('againBtn').addEventListener('click', function() {
+      renderIntro(); scrollTop();
+    });
+    document.getElementById('shareBtn').addEventListener('click', shareResult);
+    document.getElementById('saveBtn').addEventListener('click', saveResult);
+    var premiumBtn = document.getElementById('premiumBtn');
+    if (premiumBtn) premiumBtn.addEventListener('click', function() { window.location.href = './#premium'; });
+  }
+
+  async function shareResult() {
+    var total = state.total;
+    var data = state.result;
+    var url = location.origin + location.pathname + '?score=' + total;
+    var text = 'Прошёл(ла) тест на эмоциональный интеллект — ' + total + ' из 150 (' + data.name + ').';
+    if (navigator.share) {
+      try { await navigator.share({ title: 'Мой результат — MindTest', text: text, url: url }); return; }
+      catch (e) { if (e && e.name === 'AbortError') return; }
+    }
+    try { await navigator.clipboard.writeText(text + '\n' + url); showToast('Ссылка скопирована'); }
+    catch (e) { showToast('Не удалось поделиться'); }
+  }
+
+  function saveResult() {
+    try {
+      var key = 'mindtest_saved_results';
+      var list = [];
+      try { list = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { list = []; }
+      var total = state.total;
+      var data = state.result;
+      list = list.filter(function(item) { return item.test !== 'eq'; });
+      list.unshift({
+        test: 'eq',
+        testName: 'Эмоциональный интеллект',
+        result: String(total),
+        resultName: total + ' / 150 — ' + data.name,
+        date: new Date().toISOString()
+      });
+      list = list.slice(0, 100);
+      localStorage.setItem(key, JSON.stringify(list));
+      showToast('Результат сохранён');
+    } catch (e) { showToast('Не удалось сохранить'); }
+  }
+
+  if (typeof EQ_ALL_QUESTIONS === 'undefined' || !Array.isArray(EQ_ALL_QUESTIONS) || EQ_ALL_QUESTIONS.length === 0) {
+    root.innerHTML = '<div style="padding:60px 20px; text-align:center; color:#7e6b94;">Не удалось загрузить данные теста. Проверьте файл <b>eq-data.js</b>.</div>';
+    return;
+  }
+  renderIntro();
+})();
+</script>
+
+</body>
+</html>
