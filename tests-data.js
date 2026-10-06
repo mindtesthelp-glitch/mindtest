@@ -153,7 +153,7 @@ const TESTS = [
     category: 'psychology',
     desc: 'Умеешь ли ты понимать свои и чужие эмоции? Проверь свой EQ.',
     emoji: '💗',
-    time: 10,
+    time: 8,
     difficulty: 'medium',
     type: 'result',
     age: '12+',
