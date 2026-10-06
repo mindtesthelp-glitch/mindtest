@@ -218,12 +218,12 @@ const TESTS = [
     category: 'psychology',
     desc: 'Понимаешь ли ты, что такое настоящая близость? Проверим.',
     emoji: '❤️',
-    time: 12,
+    time: 7,
     difficulty: 'medium',
     type: 'result',
     age: '16+',
     badges: [],
-    href: '#'
+    href: 'test-attachment.html'
   },
 
   /* ═══════════ ИНТЕРЕСЫ И ХОББИ ═══════════ */
