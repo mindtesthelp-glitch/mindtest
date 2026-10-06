@@ -158,7 +158,7 @@ const TESTS = [
     type: 'result',
     age: '12+',
     badges: [],
-    href: '#'
+    href: 'test-eq.html'
   },
   {
     id: 'place-in-society',
