@@ -32,27 +32,8 @@
   .intro-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 28px; overflow: hidden; box-shadow: 0 20px 50px rgba(93,43,158,.08); animation: q-in .5s cubic-bezier(.16,1,.3,1); max-width: 780px; margin: 0 auto; }
   @keyframes q-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
-  .intro-hero {
-    width: 100%;
-    aspect-ratio: 1312 / 1225;
-    background: linear-gradient(135deg, #2a1550, #4b1e8c);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    position: relative;
-    overflow: hidden;
-  }
-  .intro-hero::before {
-    content: '';
-    position: absolute;
-    top: -40%; right: -20%;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(168,85,247,.45), transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 1;
-  }
+  .intro-hero { width: 100%; aspect-ratio: 1312 / 1225; background: linear-gradient(135deg, #2a1550, #4b1e8c); display: flex; align-items: center; justify-content: center; color: #fff; position: relative; overflow: hidden; }
+  .intro-hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(168,85,247,.45), transparent 70%); border-radius: 50%; pointer-events: none; z-index: 1; }
   .intro-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; z-index: 2; }
   .intro-hero-placeholder { position: relative; z-index: 2; text-align: center; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
   .intro-hero-placeholder svg { width: 64px; height: 64px; opacity: .5; }
@@ -155,6 +136,7 @@
 
   .score-display { text-align: center; margin-bottom: 24px; }
   .score-number { font-size: clamp(72px, 13vw, 130px); font-weight: 900; letter-spacing: -6px; line-height: .9; background: linear-gradient(135deg,#7c2fd4,#ec4899); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
+  .score-of { font-size: clamp(20px, 3vw, 28px); font-weight: 700; color: #a898c2; margin-left: 4px; letter-spacing: -1px; }
   .score-suffix { display: block; font-size: 14px; font-weight: 700; color: #a855f7; margin-top: 4px; letter-spacing: 1.5px; text-transform: uppercase; }
   .result-title { font-size: clamp(24px, 3.5vw, 32px); font-weight: 900; letter-spacing: -1px; line-height: 1.25; color: #2e1a4d; margin-bottom: 8px; text-align: center; }
   .result-tagline { font-size: 17px; color: #a855f7; font-weight: 700; margin-bottom: 12px; text-align: center; }
@@ -177,6 +159,17 @@
   .profile-bar-pct { font-size: 12.5px; font-weight: 800; color: #2e1a4d; }
   .profile-bar-track { height: 6px; background: #f0e8fb; border-radius: 999px; overflow: hidden; }
   .profile-bar-fill { height: 100%; border-radius: 999px; width: 0; transition: width .9s cubic-bezier(.16,1,.3,1); }
+
+  /* ═════════ ШКАЛА EQ ═════════ */
+  .eq-scale-wrap { margin-top: 28px; padding: 22px 22px 20px; background: #fff; border: 2px solid #f0e8fb; border-radius: 18px; }
+  .eq-scale-title { font-size: 13px; font-weight: 800; color: #2e1a4d; margin-bottom: 22px; text-align: center; letter-spacing: -.2px; }
+  .eq-scale-track { position: relative; height: 12px; border-radius: 999px; background: linear-gradient(90deg, #f87171 0%, #fb923c 16%, #fbbf24 32%, #34d399 49%, #60a5fa 66%, #a855f7 84%, #7c2fd4 100%); opacity: .55; }
+  .eq-scale-marker { position: absolute; top: 50%; width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 4px solid #7c2fd4; transform: translate(-50%, -50%); box-shadow: 0 4px 14px rgba(124,47,212,.45); transition: left 1s cubic-bezier(.16,1,.3,1); z-index: 2; }
+  .eq-scale-labels { position: relative; height: 18px; margin-top: 8px; }
+  .eq-scale-labels span { position: absolute; transform: translateX(-50%); font-size: 11px; color: #a898c2; font-weight: 700; }
+  .eq-scale-caption { text-align: center; margin-top: 10px; }
+  .eq-scale-caption-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #f5efff; border-radius: 999px; font-size: 12px; font-weight: 800; color: #5d2b9e; }
+  .eq-scale-caption-badge .eq-scale-caption-dot { width: 8px; height: 8px; border-radius: 50%; background: #7c2fd4; }
 
   .actions-block { background: #fff; border: 2px solid #f0e8fb; border-radius: 20px; padding: 26px 24px; margin-bottom: 32px; }
   .actions-block-title { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 800; margin-bottom: 18px; color: #2e1a4d; }
@@ -537,6 +530,12 @@
     }
   }
 
+  /* Пересчёт: сырые баллы → шкала 50–150 */
+  function toScaled(raw, max) {
+    if (max <= 0) return 50;
+    return Math.round(50 + (raw / max) * 100);
+  }
+
   function calculateScores() {
     var raw = {}, maxs = {};
     EQ_SCALES.forEach(function(s) { raw[s.id] = 0; maxs[s.id] = 0; });
@@ -564,11 +563,11 @@
     var sum = 0;
     var count = 0;
     EQ_SCALES.forEach(function(s) {
-      scores[s.id] = maxs[s.id] > 0 ? Math.round((raw[s.id] / maxs[s.id]) * 100) : 0;
+      scores[s.id] = toScaled(raw[s.id], maxs[s.id]);
       sum += scores[s.id];
       count++;
     });
-    var total = count > 0 ? Math.round(sum / count) : 0;
+    var total = count > 0 ? Math.round(sum / count) : 50;
     return { scores: scores, total: total };
   }
 
@@ -582,7 +581,7 @@
     scrollTop();
   }
 
-  /* ═════════ RADAR (6 лучей) ═════════ */
+  /* ═════════ RADAR (6 лучей, шкала 50–150) ═════════ */
   function buildRadar(scores) {
     var size = 400;
     var cx = size / 2;
@@ -593,9 +592,12 @@
     var angles = [];
     for (var i = 0; i < n; i++) angles.push(-90 + (360 / n) * i);
 
+    // Нормализация: 50 → 0, 150 → 1
+    function norm(v) { return Math.max(0, Math.min(1, (v - 50) / 100)); }
+
     var points = EQ_SCALES.map(function(s, i) {
-      var val = scores[s.id] || 0;
-      var r = R * (val / 100);
+      var val = scores[s.id] || 50;
+      var r = R * norm(val);
       if (r < 4) r = 4;
       var rad = angles[i] * Math.PI / 180;
       return {
@@ -629,7 +631,7 @@
       var nextAngle = (i === n - 1) ? angles[0] : angles[i + 1];
       var midPrev = (prevAngle + angles[i]) / 2;
       var midNext = (angles[i] + nextAngle) / 2;
-      var r = Math.max(8, R * ((scores[EQ_SCALES[i].id] || 0) / 100) * 0.85);
+      var r = Math.max(8, R * norm(scores[EQ_SCALES[i].id] || 50) * 0.85);
       var radPrev = midPrev * Math.PI / 180;
       var radNext = midNext * Math.PI / 180;
       var x1 = cx + r * Math.cos(radPrev);
@@ -658,7 +660,7 @@
       if (Math.sin(rad) < -0.5) dy = -20;
 
       labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="13" font-weight="800" fill="#7c2fd4">' + EQ_SCALES[i].name + '</text>';
-      labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy + 15).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#a898c2">' + scores[EQ_SCALES[i].id] + '%</text>';
+      labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy + 15).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#a898c2">' + scores[EQ_SCALES[i].id] + '</text>';
     });
 
     var svg = '';
@@ -666,6 +668,38 @@
     svg +=   gridLines + axesLines + sectors + polyStroke + dots + labels;
     svg += '</svg>';
     return svg;
+  }
+
+  /* ═════════ ШКАЛА EQ (50–150) ═════════ */
+  function buildScale(total) {
+    // 50 → 0%, 150 → 100%
+    var pos = ((total - 50) / 100) * 100;
+    if (pos < 1) pos = 1;
+    if (pos > 99) pos = 99;
+
+    var marks = [
+      { val: 50,  label: '50'  },
+      { val: 75,  label: '75'  },
+      { val: 100, label: '100' },
+      { val: 125, label: '125' },
+      { val: 150, label: '150' }
+    ];
+
+    var html = '';
+    html += '<div class="eq-scale-wrap">';
+    html +=   '<div class="eq-scale-title">Где ты на шкале EQ</div>';
+    html +=   '<div class="eq-scale-track">';
+    html +=     '<div class="eq-scale-marker" id="eqScaleMarker" style="left:0%"></div>';
+    html +=   '</div>';
+    html +=   '<div class="eq-scale-labels">';
+    marks.forEach(function(m) {
+      var p = ((m.val - 50) / 100) * 100;
+      html += '<span style="left:' + p + '%">' + m.label + '</span>';
+    });
+    html +=   '</div>';
+    html +=   '<div class="eq-scale-caption"><span class="eq-scale-caption-badge"><span class="eq-scale-caption-dot"></span>Твой EQ: ' + total + ' из 150</span></div>';
+    html += '</div>';
+    return { html: html, pos: pos };
   }
 
   /* ═════════ RESULT ═════════ */
@@ -679,7 +713,7 @@
     html += '<div class="result-body">';
     html +=   '<span class="result-badge">Твой уровень EQ</span>';
     html +=   '<div class="score-display">';
-    html +=     '<span class="score-number">' + total + '%</span>';
+    html +=     '<span class="score-number">' + total + '</span><span class="score-of">/ 150</span>';
     html +=     '<span class="score-suffix">эмоциональный интеллект</span>';
     html +=   '</div>';
     html +=   '<h1 class="result-title">' + escapeHtml(data.name) + '</h1>';
@@ -695,17 +729,21 @@
     html +=       '<div class="profile-radar">' + buildRadar(scores) + '</div>';
     html +=       '<div class="profile-bars">';
     EQ_SCALES.forEach(function(s) {
-      var val = scores[s.id] || 0;
+      var val = scores[s.id] || 50;
+      // Полоска = (val - 50) / 100 * 100% ширины
+      var fillPct = Math.max(0, Math.min(100, val - 50));
       html += '<div class="profile-bar">';
       html +=   '<div class="profile-bar-head">';
       html +=     '<span class="profile-bar-name"><span class="profile-bar-dot" style="background:' + s.color + '"></span>' + s.name + '</span>';
-      html +=     '<span class="profile-bar-pct">' + val + '%</span>';
+      html +=     '<span class="profile-bar-pct">' + val + '</span>';
       html +=   '</div>';
-      html +=   '<div class="profile-bar-track"><div class="profile-bar-fill" data-pct="' + val + '" style="background:' + s.color + '"></div></div>';
+      html +=   '<div class="profile-bar-track"><div class="profile-bar-fill" data-pct="' + fillPct + '" style="background:' + s.color + '"></div></div>';
       html += '</div>';
     });
     html +=       '</div>';
     html +=     '</div>';
+    var scale = buildScale(total);
+    html +=     scale.html;
     html +=   '</div>';
 
     if (data.actions && data.actions.length) {
@@ -776,6 +814,8 @@
         var pct = el.getAttribute('data-pct');
         el.style.width = pct + '%';
       });
+      var marker = document.getElementById('eqScaleMarker');
+      if (marker) marker.style.left = scale.pos + '%';
     }, 150);
 
     document.getElementById('againBtn').addEventListener('click', function() {
@@ -791,7 +831,7 @@
     var total = state.total;
     var data = state.result;
     var url = location.origin + location.pathname + '?score=' + total;
-    var text = 'Прошёл(ла) тест на эмоциональный интеллект — ' + total + '% (' + data.name + ').';
+    var text = 'Прошёл(ла) тест на эмоциональный интеллект — ' + total + ' из 150 (' + data.name + ').';
     if (navigator.share) {
       try { await navigator.share({ title: 'Мой результат — MindTest', text: text, url: url }); return; }
       catch (e) { if (e && e.name === 'AbortError') return; }
@@ -812,7 +852,7 @@
         test: 'eq',
         testName: 'Эмоциональный интеллект',
         result: String(total),
-        resultName: total + '% — ' + data.name,
+        resultName: total + ' / 150 — ' + data.name,
         date: new Date().toISOString()
       });
       list = list.slice(0, 100);
