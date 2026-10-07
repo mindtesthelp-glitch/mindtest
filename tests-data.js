@@ -233,12 +233,12 @@ const TESTS = [
     category: 'interests',
     desc: 'Найдём занятие, от которого ты не сможешь оторваться.',
     emoji: '🎨',
-    time: 10,
+    time: 8,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
     badges: ['hit'],
-    href: '#'
+    href: 'test-hobby.html'
   },
   {
     id: 'movie-pick',
