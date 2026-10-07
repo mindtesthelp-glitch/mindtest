@@ -166,12 +166,12 @@ const TESTS = [
     category: 'psychology',
     desc: 'Лидер, наблюдатель, душа компании или серый кардинал?',
     emoji: '🏛️',
-    time: 6,
+    time: 12,
     difficulty: 'medium',
     type: 'result',
     age: '12+',
     badges: [],
-    href: 'test-society.html'
+    href: '#'
   },
   {
     id: 'mutual-feelings',
@@ -192,7 +192,7 @@ const TESTS = [
     category: 'psychology',
     desc: 'Узнай, есть ли у тебя склонность к зависимости — и от чего.',
     emoji: '🔗',
-    time: 7,
+    time: 12,
     difficulty: 'medium',
     type: 'result',
     age: '16+',
@@ -218,7 +218,7 @@ const TESTS = [
     category: 'psychology',
     desc: 'Понимаешь ли ты, что такое настоящая близость? Проверим.',
     emoji: '❤️',
-    time: 7,
+    time: 12,
     difficulty: 'medium',
     type: 'result',
     age: '16+',
@@ -251,45 +251,6 @@ const TESTS = [
     type: 'result',
     age: '12+',
     badges: [],
-    href: '#'
-  },
-  {
-    id: 'anime-naruto',
-    title: 'Кто ты из Наруто? Тест на персонажа',
-    category: 'interests',
-    desc: 'Наруто, Саске, Сакура или Какаши? Узнай, кто ты из Конохи.',
-    emoji: '🍥',
-    time: 10,
-    difficulty: 'easy',
-    type: 'result',
-    age: '12+',
-    badges: ['hit'],
-    href: '#'
-  },
-  {
-    id: 'anime-deathnote',
-    title: 'Кто ты из Тетради смерти? Тест на персонажа',
-    category: 'interests',
-    desc: 'Лайт, L, Миса или Ниа? Узнай, чья стратегия ближе тебе.',
-    emoji: '📓',
-    time: 10,
-    difficulty: 'easy',
-    type: 'result',
-    age: '14+',
-    badges: ['hit'],
-    href: '#'
-  },
-  {
-    id: 'series-mean-girls',
-    title: 'Кто ты из «Дрянных девчонок»? Тест на персонажа',
-    category: 'interests',
-    desc: 'Реджина, Кэди, Дженис или Гретчен? Узнай свою роль.',
-    emoji: '💅',
-    time: 8,
-    difficulty: 'easy',
-    type: 'result',
-    age: '12+',
-    badges: ['fast'],
     href: '#'
   },
   {
