@@ -47,9 +47,6 @@
   .intro-desc { font-size: 16px; color: #4b3b63; line-height: 1.75; margin-bottom: 28px; }
   .intro-desc p + p { margin-top: 12px; }
 
-  .intro-disclaimer { display: flex; gap: 12px; padding: 18px 20px; background: #fef3c7; border-radius: 14px; margin-bottom: 26px; font-size: 14px; color: #92400e; line-height: 1.55; }
-  .intro-disclaimer svg { width: 22px; height: 22px; flex-shrink: 0; margin-top: 2px; color: #b45309; }
-
   .intro-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
   .intro-meta-item { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; background: #faf7ff; border: 1.5px solid #f0e8fb; border-radius: 12px; font-size: 15px; font-weight: 600; color: #4b3b63; }
   .intro-meta-item svg { width: 17px; height: 17px; color: #a855f7; }
@@ -345,10 +342,6 @@
     html +=     '<p class="intro-subtitle">' + escapeHtml(TEST_SUBTITLE) + '</p>';
     html +=     '<div class="intro-desc">';
     TEST_DESC.forEach(function(p) { html += '<p>' + escapeHtml(p) + '</p>'; });
-    html +=     '</div>';
-    html +=     '<div class="intro-disclaimer">';
-    html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
-    html +=       '<div>Этот тест <b>не является диагнозом</b>. Тип привязанности — это не приговор, а отправная точка. С ним можно работать, и он может меняться.</div>';
     html +=     '</div>';
     html +=     '<div class="intro-meta">';
     html +=       '<div class="intro-meta-item">';
