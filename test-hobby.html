@@ -298,7 +298,12 @@
 
   function scrollTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-  /* ═════════ РАСЧЁТ БАЛЛОВ ═════════ */
+  /* ═════════ РАСЧЁТ БАЛЛОВ ═════════
+     Для order-вопросов учитывается только ПЕРВЫЙ выбранный вариант
+     (самое важное по мнению пользователя).
+     Для multi — все выбранные.
+     Для обычных — единственный.
+  */
   function calculateScores() {
     var raw = {}, maxs = {};
     HOBBY_AXES.forEach(function(a) { raw[a.id] = 0; maxs[a.id] = 0; });
@@ -306,16 +311,18 @@
     HOBBY_ALL_QUESTIONS.forEach(function(q, qIdx) {
       var arr = state.answers[qIdx] || [];
       var isMulti = !!q.multi;
+      var isOrder = q.type === 'order';
 
-      // Максимум для этого вопроса по каждой оси
+      // Максимум, который можно было бы получить за этот вопрос по каждой оси
       HOBBY_AXES.forEach(function(axis) {
         var vals = q.a.map(function(v) { return v.v[axis.id] || 0; }).sort(function(x, y) { return y - x; });
         var maxForQ;
         if (isMulti) {
-          // Для multi — сумма q.multi наибольших
           maxForQ = 0;
-          for (var i = 0; i < (q.multi || 1); i++) maxForQ += (vals[i] || 0);
+          var take = q.multi || 1;
+          for (var i = 0; i < take; i++) maxForQ += (vals[i] || 0);
         } else {
+          // Для обычного и order — максимум = лучший вариант
           maxForQ = vals[0] || 0;
         }
         maxs[axis.id] += maxForQ;
@@ -323,12 +330,20 @@
 
       if (!arr || arr.length === 0) return;
 
-      // Суммируем выбранные значения
-      arr.forEach(function(idx) {
+      if (isOrder) {
+        // Только первый выбранный (самый важный)
+        var firstIdx = arr[0];
         HOBBY_AXES.forEach(function(axis) {
-          raw[axis.id] += q.a[idx].v[axis.id] || 0;
+          raw[axis.id] += q.a[firstIdx].v[axis.id] || 0;
         });
-      });
+      } else {
+        // Все выбранные (multi или обычный — там всегда один)
+        arr.forEach(function(idx) {
+          HOBBY_AXES.forEach(function(axis) {
+            raw[axis.id] += q.a[idx].v[axis.id] || 0;
+          });
+        });
+      }
     });
 
     var scores = {};
@@ -341,7 +356,9 @@
     return scores;
   }
 
-  /* ═════════ ПОИСК БЛИЖАЙШЕГО ХОББИ ═════════ */
+  /* ═════════ ПОИСК БЛИЖАЙШЕГО ХОББИ ═════════
+     Манхэттенское расстояние в 6D-пространстве.
+  */
   function determineHobby(scores) {
     var best = HOBBY_RESULTS[0];
     var bestDiff = Infinity;
@@ -392,7 +409,7 @@
     html +=       '</div>';
     html +=       '<div class="intro-meta-item">';
     html +=         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>';
-    html +=         '~8 минут';
+    html +=         '~10 минут';
     html +=       '</div>';
     html +=       '<div class="intro-meta-item">';
     html +=         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7 9 9.7 3 15.7"/></svg>';
@@ -445,7 +462,7 @@
     }
 
     if (isOrder) {
-      html += '<div class="q-order-hint">Кликай по вариантам — они пронумеруются 1, 2, 3... Первое место — самое важное.</div>';
+      html += '<div class="q-order-hint">Кликай по вариантам — они пронумеруются 1, 2, 3... Первое место — самое важное. Засчитывается только первое место.</div>';
     }
 
     if (isMulti) {
