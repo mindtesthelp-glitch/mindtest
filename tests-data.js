@@ -298,12 +298,12 @@ const TESTS = [
     category: 'interests',
     desc: 'Спокойный мейн-кун или энергичный хаски? Найдём питомца по тебе.',
     emoji: '🐾',
-    time: 10,
+    time: 7,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
     badges: ['hit'],
-    href: '#'
+    href: 'test-pet.html'
   },
   {
     id: 'sport-match',
