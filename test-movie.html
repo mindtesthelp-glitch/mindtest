@@ -406,9 +406,9 @@
     return flags;
   }
 
-  /* ═════════ ПОИСК С ЖЁСТКИМИ ФИЛЬТРАМИ ═════════ */
+  /* ═════════ ПОИСК: РЕГИОН И ЖАНР — ЖЁСТКИЕ, ЭПОХА И ХОРРОР — МЯГКИЕ ═════════ */
   function determineMovie(scores, flags) {
-    // Слой 1: жёсткие исключения
+    // Слой 1: исключения (что-то точно не подходит)
     var base = MOVIE_RESULTS.filter(function(m) {
       if (flags.no_horror && isHorror(m.id)) return false;
       if (flags.no_romance && isRomance(m.id)) return false;
@@ -418,27 +418,43 @@
     });
     if (base.length === 0) base = MOVIE_RESULTS.slice();
 
-    // Слой 2: жанровый фильтр (sci-fi / fantasy)
-    var genreFiltered = base.slice();
-    if (flags.want_scifi && !flags.want_fantasy) {
-      var onlyScifi = genreFiltered.filter(function(m) { return isScifi(m.id); });
-      if (onlyScifi.length >= 3) genreFiltered = onlyScifi;
-    } else if (flags.want_fantasy && !flags.want_scifi) {
-      var onlyFantasy = genreFiltered.filter(function(m) { return isFantasy(m.id); });
-      if (onlyFantasy.length >= 3) genreFiltered = onlyFantasy;
-    } else if (flags.want_scifi && flags.want_fantasy) {
-      var both = genreFiltered.filter(function(m) { return isScifi(m.id) || isFantasy(m.id); });
-      if (both.length >= 3) genreFiltered = both;
+    // Слой 2: ЖЁСТКИЙ регион. Если в регионе ноль — оставляем как есть (не откатываемся к другим регионам)
+    if (flags.region) {
+      var byRegion = base.filter(function(m) { return getRegion(m) === flags.region; });
+      if (byRegion.length > 0) base = byRegion;
+      else base = []; // Нет ни одного фильма в нужном регионе — тогда будем брать по жанру глобально
     }
 
-    // Слой 3: страна + эпоха + хоррор, с ослаблением
-    var regionFilter = flags.region;
+    // Если после региона вообще ноль — ищем по жанру глобально (лучше, чем предлагать не тот регион)
+    if (base.length === 0) {
+      base = MOVIE_RESULTS.filter(function(m) {
+        if (flags.no_horror && isHorror(m.id)) return false;
+        if (flags.no_romance && isRomance(m.id)) return false;
+        if (flags.only_rus && !isRus(m.id)) return false;
+        if (flags.short && isLong(m.id)) return false;
+        return true;
+      });
+      // Но всё равно помечаем: регион не совпадает
+    }
+
+    // Слой 3: ЖЁСТКИЙ жанр. Ослабляем только если вообще ноль в жанре.
+    if (flags.want_scifi && !flags.want_fantasy) {
+      var onlyScifi = base.filter(function(m) { return isScifi(m.id); });
+      if (onlyScifi.length > 0) base = onlyScifi;
+    } else if (flags.want_fantasy && !flags.want_scifi) {
+      var onlyFantasy = base.filter(function(m) { return isFantasy(m.id); });
+      if (onlyFantasy.length > 0) base = onlyFantasy;
+    } else if (flags.want_scifi && flags.want_fantasy) {
+      var both = base.filter(function(m) { return isScifi(m.id) || isFantasy(m.id); });
+      if (both.length > 0) base = both;
+    }
+
+    // Слой 4: мягкие фильтры (эпоха + хоррор) с ослаблением
     var eraFilter = flags.want_modern ? 'modern' : (flags.want_classic ? 'classic' : null);
     var horrorFilter = flags.want_horror;
 
-    function applyFilters(list, useRegion, useEra, useHorror) {
+    function applySoft(list, useEra, useHorror) {
       return list.filter(function(m) {
-        if (useRegion && regionFilter && getRegion(m) !== regionFilter) return false;
         if (useEra && eraFilter === 'modern' && !isModern(m)) return false;
         if (useEra && eraFilter === 'classic' && isModern(m)) return false;
         if (useHorror && horrorFilter && !isHorror(m.id)) return false;
@@ -446,22 +462,18 @@
       });
     }
 
+    var candidates = base;
     var attempts = [
-      applyFilters(genreFiltered, true, true, true),
-      applyFilters(genreFiltered, true, true, false),
-      applyFilters(genreFiltered, true, false, false),
-      applyFilters(genreFiltered, false, true, false),
-      genreFiltered
+      applySoft(base, true, true),
+      applySoft(base, true, false),
+      applySoft(base, false, true),
+      base
     ];
-
-    var candidates = genreFiltered;
     for (var i = 0; i < attempts.length; i++) {
-      if (attempts[i].length >= 3) { candidates = attempts[i]; break; }
-      candidates = attempts[i];
+      if (attempts[i].length > 0) { candidates = attempts[i]; break; }
     }
-    if (candidates.length < 3) candidates = genreFiltered;
 
-    // Слой 4: косинусное сходство среди кандидатов
+    // Слой 5: косинусное сходство среди оставшихся
     var ranked = candidates.map(function(m) {
       var dot = 0, magA = 0, magB = 0;
       MOVIE_AXES.forEach(function(a) {
@@ -481,7 +493,7 @@
     return {
       best: ranked[0].movie,
       bestMatch: ranked[0].match,
-      also: ranked.slice(1, 4)
+      also: ranked.slice(1, Math.min(4, ranked.length))
     };
   }
 
