@@ -246,12 +246,12 @@ const TESTS = [
     category: 'interests',
     desc: 'Комедия, драма, триллер или артхаус — что тебе зайдёт прямо сейчас.',
     emoji: '🎬',
-    time: 10,
+    time: 9,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
     badges: [],
-    href: '#'
+    href: 'test-movie.html'
   },
   {
     id: 'game-match',
@@ -298,7 +298,7 @@ const TESTS = [
     category: 'interests',
     desc: 'Спокойный мейн-кун или энергичный хаски? Найдём питомца по тебе.',
     emoji: '🐾',
-    time: 7,
+    time: 8,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
