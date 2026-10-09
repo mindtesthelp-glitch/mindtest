@@ -259,12 +259,12 @@ const TESTS = [
     category: 'interests',
     desc: 'Шутер, стратегия, RPG или симулятор — найдём игру по тебе.',
     emoji: '🎮',
-    time: 10,
+    time: 8,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
     badges: [],
-    href: '#'
+    href: 'test-game.html'
   },
   {
     id: 'music-genre',
