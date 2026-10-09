@@ -99,14 +99,11 @@
   .result-kind { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 999px; background: #ecfdf5; color: #059669; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; margin-left: 8px; }
   .result-meta { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; }
   .result-meta-item { padding: 4px 12px; background: #faf7ff; border: 1.5px solid #ece3fa; border-radius: 999px; font-size: 12px; font-weight: 700; color: #6b5b82; }
-
   .result-title { font-size: clamp(24px, 3.5vw, 32px); font-weight: 900; letter-spacing: -1px; line-height: 1.25; color: #2e1a4d; margin-bottom: 8px; text-align: center; }
   .result-tagline { font-size: 17px; color: #a855f7; font-weight: 700; margin-bottom: 12px; text-align: center; font-style: italic; }
-
   .score-display { text-align: center; margin: 24px 0 20px; }
   .score-number { font-size: clamp(64px, 11vw, 110px); font-weight: 900; letter-spacing: -5px; line-height: .9; background: linear-gradient(135deg,#7c2fd4,#ec4899); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
   .score-suffix { display: block; font-size: 13px; font-weight: 700; color: #a855f7; margin-top: 6px; letter-spacing: 1.5px; text-transform: uppercase; }
-
   .result-percent-wrap { text-align: center; margin-bottom: 28px; }
   .result-percent { display: inline-block; max-width: 100%; padding: 8px 18px; background: #faf7ff; border: 1.5px solid #ece3fa; border-radius: 18px; font-size: 14px; font-weight: 600; color: #6b5b82; line-height: 1.5; text-align: center; }
   .result-percent b { color: #7c2fd4; font-weight: 800; }
@@ -242,22 +239,132 @@
   /* ═════════ РЕГИОНЫ ═════════ */
   var REGION_MAP = {
     'США': 'west', 'Канада': 'west', 'Великобритания': 'west',
-    'Новая Зеландия': 'west', 'США/Польша': 'west', 'СССР': 'rus',
-    'Россия': 'rus', 'Корея': 'asia', 'Япония': 'asia', 'Китай': 'asia',
+    'Новая Зеландия': 'west', 'Австралия': 'west', 'США/Польша': 'west',
+    'СССР': 'rus', 'Россия': 'rus', 'Украина': 'rus',
+    'Корея': 'asia', 'Япония': 'asia', 'Китай': 'asia',
+    'Гонконг': 'asia', 'Тайвань': 'asia', 'Гонконг/Сингапур': 'asia',
     'Франция': 'europe', 'Испания': 'europe', 'Италия': 'europe',
-    'Германия': 'europe', 'Турция': 'other', 'Индия': 'other'
+    'Германия': 'europe', 'Швеция': 'europe', 'Дания': 'europe',
+    'Норвегия': 'europe', 'Швеция/Дания': 'europe',
+    'Турция': 'other', 'Индия': 'other',
+    'Бразилия': 'latam', 'Аргентина': 'latam', 'Мексика': 'latam'
   };
 
-  var HORROR_IDS = ['train-busan', 'food-block', 'oldboy', 'squid-game'];
-  var ROMANCE_IDS = ['titanic', 'la-la-land', 'knock-door', 'amelie', 'your-name', 'moscow-tears'];
-  var RUS_IDS = ['moscow-tears', 'kitchen', 'major', 'master-margarita', 'boys-word', 'food-block'];
-  var LONG_IDS = ['got', 'breaking-bad', 'better-call-saul', 'friends', 'himym', 'big-bang', 'office', 'magnificent-century', 'lord-of-rings', 'harry-potter', 'peaky-blinders'];
+  /* ═════════ ЖАНРЫ ЧЕРЕЗ FIELD + ID-КАРТА ═════════
+     Логика: у тайтла есть массив m.genre (если есть).
+     Если нет — определяем по id через быстрые правила.
+  */
 
-  var SCIFI_IDS = ['interstellar', 'inception', 'matrix', 'dune', 'avatar', 'black-mirror', 'rick-morty', 'stranger-things', 'gravity-falls'];
-  var FANTASY_IDS = ['got', 'witcher', 'harry-potter', 'lord-of-rings', 'spirited-away', 'howl', 'totoro', 'avatar-last-airbender'];
+  var HORROR_IDS = [
+    'train-busan','gonjiam','the-wailing','sweet-home','all-dead','kingdom','hellbound',
+    'ring','ju-on','dark-water','pulse','one-missed-call','suicide-forest','cure','audition',
+    'shining','get-out','hereditary','midsommar','quiet-place','it','conjuring','exorcist','halloween','scream',
+    '28-days-later','28-weeks-later','witching-hour','rec','orphanage',
+    'mummy','mummy-dragon','yuan','ghost-bride','rigor-mortis','eye','trick-r-treat','food-block'
+  ];
+  var SCIFI_IDS = [
+    'interstellar','inception','matrix','dune','dune-2','avatar','avatar-2','blade-runner-2049','arrival',
+    'gravity','martian','edge-tomorrow','ready-player','tenet','terminator-2','aliens','matrix-animatrix',
+    'alice-borderland','snowpiercer','ghost-shell','akira','evangelion','paprika','perfect-blue',
+    'wandering-earth','wandering-earth-2','shanghai-fortress','three-body',
+    'kin-dza-dza','guest-future','attraction','dark','mad-max','mad-max-fury','mad-max-original','mad-max-fury-aus',
+    'lost','westworld','the-expanse','last-of-us','fallout','severance','stranger-things','manifest',
+    'black-mirror','black-mirror-us','rick-morty','cyberpunk-edgerunners',
+    'moon','concrete-utopia','green-mile','cube','arrival-canada','invisible-man','shape-water',
+    'you-netflix','better-than-us','dark','la-casa-papel-mx','cidade-invisible'
+  ];
+  var FANTASY_IDS = [
+    'got','house-dragon','witcher','harry-potter','harry-potter-azkaban','lord-of-rings','hobbit','ring-of-power',
+    'spirited-away','howl','totoro','princess-mononoke','grave-fireflies','your-name','garden-words','weathering-you','suzume','violet-evergarden',
+    'goblin','hotel-luna','gumiho','nine-tailed','master-margarita','night-watch','day-watch','silver-skates',
+    'pan-labyrinth','shape-water','labyrinth',
+    'sandman','umbrella-academy','avatar-last-airbender','gravity-falls','merlin','good-omens','misfits',
+    'untamed','listen-my-heart','legend-fei','eternal-love','ashes-love','love-between-fairy','word-honor','nirvana-fire',
+    'never-ending-story','trollhunter','mortal-instruments','shadowhunters'
+  ];
+  var DETECTIVE_IDS = [
+    'knives-out','knives-out-2','true-detective','seven','se7en','sherlock','memories-murder','burning',
+    'the-wailing','girl-dragon-tattoo','girl-dragon-tattoo-us','dark','babylon-berlin','elite','better-call-saul','dexter',
+    'house-md','mindhunter','you','killing-eve','mare-easttown','broadchurch','line-of-duty','bodyguard',
+    'wallander','bridge','the-killing','borgen','method','method-ru','method','csi-vegas',
+    'psych','monk','castle','mentalist','white-collar','leverage','lupin','call-my-agent',
+    'only-murders','law-school','defendant','signal','stranger-secret','voice','memorist','beyond-evil','flower-evil','mouse',
+    'sherlock','three-body','guardian','hidden-city','detective-chinatown','zodiac','memento','shutter-island','prisoners',
+    'gone-girl','nightcrawler','no-country','no-country-coens','inferno'
+  ];
+  var ACTION_IDS = [
+    'dark-knight','mad-max','mad-max-fury','mad-max-original','mad-max-fury-aus','john-wick','mission-impossible',
+    'top-gun-maverick','gladiator','braveheart','inception-action','terminator-2','aliens','raiders-lost-ark','jurassic-park',
+    'matrix','train-busan','berlin-file','villainess','snowpiercer','sweet-home','all-dead','kingdom','vincenzo','itaewon-class',
+    'weak-hero','ballerina','vagabond','k2','descendants-sun','roundup','escape-mogadishu','outlaws','veteran','new-world',
+    'ip-man','police-story','hard-boiled','better-tomorrow','infernal-affairs','hero','kung-fu-hustle','house-flying-daggers',
+    'crouching-tiger','ip-man','ip-man-2','hero','wandering-earth','wandering-earth-2','shanghai-fortress',
+    'the-boys','daredevil','punisher','jessica-jones','loki','wandavision','invincible','cyberpunk-edgerunners','castlevania','arcane',
+    'peaky-blinders','boys-word','major','night-watch','day-watch','attraction','pirate',
+    'money-heist','casa-papel-berlin','elite','la-casa-papel-mx','narcos-mexico','narcos','son-s-o',
+    'rrr','dhoom-3','escape-mogadishu','kill-bill','reservoir-dogs','dunkirk','1917','28-days-later','28-weeks-later',
+    'young-royals','borgen','occupation','rage','lock-stock','snatch'
+  ];
+  var COMEDY_IDS = [
+    'friends','himym','big-bang','office','brooklyn-99','brooklyn-b99','parks-rec','community','modern-family',
+    'schitts-creek','ted-lasso','good-place','broad-city','fleabag','after-life','sex-education','skins',
+    'rick-morty','gravity-falls','simpsons','south-park','family-guy','bojack',
+    'grand-budapest','la-la-land','notting-hill','devil-prada','intern','hangover','deadpool','elf','groundhog-day','truman','amazing-love',
+    'paddington','paddington-2','hot-fuzz','lock-stock','snatch',
+    'kin-dza-dza','guest-future','ivan-vasilievich','diamond-hand','caucasian-captive','irony-fate','irony-2','office-romance','kitchen',
+    'chak-de-india','3-idiots','pk','bajrangi','dangal','lagaan','pk-2','dhoom-3',
+    'perfect-strangers-it','perfect-strangers','perfect-strangers-fr','benvenuti-al-sud','intern',
+    'peaceful-warrior','ted-lasso','call-my-agent','psych','monk','castle','mentalist','white-collar','leverage','suits',
+    'lupin','fleabag','miranda','it-crowd','black-books','young-royals'
+  ];
+  var ROMANCE_IDS = [
+    'titanic','titanic-romance','la-la-land','amelie','your-name','moscow-tears','crash-landing','secretary-kim',
+    'goblin','love-letter','1litre-tears','5cm','love-o2o','irony-fate','irony-2','office-romance','silver-skates',
+    'theory-everything','volver','the-dressmaker','cinema-paradiso','handmaiden','forrest','himym','friends',
+    'notting-hill','love-actually','call-me-name','portrait-lady','blue-warmest','the-proposal','crazy-rich','to-all-boys',
+    'before-sunrise','silver-linings','eternal-sunshine','amazing-love','notebook','titanic-romance',
+    'magnificent-century','knock-door','black-money-love','endless-love','zeki','son-sofia','heirs','descendants-sun','my-love-star','while-sleeping','business-proposal',
+    'twenty-five','crash-course-romance','reply-1988','something-rain','romance-bonus','bridgerton','young-royals',
+    'pretty-woman','holiday','love-rosie','one-day','me-before-you','about-time','vow','dear-john',
+    'chungking-express','happy-together','suzume','weathering-you','garden-words','violet-evergarden',
+    'three-times','eat-drink-man-woman','call-me-name-us','great-gatsby','chocolate','queen-sweden','royal-affair'
+  ];
+  var LONG_IDS = [
+    'got','breaking-bad','better-call-saul','friends','himym','big-bang','office','magnificent-century',
+    'lord-of-rings','harry-potter','peaky-blinders','sweet-home','alice-borderland','goblin','crash-landing',
+    'secretary-kim','1litre-tears','yuan','love-o2o','nothing-thirty','kitchen','major','boys-word','master-margarita',
+    'dark','babylon-berlin','borgen','money-heist','elite','lost','westworld','the-expanse','walking-dead','house-dragon',
+    'stranger-things','sopranos','the-wire','mad-men','six-feet-under','west-wing','house-cards','succession','the-bear',
+    'this-is-us','handmaids-tale','ozark','yellowstone','narcos','dexter','you','killing-eve','mindhunter','fargo',
+    'true-detective','daredevil','jessica-jones','punisher','loki','wandavision','crown','line-of-duty','broadchurch',
+    'bodyguard','fleabag','sex-education','after-life','good-omens','misfits','skins','merlin','doctor-who',
+    'gomorrah','my-brilliant-friend','the-bridge','the-killing','wallander','occupation','young-royals','squid-game',
+    'all-dead','kingdom','vincenzo','itaewon-class','hotel-luna','gumiho','nine-tailed','true-beauty','penthouse',
+    'weak-hero','mouse','beyond-evil','flower-evil','signal','stranger-secret','voice','memorist','law-school',
+    'defendant','vagabond','k2','descendants-sun','heirs','boys-flowers','coffee-prince','full-house','secret-garden',
+    'my-love-star','while-sleeping','strong-woman','extraordinary-woo','business-proposal','twenty-five','crash-course-romance',
+    'reply-1988','hospital-playlist','prison-playbook','sky-castle','world-married','something-rain','romance-bonus',
+    'while-married','doctors','crash-landing-2','twenty-one-fifty','true-beauty','alice-borderland-2','big-bang-2'
+  ];
+  var RUS_IDS = [
+    'moscow-tears','kitchen','major','boys-word','master-margarita','food-block','irony-fate','irony-2','office-romance',
+    'kin-dza-dza','guest-future','night-watch','day-watch','fool','leviathan','geographer','attraction','silver-skates',
+    'method','thaw','sofia','catherine','gogol','better-than-us','ivan-vasilievich','diamond-hand','caucasian-captive',
+    'andrei-rublev','solaris','stalker','t-34','battle-stalingrad','legend-17','crew','crew-2','crew-3','moscow-doesnt-believe'
+  ];
 
+  function isHorror(id) { return HORROR_IDS.indexOf(id) !== -1; }
   function isScifi(id) { return SCIFI_IDS.indexOf(id) !== -1; }
   function isFantasy(id) { return FANTASY_IDS.indexOf(id) !== -1; }
+  function isDetective(id) { return DETECTIVE_IDS.indexOf(id) !== -1; }
+  function isAction(id) { return ACTION_IDS.indexOf(id) !== -1; }
+  function isComedy(id) { return COMEDY_IDS.indexOf(id) !== -1; }
+  function isRomance(id) { return ROMANCE_IDS.indexOf(id) !== -1; }
+  function isLong(id) { return LONG_IDS.indexOf(id) !== -1; }
+  function isRus(id) { return RUS_IDS.indexOf(id) !== -1; }
+
+  /* Тайтл считается "коротким", если не в LONG_IDS */
+  function isShort(id) { return !isLong(id); }
 
   function getRegion(m) {
     var parts = String(m.country).split('/');
@@ -268,10 +375,6 @@
     return 'west';
   }
   function isModern(m) { return m.year >= 2010; }
-  function isHorror(id) { return HORROR_IDS.indexOf(id) !== -1; }
-  function isRomance(id) { return ROMANCE_IDS.indexOf(id) !== -1; }
-  function isRus(id) { return RUS_IDS.indexOf(id) !== -1; }
-  function isLong(id) { return LONG_IDS.indexOf(id) !== -1; }
 
   var TEST_TITLE = 'Какое кино тебе стоит посмотреть?';
   var TEST_SUBTITLE = 'Подбор фильма или сериала по характеру';
@@ -355,7 +458,6 @@
     return scores;
   }
 
-  /* ═════════ СБОР ПРЕДПОЧТЕНИЙ ═════════ */
   function collectFlags() {
     var flags = {
       no_horror: false, want_horror: false,
@@ -363,6 +465,7 @@
       only_rus: false, short: false,
       want_modern: false, want_classic: false,
       want_scifi: false, want_fantasy: false,
+      want_detective: false, want_action: false, want_comedy: false, want_drama: false,
       region: null
     };
 
@@ -374,13 +477,15 @@
         if (ans.flags) {
           Object.keys(ans.flags).forEach(function(k) { if (ans.flags[k]) flags[k] = true; });
         }
-        // Жанр из первого вопроса
         if (q.q.indexOf('Какой жанр') !== -1) {
           var tGenre = ans.t;
           if (tGenre.indexOf('Научное') !== -1) flags.want_scifi = true;
           if (tGenre.indexOf('Фэнтези') !== -1) flags.want_fantasy = true;
+          if (tGenre.indexOf('Детектив') !== -1) flags.want_detective = true;
+          if (tGenre.indexOf('Боевик') !== -1) flags.want_action = true;
+          if (tGenre.indexOf('Комедия') !== -1) flags.want_comedy = true;
+          if (tGenre.indexOf('Драма') !== -1) flags.want_drama = true;
         }
-        // Регион
         if (q.q.indexOf('какой страны') !== -1) {
           var t = ans.t;
           if (t.indexOf('США') !== -1) flags.region = 'west';
@@ -389,13 +494,11 @@
           else if (t.indexOf('Россия') !== -1) flags.region = 'rus';
           else if (t.indexOf('Турция') !== -1) flags.region = 'other';
         }
-        // Современность
         if (q.q.indexOf('классику') !== -1) {
           var t2 = ans.t;
           if (t2.indexOf('предпочитаю новое') !== -1 || t2.indexOf('Не смотрю') !== -1) flags.want_modern = true;
           else if (t2.indexOf('регулярно') !== -1) flags.want_classic = true;
         }
-        // Хоррор
         if (q.q.indexOf('страшного') !== -1 || q.q.indexOf('боишься страшного') !== -1) {
           var t3 = ans.t;
           if (t3.indexOf('жуть') !== -1 || (t3.indexOf('Люблю') !== -1 && t3.indexOf('нервы') !== -1)) flags.want_horror = true;
@@ -406,9 +509,16 @@
     return flags;
   }
 
-  /* ═════════ ПОИСК: РЕГИОН И ЖАНР — ЖЁСТКИЕ, ЭПОХА И ХОРРОР — МЯГКИЕ ═════════ */
+  /* ═════════ ПОИСК: ЖЁСТКИЕ ФИЛЬТРЫ ═════════
+     Порядок:
+       1. Исключения: no_horror, no_romance, only_rus, short
+       2. ЖЁСТКИЙ регион
+       3. ЖЁСТКИЙ жанр (объединение по ИЛИ среди выбранных)
+       4. Мягкие: эпоха, хоррор
+       5. Косинус
+  */
   function determineMovie(scores, flags) {
-    // Слой 1: исключения (что-то точно не подходит)
+    // Слой 1: исключения
     var base = MOVIE_RESULTS.filter(function(m) {
       if (flags.no_horror && isHorror(m.id)) return false;
       if (flags.no_romance && isRomance(m.id)) return false;
@@ -418,14 +528,14 @@
     });
     if (base.length === 0) base = MOVIE_RESULTS.slice();
 
-    // Слой 2: ЖЁСТКИЙ регион. Если в регионе ноль — оставляем как есть (не откатываемся к другим регионам)
+    // Слой 2: ЖЁСТКИЙ регион
     if (flags.region) {
       var byRegion = base.filter(function(m) { return getRegion(m) === flags.region; });
       if (byRegion.length > 0) base = byRegion;
-      else base = []; // Нет ни одного фильма в нужном регионе — тогда будем брать по жанру глобально
+      else base = [];
     }
 
-    // Если после региона вообще ноль — ищем по жанру глобально (лучше, чем предлагать не тот регион)
+    // Если регион отсеял всё — не откатываемся, ищем по жанру глобально
     if (base.length === 0) {
       base = MOVIE_RESULTS.filter(function(m) {
         if (flags.no_horror && isHorror(m.id)) return false;
@@ -434,22 +544,39 @@
         if (flags.short && isLong(m.id)) return false;
         return true;
       });
-      // Но всё равно помечаем: регион не совпадает
     }
 
-    // Слой 3: ЖЁСТКИЙ жанр. Ослабляем только если вообще ноль в жанре.
-    if (flags.want_scifi && !flags.want_fantasy) {
-      var onlyScifi = base.filter(function(m) { return isScifi(m.id); });
-      if (onlyScifi.length > 0) base = onlyScifi;
-    } else if (flags.want_fantasy && !flags.want_scifi) {
-      var onlyFantasy = base.filter(function(m) { return isFantasy(m.id); });
-      if (onlyFantasy.length > 0) base = onlyFantasy;
-    } else if (flags.want_scifi && flags.want_fantasy) {
-      var both = base.filter(function(m) { return isScifi(m.id) || isFantasy(m.id); });
-      if (both.length > 0) base = both;
+    // Слой 3: ЖЁСТКИЙ жанр
+    var wantGenres = [];
+    if (flags.want_scifi) wantGenres.push('scifi');
+    if (flags.want_fantasy) wantGenres.push('fantasy');
+    if (flags.want_detective) wantGenres.push('detective');
+    if (flags.want_action) wantGenres.push('action');
+    if (flags.want_comedy) wantGenres.push('comedy');
+    if (flags.want_drama) wantGenres.push('drama');
+
+    if (wantGenres.length > 0) {
+      var byGenre = base.filter(function(m) {
+        // 1. Пытаемся использовать m.genre (если есть поле)
+        var g = m.genre || [];
+        if (Array.isArray(g)) {
+          for (var i = 0; i < g.length; i++) {
+            if (wantGenres.indexOf(g[i]) !== -1) return true;
+          }
+        }
+        // 2. Фолбэк: id-карта
+        if (wantGenres.indexOf('scifi') !== -1 && isScifi(m.id)) return true;
+        if (wantGenres.indexOf('fantasy') !== -1 && isFantasy(m.id)) return true;
+        if (wantGenres.indexOf('detective') !== -1 && isDetective(m.id)) return true;
+        if (wantGenres.indexOf('action') !== -1 && isAction(m.id)) return true;
+        if (wantGenres.indexOf('comedy') !== -1 && isComedy(m.id)) return true;
+        if (wantGenres.indexOf('drama') !== -1 && (m.profile.D >= 75)) return true;
+        return false;
+      });
+      if (byGenre.length > 0) base = byGenre;
     }
 
-    // Слой 4: мягкие фильтры (эпоха + хоррор) с ослаблением
+    // Слой 4: мягкие фильтры
     var eraFilter = flags.want_modern ? 'modern' : (flags.want_classic ? 'classic' : null);
     var horrorFilter = flags.want_horror;
 
@@ -473,7 +600,7 @@
       if (attempts[i].length > 0) { candidates = attempts[i]; break; }
     }
 
-    // Слой 5: косинусное сходство среди оставшихся
+    // Слой 5: косинус
     var ranked = candidates.map(function(m) {
       var dot = 0, magA = 0, magB = 0;
       MOVIE_AXES.forEach(function(a) {
