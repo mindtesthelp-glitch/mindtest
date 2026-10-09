@@ -285,12 +285,12 @@ const TESTS = [
     category: 'interests',
     desc: 'Художник, музыкант, писатель или изобретатель? Узнай.',
     emoji: '🎭',
-    time: 10,
+    time: 6,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
     badges: [],
-    href: '#'
+    href: 'test-creative.html'
   },
   {
     id: 'pet-match',
