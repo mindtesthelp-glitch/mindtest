@@ -245,10 +245,14 @@
     return forms[2];
   }
 
+  function norm(s) {
+    return String(s || '').toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim();
+  }
+
   var TEST_TITLE = 'Какой жанр музыки ты полюбишь?';
   var TEST_SUBTITLE = 'Тест на музыкальный вкус';
   var TEST_DESC = [
-    'Ответь на 30 вопросов о том, что тебе нравится в музыке, — и мы подберём жанр, который тебе зайдёт. Учтём энергию, тексты, атмосферу, тяжесть и готовность к экспериментам.',
+    'Ответь на 28 вопросов о том, что тебе нравится в музыке, — и мы подберём жанр, который тебе зайдёт. Учтём, кого ты слушаешь, что тебе важно, какая энергия и атмосфера тебе ближе.',
     'Отвечай честно, ориентируясь на реальные предпочтения. Правильных ответов нет — есть музыка именно для тебя.'
   ];
   var HERO_IMG = './music-hero.png';
@@ -259,6 +263,7 @@
     answers: [],
     scores: null,
     flags: null,
+    artistHits: null,
     result: null,
     bestMatch: 0,
     also: []
@@ -278,6 +283,66 @@
   }
 
   function scrollTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+  /* ═════════ ПОИСК ВЫБРАННЫХ ИСПОЛНИТЕЛЕЙ ═════════ */
+  function collectArtistHits() {
+    var hits = {};
+    var selectedArtists = [];
+
+    // Вопрос №1 — «Выбери своих любимых исполнителей»
+    var firstQ = MUSIC_ALL_QUESTIONS[0];
+    var firstAnswers = state.answers[0] || [];
+    firstAnswers.forEach(function(idx) {
+      var ans = firstQ.a[idx];
+      if (ans && ans.t) selectedArtists.push(norm(ans.t));
+    });
+
+    // Вопрос №2 — «Какие направления тебе точно заходят»
+    var secondQ = MUSIC_ALL_QUESTIONS[1];
+    var secondAnswers = state.answers[1] || [];
+    var DIRECTION_MAP = {
+      'поп и танцевальная музыка': ['pop', 'edm'],
+      'k-pop и азиатская музыка': ['kpop', 'anime-music'],
+      'русский рэп и хип-хоп': ['hip-hop', 'trap', 'chanson'],
+      'зарубежный рэп и хип-хоп': ['hip-hop', 'trap'],
+      'рок (классический или современный)': ['rock'],
+      'метал и тяжёлая музыка': ['metal', 'industrial'],
+      'инди и альтернатива': ['indie', 'shoegaze'],
+      'электроника и edm': ['edm', 'house', 'techno'],
+      'русский рок': ['rock', 'post-punk'],
+      'r&b и соул': ['rnb'],
+      'джаз и классика': ['jazz', 'classical'],
+      'лоу-фай и эмбиент': ['lo-fi', 'ambient']
+    };
+
+    secondAnswers.forEach(function(idx) {
+      var ans = secondQ.a[idx];
+      if (!ans) return;
+      var key = norm(ans.t);
+      var genres = DIRECTION_MAP[key];
+      if (genres) {
+        genres.forEach(function(g) {
+          hits[g] = (hits[g] || 0) + 2;
+        });
+      }
+    });
+
+    // Прямой матчинг по исполнителям
+    MUSIC_RESULTS.forEach(function(genre) {
+      if (!genre.matchKeys || !genre.matchKeys.length) return;
+      var genreHits = 0;
+      selectedArtists.forEach(function(artist) {
+        genre.matchKeys.forEach(function(key) {
+          if (artist.indexOf(key) !== -1) genreHits++;
+        });
+      });
+      if (genreHits > 0) {
+        hits[genre.id] = (hits[genre.id] || 0) + genreHits * 3;
+      }
+    });
+
+    return { hits: hits, artists: selectedArtists };
+  }
 
   function calculateScores() {
     var raw = {}, maxs = {};
@@ -339,38 +404,31 @@
       arr.forEach(function(idx) {
         var ans = q.a[idx];
         if (!ans) return;
-
         if (ans.flags) {
           Object.keys(ans.flags).forEach(function(k) {
             if (ans.flags[k]) flags[k] = true;
           });
         }
-
-        if (q.q.indexOf('языке') !== -1) {
-          var t = ans.t;
-          if (t.indexOf('Русский') !== -1) flags.only_rus = true;
-        }
-
-        if (q.q.indexOf('смысл в песне') !== -1) {
-          if (ans.t.indexOf('всё равно') !== -1) flags.no_text = true;
-        }
-
-        if (q.q.indexOf('танцуешь') !== -1) {
-          if (ans.t.indexOf('Почти никогда') !== -1) flags.no_dance = true;
-        }
-
-        if (q.q.indexOf('эксперимент') !== -1) {
-          if (ans.t.indexOf('Не люблю') !== -1) flags.no_experiment = true;
-        }
       });
     });
+
+    // Язык (вопрос №3)
+    var langQ = MUSIC_ALL_QUESTIONS[2];
+    var langAnswers = state.answers[2] || [];
+    if (langAnswers.length === 1) {
+      var ans = langQ.a[langAnswers[0]];
+      if (ans) {
+        var t = norm(ans.t);
+        if (t.indexOf('русский') !== -1) flags.only_rus = true;
+      }
+    }
 
     return flags;
   }
 
-  function determineGenre(scores, flags) {
+  function determineGenre(scores, flags, artistHits) {
     var HEAVY_IDS = ['metal', 'punk', 'industrial'];
-    var EXPERIMENT_IDS = ['ambient', 'shoegaze', 'industrial', 'retro-wave', 'techno'];
+    var EXPERIMENT_IDS = ['ambient', 'shoegaze', 'industrial', 'retro-wave', 'techno', 'jazz', 'classical'];
     var DANCE_IDS = ['edm', 'house', 'techno', 'latina', 'kpop', 'funk', 'trap'];
     var TEXT_IDS = ['chanson', 'folklore', 'hip-hop', 'blues', 'country'];
     var ASIA_IDS = ['kpop', 'anime-music'];
@@ -389,21 +447,21 @@
       if (flags.no_experiment && isExp(g.id)) return false;
       return true;
     });
-    if (base.length === 0) base = MUSIC_RESULTS.slice();
+    if (base.length < 5) base = MUSIC_RESULTS.slice();
 
-    // Слой 2: no_text — убираем жанры, где текст критичен
+    // Слой 2: no_text
     if (flags.no_text) {
       var withoutText = base.filter(function(g) { return !isText(g.id); });
       if (withoutText.length >= 5) base = withoutText;
     }
 
-    // Слой 3: want_heavy — оставляем только тяжёлые
+    // Слой 3: want_heavy
     if (flags.want_heavy) {
       var onlyHeavy = base.filter(function(g) { return isHeavy(g.id); });
       if (onlyHeavy.length >= 3) base = onlyHeavy;
     }
 
-    // Слой 4: косинус
+    // Слой 4: косинус + бонус по исполнителям
     var ranked = base.map(function(g) {
       var dot = 0, magA = 0, magB = 0;
       MUSIC_AXES.forEach(function(a) {
@@ -414,15 +472,27 @@
         magB += v * v;
       });
       var sim = dot / (Math.sqrt(magA) * Math.sqrt(magB));
+
+      var artistBonus = artistHits.hits[g.id] || 0;
+      var boostedSim = sim + artistBonus * 0.08;
+
       var match = Math.round(sim * 100);
       if (match > 99) match = 99;
       if (match < 45) match = 45;
-      return { genre: g, sim: sim, match: match };
-    }).sort(function(a, b) { return b.sim - a.sim; });
 
+      return {
+        genre: g,
+        sim: sim,
+        boostedSim: boostedSim,
+        artistBonus: artistBonus,
+        match: match
+      };
+    }).sort(function(a, b) { return b.boostedSim - a.boostedSim; });
+
+    var best = ranked[0];
     return {
-      best: ranked[0].genre,
-      bestMatch: ranked[0].match,
+      best: best.genre,
+      bestMatch: Math.min(99, Math.round(best.boostedSim * 100)),
       also: ranked.slice(1, Math.min(4, ranked.length))
     };
   }
@@ -433,6 +503,7 @@
     state.answers = MUSIC_ALL_QUESTIONS.map(function() { return []; });
     state.scores = null;
     state.flags = null;
+    state.artistHits = null;
     state.result = null;
     state.bestMatch = 0;
     state.also = [];
@@ -608,7 +679,8 @@
   function finishTest() {
     state.scores = calculateScores();
     state.flags = collectFlags();
-    var res = determineGenre(state.scores, state.flags);
+    state.artistHits = collectArtistHits();
+    var res = determineGenre(state.scores, state.flags, state.artistHits);
     state.result = res.best;
     state.bestMatch = res.bestMatch;
     state.also = res.also;
