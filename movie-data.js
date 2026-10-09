@@ -852,20 +852,7 @@ const MOVIE_RESULTS_PART2 = [
     desc: ['После землетрясения выжившие прячутся в единственном уцелевшем доме. Постапокалипсис.'] }
 ];
 
-/* ═══════════════════════════════════════════════════════════
-   ВРЕМЕННАЯ СКЛЕЙКА (пока не добавим остальные части)
-   ═══════════════════════════════════════════════════════════ */
 
-const MOVIE_RESULTS = MOVIE_RESULTS_PART1
-  .concat(MOVIE_RESULTS_PART2)
-  .concat(MOVIE_RESULTS_PART3)
-  .concat(MOVIE_RESULTS_PART4)
-  .concat(MOVIE_RESULTS_PART5)
-  .concat(MOVIE_RESULTS_PART6)
-  .concat(MOVIE_RESULTS_PART7)
-  .concat(MOVIE_RESULTS_PART8)
-  .concat(MOVIE_RESULTS_PART9)
-  .concat(MOVIE_RESULTS_PART10);
 /* ═══════════════════════════════════════════════════════════
    ЯПОНИЯ — ФИЛЬМЫ, СЕРИАЛЫ, АНИМЕ (40)
    ═══════════════════════════════════════════════════════════ */
@@ -3698,3 +3685,17 @@ const MOVIE_RESULTS_PART10 = [
     profile: { D: 92, A: 15, M: 75, L: 75, F: 5, R: 60 },
     desc: ['Гениальный уборщик из MIT проходит терапию. Оскароносная драма о поиске себя.'] }
 ];
+/* ═══════════════════════════════════════════════════════════
+   ФИНАЛЬНАЯ СКЛЕЙКА
+   ═══════════════════════════════════════════════════════════ */
+
+const MOVIE_RESULTS = MOVIE_RESULTS_PART1
+  .concat(MOVIE_RESULTS_PART2)
+  .concat(MOVIE_RESULTS_PART3)
+  .concat(MOVIE_RESULTS_PART4)
+  .concat(MOVIE_RESULTS_PART5)
+  .concat(MOVIE_RESULTS_PART6)
+  .concat(MOVIE_RESULTS_PART7)
+  .concat(MOVIE_RESULTS_PART8)
+  .concat(MOVIE_RESULTS_PART9)
+  .concat(MOVIE_RESULTS_PART10);
