@@ -311,12 +311,12 @@ const TESTS = [
     category: 'interests',
     desc: 'Плавание, бег, танцы или единоборства — узнай, что твоё.',
     emoji: '⚽',
-    time: 10,
+    time: 7,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
     badges: [],
-    href: '#'
+    href: 'test-sport.html'
   },
   {
     id: 'interests-deep',
