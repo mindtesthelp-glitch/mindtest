@@ -272,12 +272,12 @@ const TESTS = [
     category: 'interests',
     desc: 'Рэп, поп, рок, инди, классика — узнай, что тебе ближе.',
     emoji: '🎧',
-    time: 10,
+    time: 7,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
     badges: [],
-    href: '#'
+    href: 'test-music.html'
   },
   {
     id: 'creative-type',
