@@ -413,7 +413,7 @@ const MUSIC_RESULTS_PART2 = [
 
   { id: 'reggae', name: 'Регги', year: 'с 1960-х', popularity: 'для расслабления',
     tagline: 'Солнце, ритм и спокойствие',
-    artists: ['Bob Marley', 'Peter Tosh', 'Shaggy', 'Damian Marley', '5'nizza', 'Zdob și Zdub'],
+    artists: ['Bob Marley', 'Peter Tosh', 'Shaggy', 'Damian Marley', '5\'nizza', 'Zdob și Zdub'],
     profile: { E: 60, L: 75, M: 35, T: 80, H: 20, X: 45 },
     desc: ['Регги — ямайская музыка с характерным расслабленным ритмом и позитивным настроем. Тексты часто про свободу, любовь и справедливость. Идеально для лета, пляжа, хорошего настроения.'],
     premium: { focus: ['Ритм', 'Позитив'], develop: ['Начни с Bob Marley — легенда жанра.', 'Потом — Peter Tosh, Damian Marley.', '5\'nizza — русский регги-дуэт, попробуй.'], read: ['«Регги: история» — Ллойд Брэдли'] } },
