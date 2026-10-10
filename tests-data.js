@@ -324,12 +324,12 @@ const TESTS = [
     category: 'interests',
     desc: 'Узнай, к каким темам тебя тянет — и почему.',
     emoji: '🧭',
-    time: 12,
+    time: 8,
     difficulty: 'easy',
     type: 'result',
     age: '12+',
     badges: [],
-    href: '#'
+    href: 'test-interests.html'
   },
   {
     id: 'style-match',
