@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Какой ты творческий тип — MindTest</title>
+<title>Какой жанр музыки ты полюбишь — MindTest</title>
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -112,6 +112,14 @@
   .result-desc { font-size: 16px; color: #4b3b63; line-height: 1.8; margin-bottom: 24px; }
   .result-desc p + p { margin-top: 14px; }
 
+  .artists-block { background: #faf7ff; border: 2px solid #f0e8fb; border-radius: 18px; padding: 20px 22px; margin-bottom: 32px; }
+  .artists-block-title { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 800; color: #5d2b9e; margin-bottom: 14px; text-transform: uppercase; letter-spacing: .5px; }
+  .artists-block-title svg { width: 18px; height: 18px; color: #a855f7; }
+  .artists-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .artist-chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; background: #fff; border: 1.5px solid #ece3fa; border-radius: 999px; font-size: 13px; font-weight: 700; color: #4b3b63; transition: all .2s; }
+  .artist-chip:hover { border-color: #a855f7; color: #5d2b9e; background: #f5efff; }
+  .artist-chip svg { width: 12px; height: 12px; color: #a855f7; }
+
   .profile-box { background: #faf7ff; border: 2px solid #f0e8fb; border-radius: 22px; padding: 28px 26px; margin-bottom: 36px; }
   .profile-box-title { font-size: 16px; font-weight: 800; color: #2e1a4d; margin-bottom: 20px; text-align: center; letter-spacing: -.2px; }
   .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; }
@@ -156,7 +164,6 @@
   .premium-locked-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: #fbbf24; }
   .premium-locked-icon svg { width: 26px; height: 26px; }
   .premium-locked p { font-size: 15px; color: #c4a9e8; margin-bottom: 20px; line-height: 1.6; max-width: 480px; margin-left: auto; margin-right: auto; }
-  .premium-locked p b { color: #fff; font-weight: 700; }
   .premium-locked .btn-premium-rec { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 12px; background: #fff; color: #5d2b9e; font-size: 15px; font-weight: 800; transition: transform .2s; }
   .premium-locked .btn-premium-rec:hover { transform: translateY(-2px); }
   .premium-locked .btn-premium-rec svg { width: 17px; height: 17px; }
@@ -188,6 +195,7 @@
     .also-grid { grid-template-columns: 1fr; gap: 10px; }
     .also-block-title { font-size: 16px; margin-bottom: 14px; }
     .score-number { letter-spacing: -3px; }
+    .artists-block { padding: 18px 16px; }
   }
   @media (max-width: 480px) {
     .q-num { font-size: 11px; padding: 4px 10px; }
@@ -222,7 +230,7 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="creative-data.js"></script>
+<script src="music-data.js"></script>
 <script>
 (function() {
   'use strict';
@@ -237,13 +245,17 @@
     return forms[2];
   }
 
-  var TEST_TITLE = 'Какой ты творческий тип?';
-  var TEST_SUBTITLE = 'Художник, музыкант, писатель или изобретатель?';
+  function norm(s) {
+    return String(s || '').toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim();
+  }
+
+  var TEST_TITLE = 'Какой жанр музыки ты полюбишь?';
+  var TEST_SUBTITLE = 'Тест на музыкальный вкус';
   var TEST_DESC = [
-    'Ответь на 20 вопросов о своих привычках, увлечениях и способах самовыражения — и мы определим, какой творческий тип тебе ближе всего.',
-    'Правильных ответов нет. Есть только ты и твоя творческая сторона, о которой ты, возможно, ещё не знаешь.'
+    'Ответь на 28 вопросов о том, что тебе нравится в музыке, — и мы подберём жанр, который тебе зайдёт. Учтём, кого ты слушаешь, что тебе важно, какая энергия и атмосфера тебе ближе.',
+    'Отвечай честно, ориентируясь на реальные предпочтения. Правильных ответов нет — есть музыка именно для тебя.'
   ];
-  var HERO_IMG = './creative-hero.png';
+  var HERO_IMG = './music-hero.png';
 
   var state = {
     screen: 'intro',
@@ -251,6 +263,7 @@
     answers: [],
     scores: null,
     flags: null,
+    artistHits: null,
     result: null,
     bestMatch: 0,
     also: []
@@ -271,16 +284,72 @@
 
   function scrollTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
+  function collectArtistHits() {
+    var hits = {};
+    var selectedArtists = [];
+
+    var firstQ = MUSIC_ALL_QUESTIONS[0];
+    var firstAnswers = state.answers[0] || [];
+    firstAnswers.forEach(function(idx) {
+      var ans = firstQ.a[idx];
+      if (ans && ans.t) selectedArtists.push(norm(ans.t));
+    });
+
+    var secondQ = MUSIC_ALL_QUESTIONS[1];
+    var secondAnswers = state.answers[1] || [];
+    var DIRECTION_MAP = {
+      'поп и танцевальная музыка': ['pop', 'edm'],
+      'k-pop и азиатская музыка': ['kpop', 'anime-music'],
+      'русский рэп и хип-хоп': ['hip-hop', 'trap', 'chanson'],
+      'зарубежный рэп и хип-хоп': ['hip-hop', 'trap'],
+      'рок (классический или современный)': ['rock'],
+      'метал и тяжёлая музыка': ['metal', 'industrial'],
+      'инди и альтернатива': ['indie', 'shoegaze'],
+      'электроника и edm': ['edm', 'house', 'techno'],
+      'русский рок': ['rock', 'post-punk'],
+      'r&b и соул': ['rnb'],
+      'джаз и классика': ['jazz', 'classical'],
+      'лоу-фай и эмбиент': ['lo-fi', 'ambient']
+    };
+
+    secondAnswers.forEach(function(idx) {
+      var ans = secondQ.a[idx];
+      if (!ans) return;
+      var key = norm(ans.t);
+      var genres = DIRECTION_MAP[key];
+      if (genres) {
+        genres.forEach(function(g) {
+          hits[g] = (hits[g] || 0) + 2;
+        });
+      }
+    });
+
+    MUSIC_RESULTS.forEach(function(genre) {
+      if (!genre.matchKeys || !genre.matchKeys.length) return;
+      var genreHits = 0;
+      selectedArtists.forEach(function(artist) {
+        genre.matchKeys.forEach(function(key) {
+          if (artist.indexOf(key) !== -1) genreHits++;
+        });
+      });
+      if (genreHits > 0) {
+        hits[genre.id] = (hits[genre.id] || 0) + genreHits * 3;
+      }
+    });
+
+    return { hits: hits, artists: selectedArtists };
+  }
+
   function calculateScores() {
     var raw = {}, maxs = {};
-    CREATIVE_AXES.forEach(function(a) { raw[a.id] = 0; maxs[a.id] = 0; });
+    MUSIC_AXES.forEach(function(a) { raw[a.id] = 0; maxs[a.id] = 0; });
 
-    CREATIVE_ALL_QUESTIONS.forEach(function(q, qIdx) {
+    MUSIC_ALL_QUESTIONS.forEach(function(q, qIdx) {
       var arr = state.answers[qIdx] || [];
       var isMulti = !!q.multi;
       var isOrder = q.type === 'order';
 
-      CREATIVE_AXES.forEach(function(axis) {
+      MUSIC_AXES.forEach(function(axis) {
         var vals = q.a.map(function(v) { return (v.v && v.v[axis.id]) || 0; }).sort(function(x, y) { return y - x; });
         var maxForQ;
         if (isMulti) {
@@ -297,12 +366,12 @@
 
       if (isOrder) {
         var firstIdx = arr[0];
-        CREATIVE_AXES.forEach(function(axis) {
+        MUSIC_AXES.forEach(function(axis) {
           raw[axis.id] += (q.a[firstIdx].v && q.a[firstIdx].v[axis.id]) || 0;
         });
       } else {
         arr.forEach(function(idx) {
-          CREATIVE_AXES.forEach(function(axis) {
+          MUSIC_AXES.forEach(function(axis) {
             raw[axis.id] += (q.a[idx].v && q.a[idx].v[axis.id]) || 0;
           });
         });
@@ -310,7 +379,7 @@
     });
 
     var scores = {};
-    CREATIVE_AXES.forEach(function(a) {
+    MUSIC_AXES.forEach(function(a) {
       var v = maxs[a.id] > 0 ? (raw[a.id] / maxs[a.id]) * 100 : 0;
       if (v > 100) v = 100;
       if (v < 0) v = 0;
@@ -321,11 +390,12 @@
 
   function collectFlags() {
     var flags = {
-      no_music: false,
-      no_public: false
+      no_heavy: false, want_heavy: false,
+      only_rus: false, no_text: false,
+      no_dance: false, no_experiment: false
     };
 
-    CREATIVE_ALL_QUESTIONS.forEach(function(q, qIdx) {
+    MUSIC_ALL_QUESTIONS.forEach(function(q, qIdx) {
       var arr = state.answers[qIdx] || [];
       arr.forEach(function(idx) {
         var ans = q.a[idx];
@@ -338,36 +408,82 @@
       });
     });
 
+    var langQ = MUSIC_ALL_QUESTIONS[2];
+    var langAnswers = state.answers[2] || [];
+    if (langAnswers.length === 1) {
+      var ans = langQ.a[langAnswers[0]];
+      if (ans) {
+        var t = norm(ans.t);
+        if (t.indexOf('русский') !== -1) flags.only_rus = true;
+      }
+    }
+
     return flags;
   }
 
-  function determineType(scores, flags) {
-    var base = CREATIVE_RESULTS.filter(function(t) {
-      if (flags.no_music && t.id === 'musician') return false;
-      if (flags.no_public && t.id === 'actor') return false;
+  function determineGenre(scores, flags, artistHits) {
+    var HEAVY_IDS = ['metal', 'punk', 'industrial'];
+    var EXPERIMENT_IDS = ['ambient', 'shoegaze', 'industrial', 'retro-wave', 'techno', 'jazz', 'classical'];
+    var DANCE_IDS = ['edm', 'house', 'techno', 'latina', 'kpop', 'funk', 'trap'];
+    var TEXT_IDS = ['chanson', 'folklore', 'hip-hop', 'blues', 'country'];
+    var ASIA_IDS = ['kpop', 'anime-music'];
+
+    function isHeavy(id) { return HEAVY_IDS.indexOf(id) !== -1; }
+    function isExp(id) { return EXPERIMENT_IDS.indexOf(id) !== -1; }
+    function isDance(id) { return DANCE_IDS.indexOf(id) !== -1; }
+    function isText(id) { return TEXT_IDS.indexOf(id) !== -1; }
+    function isAsia(id) { return ASIA_IDS.indexOf(id) !== -1; }
+
+    var base = MUSIC_RESULTS.filter(function(g) {
+      if (flags.no_heavy && isHeavy(g.id)) return false;
+      if (flags.only_rus && isAsia(g.id)) return false;
+      if (flags.no_dance && isDance(g.id)) return false;
+      if (flags.no_experiment && isExp(g.id)) return false;
       return true;
     });
-    if (base.length < 3) base = CREATIVE_RESULTS.slice();
+    if (base.length < 5) base = MUSIC_RESULTS.slice();
 
-    var ranked = base.map(function(t) {
+    if (flags.no_text) {
+      var withoutText = base.filter(function(g) { return !isText(g.id); });
+      if (withoutText.length >= 5) base = withoutText;
+    }
+
+    if (flags.want_heavy) {
+      var onlyHeavy = base.filter(function(g) { return isHeavy(g.id); });
+      if (onlyHeavy.length >= 3) base = onlyHeavy;
+    }
+
+    var ranked = base.map(function(g) {
       var dot = 0, magA = 0, magB = 0;
-      CREATIVE_AXES.forEach(function(a) {
+      MUSIC_AXES.forEach(function(a) {
         var u = (scores[a.id] || 0) + 1;
-        var v = (t.profile[a.id] || 0) + 1;
+        var v = (g.profile[a.id] || 0) + 1;
         dot += u * v;
         magA += u * u;
         magB += v * v;
       });
       var sim = dot / (Math.sqrt(magA) * Math.sqrt(magB));
+
+      var artistBonus = artistHits.hits[g.id] || 0;
+      var boostedSim = sim + artistBonus * 0.08;
+
       var match = Math.round(sim * 100);
       if (match > 99) match = 99;
-      if (match < 55) match = 55;
-      return { type: t, sim: sim, match: match };
-    }).sort(function(a, b) { return b.sim - a.sim; });
+      if (match < 45) match = 45;
 
+      return {
+        genre: g,
+        sim: sim,
+        boostedSim: boostedSim,
+        artistBonus: artistBonus,
+        match: match
+      };
+    }).sort(function(a, b) { return b.boostedSim - a.boostedSim; });
+
+    var best = ranked[0];
     return {
-      best: ranked[0].type,
-      bestMatch: ranked[0].match,
+      best: best.genre,
+      bestMatch: Math.min(99, Math.round(best.boostedSim * 100)),
       also: ranked.slice(1, Math.min(4, ranked.length))
     };
   }
@@ -375,9 +491,10 @@
   function renderIntro() {
     state.screen = 'intro';
     state.current = 0;
-    state.answers = CREATIVE_ALL_QUESTIONS.map(function() { return []; });
+    state.answers = MUSIC_ALL_QUESTIONS.map(function() { return []; });
     state.scores = null;
     state.flags = null;
+    state.artistHits = null;
     state.result = null;
     state.bestMatch = 0;
     state.also = [];
@@ -387,13 +504,13 @@
     html +=   '<div class="intro-hero">';
     html +=     '<img src="' + HERO_IMG + '" alt="" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">';
     html +=     '<div class="intro-hero-placeholder" style="display:none;">';
-    html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>';
+    html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
     html +=       '<p>Место для картинки теста</p>';
     html +=     '</div>';
     html +=   '</div>';
     html +=   '<div class="intro-body">';
     html +=     '<div class="intro-cat">';
-    html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>';
+    html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
     html +=       'Интересы и хобби';
     html +=     '</div>';
     html +=     '<h1 class="intro-title">' + escapeHtml(TEST_TITLE) + '</h1>';
@@ -404,11 +521,11 @@
     html +=     '<div class="intro-meta">';
     html +=       '<div class="intro-meta-item">';
     html +=         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>';
-    html +=         CREATIVE_ALL_QUESTIONS.length + ' ' + pluralRu(CREATIVE_ALL_QUESTIONS.length, ['вопрос', 'вопроса', 'вопросов']);
+    html +=         MUSIC_ALL_QUESTIONS.length + ' ' + pluralRu(MUSIC_ALL_QUESTIONS.length, ['вопрос', 'вопроса', 'вопросов']);
     html +=       '</div>';
     html +=       '<div class="intro-meta-item">';
     html +=         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>';
-    html +=         '~6 минут';
+    html +=         '~7 минут';
     html +=       '</div>';
     html +=       '<div class="intro-meta-item">';
     html +=         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7 9 9.7 3 15.7"/></svg>';
@@ -432,8 +549,8 @@
   }
 
   function renderQuestion() {
-    var q = CREATIVE_ALL_QUESTIONS[state.current];
-    var total = CREATIVE_ALL_QUESTIONS.length;
+    var q = MUSIC_ALL_QUESTIONS[state.current];
+    var total = MUSIC_ALL_QUESTIONS.length;
     var pct = (state.current / total) * 100;
     var isMulti = !!q.multi;
     var isOrder = q.type === 'order';
@@ -442,7 +559,7 @@
     var html = '';
     html += '<div class="test-topbar">';
     html +=   '<div>Вопрос <b>' + (state.current + 1) + '</b> из ' + total + '</div>';
-    html +=   '<div>Творчество</div>';
+    html +=   '<div>Музыка</div>';
     html += '</div>';
     html += '<div class="test-progress"><div class="test-progress-fill" style="width:' + pct + '%"></div></div>';
     html += '<div class="q-card">';
@@ -553,7 +670,8 @@
   function finishTest() {
     state.scores = calculateScores();
     state.flags = collectFlags();
-    var res = determineType(state.scores, state.flags);
+    state.artistHits = collectArtistHits();
+    var res = determineGenre(state.scores, state.flags, state.artistHits);
     state.result = res.best;
     state.bestMatch = res.bestMatch;
     state.also = res.also;
@@ -564,10 +682,10 @@
 
   function buildRadar(scores) {
     var size = 400, cx = 200, cy = 200, R = 130;
-    var n = CREATIVE_AXES.length;
+    var n = MUSIC_AXES.length;
     var angles = [];
     for (var i = 0; i < n; i++) angles.push(-90 + (360 / n) * i);
-    var points = CREATIVE_AXES.map(function(s, i) {
+    var points = MUSIC_AXES.map(function(s, i) {
       var val = scores[s.id] || 0;
       var r = R * (val / 100);
       if (r < 4) r = 4;
@@ -588,17 +706,8 @@
       var rad = a * Math.PI / 180;
       axes += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + R * Math.cos(rad)).toFixed(1) + '" y2="' + (cy + R * Math.sin(rad)).toFixed(1) + '" stroke="#ece3fa" stroke-width="1"/>';
     });
-    var sectors = '';
-    points.forEach(function(p, i) {
-      var prev = (i === 0) ? angles[n - 1] : angles[i - 1];
-      var next = (i === n - 1) ? angles[0] : angles[i + 1];
-      var mp = (prev + angles[i]) / 2, mn = (angles[i] + next) / 2;
-      var r = Math.max(8, R * ((scores[CREATIVE_AXES[i].id] || 0) / 100) * 0.85);
-      var rp = mp * Math.PI / 180, rn = mn * Math.PI / 180;
-      var x1 = cx + r * Math.cos(rp), y1 = cy + r * Math.sin(rp);
-      var x2 = cx + r * Math.cos(rn), y2 = cy + r * Math.sin(rn);
-      sectors += '<path d="M ' + cx + ' ' + cy + ' L ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' A ' + r.toFixed(1) + ' ' + r.toFixed(1) + ' 0 0 1 ' + x2.toFixed(1) + ' ' + y2.toFixed(1) + ' Z" fill="' + CREATIVE_AXES[i].color + '" opacity="0.22"/>';
-    });
+    // Мягкая заливка внутри полигона (вместо цветных секторов)
+    var fill = '<polygon points="' + poly + '" fill="#7c2fd4" fill-opacity="0.12"/>';
     var stroke = '<polygon points="' + poly + '" fill="none" stroke="#7c2fd4" stroke-width="2" stroke-linejoin="round" opacity="0.85"/>';
     var dots = '';
     points.forEach(function(p) { dots += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="5" fill="' + p.color + '" stroke="#fff" stroke-width="2"/>'; });
@@ -612,10 +721,10 @@
       var dy = 0;
       if (Math.sin(rad) > 0.5) dy = 16;
       if (Math.sin(rad) < -0.5) dy = -22;
-      labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="13" font-weight="800" fill="#7c2fd4">' + CREATIVE_AXES[i].name + '</text>';
-      labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy + 15).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#a898c2">' + scores[CREATIVE_AXES[i].id] + '%</text>';
+      labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="13" font-weight="800" fill="#7c2fd4">' + MUSIC_AXES[i].name + '</text>';
+      labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy + 15).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#a898c2">' + scores[MUSIC_AXES[i].id] + '%</text>';
     });
-    return '<svg viewBox="-90 -40 580 480" xmlns="http://www.w3.org/2000/svg">' + grid + axes + sectors + stroke + dots + labels + '</svg>';
+    return '<svg viewBox="-90 -40 580 480" xmlns="http://www.w3.org/2000/svg">' + grid + axes + fill + stroke + dots + labels + '</svg>';
   }
 
   function renderResult() {
@@ -625,7 +734,7 @@
     var html = '';
     html += '<div class="result-card">';
     html += '<div class="result-body">';
-    html +=   '<span class="result-badge">Твой творческий тип</span>';
+    html +=   '<span class="result-badge">Твой жанр</span>';
     html +=   '<span class="result-year">' + escapeHtml(data.year) + '</span>';
     html +=   '<h1 class="result-title" style="margin-top:16px">' + escapeHtml(data.name) + '</h1>';
     html +=   '<p class="result-tagline">«' + escapeHtml(data.tagline) + '»</p>';
@@ -640,17 +749,34 @@
     html +=     '<span class="score-number">' + state.bestMatch + '%</span>';
     html +=     '<span class="score-suffix">совпадение</span>';
     html +=   '</div>';
-    html +=   '<div class="result-percent-wrap"><div class="result-percent">Этот тип творчества близок примерно <b>' + escapeHtml(data.popularity).replace('примерно у ', '') + '</b> людей</div></div>';
+    html +=   '<div class="result-percent-wrap"><div class="result-percent">Этот жанр нравится примерно <b>30–40%</b> слушателей</div></div>';
     html +=   '<div class="result-desc">';
     data.desc.forEach(function(p) { html += '<p>' + escapeHtml(p) + '</p>'; });
     html +=   '</div>';
+
+    if (data.artists && data.artists.length) {
+      html += '<div class="artists-block">';
+      html +=   '<div class="artists-block-title">';
+      html +=     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
+      html +=     'С чего начать';
+      html +=   '</div>';
+      html +=   '<div class="artists-list">';
+      data.artists.forEach(function(a) {
+        html += '<span class="artist-chip">';
+        html +=   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+        html +=   escapeHtml(a);
+        html += '</span>';
+      });
+      html +=   '</div>';
+      html += '</div>';
+    }
 
     html +=   '<div class="profile-box">';
     html +=     '<div class="profile-box-title">Твой профиль по 6 осям</div>';
     html +=     '<div class="profile-grid">';
     html +=       '<div class="profile-radar">' + buildRadar(scores) + '</div>';
     html +=       '<div class="profile-bars">';
-    CREATIVE_AXES.forEach(function(s) {
+    MUSIC_AXES.forEach(function(s) {
       var val = scores[s.id] || 0;
       html += '<div class="profile-bar">';
       html +=   '<div class="profile-bar-head">';
@@ -667,15 +793,15 @@
     if (state.also && state.also.length) {
       html +=   '<div class="also-block">';
       html +=     '<div class="also-block-title">';
-      html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>';
-      html +=       'В тебе также есть черты';
+      html +=       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
+      html +=       'Также вам могут понравиться';
       html +=     '</div>';
       html +=     '<div class="also-grid">';
       state.also.forEach(function(item) {
-        var t = item.type;
+        var g = item.genre;
         html += '<div class="also-card">';
-        html +=   '<div class="also-card-kind">' + escapeHtml(t.year) + '</div>';
-        html +=   '<div class="also-card-name">' + escapeHtml(t.name) + '</div>';
+        html +=   '<div class="also-card-kind">' + escapeHtml(g.year) + '</div>';
+        html +=   '<div class="also-card-name">' + escapeHtml(g.name) + '</div>';
         html +=   '<div class="also-card-match">' + item.match + '% совпадение</div>';
         html += '</div>';
       });
@@ -708,12 +834,12 @@
     html +=       '</div>';
     html +=       '<h3>Личные рекомендации</h3>';
     html +=     '</div>';
-    html +=     '<p class="premium-rec-sub">С чего начать именно тебе, что развивать и какие упражнения попробовать — под твой творческий тип.</p>';
+    html +=     '<p class="premium-rec-sub">Что слушать дальше в этом жанре, как копать глубже и что почитать о музыке.</p>';
     html +=     '<div class="premium-locked">';
     html +=       '<div class="premium-locked-icon">';
     html +=         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
     html +=       '</div>';
-    html +=       '<p><b>Что откроется с Premium:</b> персональные стартовые инструменты, план развития креативности, упражнения и подборка книг для твоего типа.</p>';
+    html +=       '<p>Этот блок доступен только с Premium-подпиской. Открой персональные советы по жанру, план погружения и подборку книг о музыке.</p>';
     html +=       '<button type="button" class="btn-premium-rec" id="premiumBtn">';
     html +=         'Оформить Premium';
     html +=         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
@@ -739,8 +865,8 @@
 
   async function shareResult() {
     var data = state.result;
-    var url = location.origin + location.pathname + '?type=' + data.id;
-    var text = 'Мой творческий тип по MindTest — ' + data.name + '. А ты как думаешь?';
+    var url = location.origin + location.pathname + '?genre=' + data.id;
+    var text = 'Мой музыкальный жанр по MindTest — ' + data.name + '. А ты как думаешь?';
     if (navigator.share) {
       try { await navigator.share({ title: 'Мой результат — MindTest', text: text, url: url }); return; }
       catch (e) { if (e && e.name === 'AbortError') return; }
@@ -755,16 +881,16 @@
       var list = [];
       try { list = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { list = []; }
       var data = state.result;
-      list = list.filter(function(item) { return item.test !== 'creative'; });
-      list.unshift({ test: 'creative', testName: 'Творческий тип', result: data.id, resultName: data.name + ' (' + state.bestMatch + '%)', date: new Date().toISOString() });
+      list = list.filter(function(item) { return item.test !== 'music'; });
+      list.unshift({ test: 'music', testName: 'Музыка', result: data.id, resultName: data.name + ' (' + state.bestMatch + '%)', date: new Date().toISOString() });
       list = list.slice(0, 100);
       localStorage.setItem(key, JSON.stringify(list));
       showToast('Результат сохранён');
     } catch (e) { showToast('Не удалось сохранить'); }
   }
 
-  if (typeof CREATIVE_ALL_QUESTIONS === 'undefined' || !Array.isArray(CREATIVE_ALL_QUESTIONS) || CREATIVE_ALL_QUESTIONS.length === 0) {
-    root.innerHTML = '<div style="padding:60px 20px; text-align:center; color:#7e6b94;">Не удалось загрузить данные теста. Проверьте файл <b>creative-data.js</b>.</div>';
+  if (typeof MUSIC_ALL_QUESTIONS === 'undefined' || !Array.isArray(MUSIC_ALL_QUESTIONS) || MUSIC_ALL_QUESTIONS.length === 0) {
+    root.innerHTML = '<div style="padding:60px 20px; text-align:center; color:#7e6b94;">Не удалось загрузить данные теста. Проверьте файл <b>music-data.js</b>.</div>';
     return;
   }
   renderIntro();
