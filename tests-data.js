@@ -166,7 +166,7 @@ const TESTS = [
     category: 'psychology',
     desc: 'Лидер, наблюдатель, душа компании или серый кардинал?',
     emoji: '🏛️',
-    time: 12,
+    time: 6,
     difficulty: 'medium',
     type: 'result',
     age: '12+',
