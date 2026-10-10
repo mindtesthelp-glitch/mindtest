@@ -236,7 +236,6 @@
     return forms[2];
   }
 
-  /* ═════════ РЕГИОНЫ ═════════ */
   var REGION_MAP = {
     'США': 'west', 'Канада': 'west', 'Великобритания': 'west',
     'Новая Зеландия': 'west', 'Австралия': 'west', 'США/Польша': 'west',
@@ -249,11 +248,6 @@
     'Турция': 'other', 'Индия': 'other',
     'Бразилия': 'latam', 'Аргентина': 'latam', 'Мексика': 'latam'
   };
-
-  /* ═════════ ЖАНРЫ ЧЕРЕЗ FIELD + ID-КАРТА ═════════
-     Логика: у тайтла есть массив m.genre (если есть).
-     Если нет — определяем по id через быстрые правила.
-  */
 
   var HORROR_IDS = [
     'train-busan','gonjiam','the-wailing','sweet-home','all-dead','kingdom','hellbound',
@@ -362,8 +356,6 @@
   function isRomance(id) { return ROMANCE_IDS.indexOf(id) !== -1; }
   function isLong(id) { return LONG_IDS.indexOf(id) !== -1; }
   function isRus(id) { return RUS_IDS.indexOf(id) !== -1; }
-
-  /* Тайтл считается "коротким", если не в LONG_IDS */
   function isShort(id) { return !isLong(id); }
 
   function getRegion(m) {
@@ -509,16 +501,7 @@
     return flags;
   }
 
-  /* ═════════ ПОИСК: ЖЁСТКИЕ ФИЛЬТРЫ ═════════
-     Порядок:
-       1. Исключения: no_horror, no_romance, only_rus, short
-       2. ЖЁСТКИЙ регион
-       3. ЖЁСТКИЙ жанр (объединение по ИЛИ среди выбранных)
-       4. Мягкие: эпоха, хоррор
-       5. Косинус
-  */
   function determineMovie(scores, flags) {
-    // Слой 1: исключения
     var base = MOVIE_RESULTS.filter(function(m) {
       if (flags.no_horror && isHorror(m.id)) return false;
       if (flags.no_romance && isRomance(m.id)) return false;
@@ -528,14 +511,12 @@
     });
     if (base.length === 0) base = MOVIE_RESULTS.slice();
 
-    // Слой 2: ЖЁСТКИЙ регион
     if (flags.region) {
       var byRegion = base.filter(function(m) { return getRegion(m) === flags.region; });
       if (byRegion.length > 0) base = byRegion;
       else base = [];
     }
 
-    // Если регион отсеял всё — не откатываемся, ищем по жанру глобально
     if (base.length === 0) {
       base = MOVIE_RESULTS.filter(function(m) {
         if (flags.no_horror && isHorror(m.id)) return false;
@@ -546,7 +527,6 @@
       });
     }
 
-    // Слой 3: ЖЁСТКИЙ жанр
     var wantGenres = [];
     if (flags.want_scifi) wantGenres.push('scifi');
     if (flags.want_fantasy) wantGenres.push('fantasy');
@@ -557,14 +537,12 @@
 
     if (wantGenres.length > 0) {
       var byGenre = base.filter(function(m) {
-        // 1. Пытаемся использовать m.genre (если есть поле)
         var g = m.genre || [];
         if (Array.isArray(g)) {
           for (var i = 0; i < g.length; i++) {
             if (wantGenres.indexOf(g[i]) !== -1) return true;
           }
         }
-        // 2. Фолбэк: id-карта
         if (wantGenres.indexOf('scifi') !== -1 && isScifi(m.id)) return true;
         if (wantGenres.indexOf('fantasy') !== -1 && isFantasy(m.id)) return true;
         if (wantGenres.indexOf('detective') !== -1 && isDetective(m.id)) return true;
@@ -576,7 +554,6 @@
       if (byGenre.length > 0) base = byGenre;
     }
 
-    // Слой 4: мягкие фильтры
     var eraFilter = flags.want_modern ? 'modern' : (flags.want_classic ? 'classic' : null);
     var horrorFilter = flags.want_horror;
 
@@ -600,7 +577,6 @@
       if (attempts[i].length > 0) { candidates = attempts[i]; break; }
     }
 
-    // Слой 5: косинус
     var ranked = candidates.map(function(m) {
       var dot = 0, magA = 0, magB = 0;
       MOVIE_AXES.forEach(function(a) {
@@ -840,17 +816,8 @@
       var rad = a * Math.PI / 180;
       axes += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + R * Math.cos(rad)).toFixed(1) + '" y2="' + (cy + R * Math.sin(rad)).toFixed(1) + '" stroke="#ece3fa" stroke-width="1"/>';
     });
-    var sectors = '';
-    points.forEach(function(p, i) {
-      var prev = (i === 0) ? angles[n - 1] : angles[i - 1];
-      var next = (i === n - 1) ? angles[0] : angles[i + 1];
-      var mp = (prev + angles[i]) / 2, mn = (angles[i] + next) / 2;
-      var r = Math.max(8, R * ((scores[MOVIE_AXES[i].id] || 0) / 100) * 0.85);
-      var rp = mp * Math.PI / 180, rn = mn * Math.PI / 180;
-      var x1 = cx + r * Math.cos(rp), y1 = cy + r * Math.sin(rp);
-      var x2 = cx + r * Math.cos(rn), y2 = cy + r * Math.sin(rn);
-      sectors += '<path d="M ' + cx + ' ' + cy + ' L ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' A ' + r.toFixed(1) + ' ' + r.toFixed(1) + ' 0 0 1 ' + x2.toFixed(1) + ' ' + y2.toFixed(1) + ' Z" fill="' + MOVIE_AXES[i].color + '" opacity="0.22"/>';
-    });
+    // Мягкая заливка внутри полигона (вместо цветных секторов)
+    var fill = '<polygon points="' + poly + '" fill="#7c2fd4" fill-opacity="0.12"/>';
     var stroke = '<polygon points="' + poly + '" fill="none" stroke="#7c2fd4" stroke-width="2" stroke-linejoin="round" opacity="0.85"/>';
     var dots = '';
     points.forEach(function(p) { dots += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="5" fill="' + p.color + '" stroke="#fff" stroke-width="2"/>'; });
@@ -867,7 +834,7 @@
       labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="13" font-weight="800" fill="#7c2fd4">' + MOVIE_AXES[i].name + '</text>';
       labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy + 15).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#a898c2">' + scores[MOVIE_AXES[i].id] + '%</text>';
     });
-    return '<svg viewBox="-90 -40 580 480" xmlns="http://www.w3.org/2000/svg">' + grid + axes + sectors + stroke + dots + labels + '</svg>';
+    return '<svg viewBox="-90 -40 580 480" xmlns="http://www.w3.org/2000/svg">' + grid + axes + fill + stroke + dots + labels + '</svg>';
   }
 
   function renderResult() {
