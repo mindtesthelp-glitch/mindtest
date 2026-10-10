@@ -94,7 +94,6 @@
   .q-answer.selected .q-radio { border-color: #a855f7; }
   .q-answer.selected .q-radio::after { content: ''; position: absolute; inset: 4px; border-radius: 50%; background: linear-gradient(135deg,#7c2fd4,#a855f7); }
 
-  /* Мультивыбор */
   .q-answer--multi .q-radio { border-radius: 6px; }
   .q-answer--multi.selected .q-radio { background: linear-gradient(135deg,#7c2fd4,#a855f7); }
     .q-answer--multi.selected .q-radio::after {
@@ -469,7 +468,6 @@
     state.answers.forEach(function(arr, qIdx) {
       if (!arr || arr.length === 0) return;
       var q = BIZ_QUESTIONS[qIdx];
-      // для multi — берём среднее из выбранных, но max = 4 (как у одиночного)
       var localSum = 0;
       arr.forEach(function(idx) {
         localSum += q.a[idx].v;
@@ -542,21 +540,8 @@
       axesLines += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + R * Math.cos(rad)).toFixed(1) + '" y2="' + (cy + R * Math.sin(rad)).toFixed(1) + '" stroke="#ece3fa" stroke-width="1"/>';
     });
 
-    var sectors = '';
-    points.forEach(function(p, i) {
-      var prevAngle = (i === 0) ? angles[n - 1] : angles[i - 1];
-      var nextAngle = (i === n - 1) ? angles[0] : angles[i + 1];
-      var midPrev = (prevAngle + angles[i]) / 2;
-      var midNext = (angles[i] + nextAngle) / 2;
-      var r = Math.max(8, R * ((scores[BIZ_SCALES[i].id] || 0) / 100) * 0.85);
-      var radPrev = midPrev * Math.PI / 180;
-      var radNext = midNext * Math.PI / 180;
-      var x1 = cx + r * Math.cos(radPrev);
-      var y1 = cy + r * Math.sin(radPrev);
-      var x2 = cx + r * Math.cos(radNext);
-      var y2 = cy + r * Math.sin(radNext);
-      sectors += '<path d="M ' + cx + ' ' + cy + ' L ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' A ' + r.toFixed(1) + ' ' + r.toFixed(1) + ' 0 0 1 ' + x2.toFixed(1) + ' ' + y2.toFixed(1) + ' Z" fill="' + BIZ_SCALES[i].color + '" opacity="0.22"/>';
-    });
+    // Мягкая заливка внутри полигона (вместо цветных секторов)
+    var fill = '<polygon points="' + polyPoints + '" fill="#7c2fd4" fill-opacity="0.12"/>';
 
     var polyStroke = '<polygon points="' + polyPoints + '" fill="none" stroke="#7c2fd4" stroke-width="2" stroke-linejoin="round" opacity="0.85"/>';
 
@@ -581,7 +566,7 @@
 
     var svg = '';
     svg += '<svg viewBox="-70 -50 540 500" xmlns="http://www.w3.org/2000/svg">';
-    svg +=   gridLines + axesLines + sectors + polyStroke + dots + labels;
+    svg +=   gridLines + axesLines + fill + polyStroke + dots + labels;
     svg += '</svg>';
     return svg;
   }
