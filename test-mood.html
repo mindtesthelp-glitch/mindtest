@@ -82,7 +82,6 @@
   .q-answer.selected .q-radio { border-color: #a855f7; }
   .q-answer.selected .q-radio::after { content: ''; position: absolute; inset: 4px; border-radius: 50%; background: linear-gradient(135deg,#7c2fd4,#a855f7); }
 
-  /* Мультивыбор — квадратный чекбокс */
   .q-answer--multi .q-radio { border-radius: 6px; }
   .q-answer--multi.selected .q-radio { background: linear-gradient(135deg,#7c2fd4,#a855f7); }
   .q-answer--multi.selected .q-radio::after {
@@ -98,7 +97,6 @@
   .q-answer--multi.is-locked { opacity: .45; cursor: not-allowed; }
   .q-answer--multi.is-locked:hover { border-color: #ece3fa; background: #faf7ff; transform: none; }
 
-  /* Расстановка по порядку */
   .q-answer--order { padding-left: 60px; position: relative; }
   .q-answer--order .q-order-num {
     position: absolute;
@@ -134,7 +132,6 @@
   .btn-next:hover:not(:disabled) { transform: translateY(-2px); }
   .btn-next:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
 
-  /* RESULT */
   .result-card { background: #fff; border: 2px solid #f0e8fb; border-radius: 28px; overflow: hidden; box-shadow: 0 25px 60px rgba(93,43,158,.12); animation: q-in .5s cubic-bezier(.16,1,.3,1); max-width: 780px; margin: 0 auto; }
 
   .result-body { padding: 56px 48px 40px; }
@@ -314,7 +311,6 @@
     return MOOD_LEVELS[MOOD_LEVELS.length - 1];
   }
 
-  /* ═════════ INTRO ═════════ */
   function renderIntro() {
     state.screen = 'intro';
     state.current = 0;
@@ -378,7 +374,6 @@
     });
   }
 
-  /* ═════════ QUESTION ═════════ */
   function renderQuestion() {
     var q = MOOD_ALL_QUESTIONS[state.current];
     var total = MOOD_ALL_QUESTIONS.length;
@@ -477,7 +472,6 @@
           } else {
             arr.splice(pos, 1);
           }
-          // перерисовать номера
           root.querySelectorAll('.q-answer--order').forEach(function(a) {
             var i = parseInt(a.getAttribute('data-idx'), 10);
             var num = arr.indexOf(i) + 1;
@@ -543,13 +537,11 @@
       var q = MOOD_ALL_QUESTIONS[qIdx];
 
       if (q.type === 'order') {
-        // Смотрим только на 1-е место (arr[0])
         var firstIdx = arr[0];
         var val = q.a[firstIdx].v;
         raw[q.scale] += val;
         maxs[q.scale] += 4;
       } else if (q.multi) {
-        // среднее из выбранных
         var localSum = 0;
         arr.forEach(function(idx) { localSum += q.a[idx].v; });
         var avg = localSum / arr.length;
@@ -624,21 +616,8 @@
       axesLines += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + R * Math.cos(rad)).toFixed(1) + '" y2="' + (cy + R * Math.sin(rad)).toFixed(1) + '" stroke="#ece3fa" stroke-width="1"/>';
     });
 
-    var sectors = '';
-    points.forEach(function(p, i) {
-      var prevAngle = (i === 0) ? angles[n - 1] : angles[i - 1];
-      var nextAngle = (i === n - 1) ? angles[0] : angles[i + 1];
-      var midPrev = (prevAngle + angles[i]) / 2;
-      var midNext = (angles[i] + nextAngle) / 2;
-      var r = Math.max(8, R * ((scores[MOOD_SCALES[i].id] || 0) / 100) * 0.85);
-      var radPrev = midPrev * Math.PI / 180;
-      var radNext = midNext * Math.PI / 180;
-      var x1 = cx + r * Math.cos(radPrev);
-      var y1 = cy + r * Math.sin(radPrev);
-      var x2 = cx + r * Math.cos(radNext);
-      var y2 = cy + r * Math.sin(radNext);
-      sectors += '<path d="M ' + cx + ' ' + cy + ' L ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' A ' + r.toFixed(1) + ' ' + r.toFixed(1) + ' 0 0 1 ' + x2.toFixed(1) + ' ' + y2.toFixed(1) + ' Z" fill="' + MOOD_SCALES[i].color + '" opacity="0.22"/>';
-    });
+    // Мягкая заливка внутри полигона (вместо цветных секторов)
+    var fill = '<polygon points="' + polyPoints + '" fill="#7c2fd4" fill-opacity="0.12"/>';
 
     var polyStroke = '<polygon points="' + polyPoints + '" fill="none" stroke="#7c2fd4" stroke-width="2" stroke-linejoin="round" opacity="0.85"/>';
 
@@ -664,12 +643,11 @@
 
     var svg = '';
     svg += '<svg viewBox="-90 -40 580 480" xmlns="http://www.w3.org/2000/svg">';
-    svg +=   gridLines + axesLines + sectors + polyStroke + dots + labels;
+    svg +=   gridLines + axesLines + fill + polyStroke + dots + labels;
     svg += '</svg>';
     return svg;
   }
 
-  /* ═════════ RESULT ═════════ */
   function renderResult() {
     var total = state.total;
     var data = state.result;
@@ -690,7 +668,6 @@
     data.desc.forEach(function(p) { html += '<p>' + escapeHtml(p) + '</p>'; });
     html +=   '</div>';
 
-    // Радар + полоски
     html +=   '<div class="profile-box">';
     html +=     '<div class="profile-box-title">Твой профиль по 8 сферам</div>';
     html +=     '<div class="profile-grid">';
@@ -710,7 +687,6 @@
     html +=     '</div>';
     html +=   '</div>';
 
-    // Что делать
     if (data.actions && data.actions.length) {
       html += '<div class="actions-block">';
       html +=   '<div class="actions-block-title">';
@@ -728,7 +704,6 @@
       html += '</div>';
     }
 
-    // Телефоны доверия (для low / very-low)
     if (data.hotline) {
       html += '<div class="hotline-block">';
       html +=   '<div class="hotline-block-title">';
@@ -772,7 +747,6 @@
     html += '</div>';
     html += '</div>';
 
-    // Premium
     html += '<div class="premium-rec">';
     html +=   '<div class="premium-rec-inner">';
     html +=     '<div class="premium-rec-head">';
