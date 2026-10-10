@@ -352,7 +352,6 @@
   }
 
   function determineSport(scores, flags) {
-    // Классификация по категориям
     var WATER_IDS = ['swimming', 'waterpolo', 'synchro', 'diving', 'rowing', 'kayak', 'surfing', 'sailing', 'triathlon'];
     var HEIGHT_IDS = ['climbing', 'mountaineering', 'diving', 'trampoline', 'parkour', 'bmx', 'snowboard', 'skiing', 'skateboard', 'rollerblading', 'gymnastics', 'cheerleading'];
     var CONTACT_IDS = ['rugby', 'boxing', 'mma', 'judo', 'karate', 'taekwondo', 'sambo', 'fencing', 'american-football', 'hockey-ice', 'handball', 'waterpolo'];
@@ -369,7 +368,6 @@
     function isIntense(id) { return INTENSE_IDS.indexOf(id) !== -1; }
     function isStrength(id) { return STRENGTH_IDS.indexOf(id) !== -1; }
 
-    // Слой 1: жёсткие исключения
     var base = SPORT_RESULTS.filter(function(s) {
       if (flags.no_water && isWater(s.id)) return false;
       if (flags.no_heights && isHeight(s.id)) return false;
@@ -381,7 +379,6 @@
       return true;
     });
 
-    // Если осталось мало — ослабляем по одному
     if (base.length < 5) {
       base = SPORT_RESULTS.filter(function(s) {
         if (flags.no_water && isWater(s.id)) return false;
@@ -392,19 +389,16 @@
     }
     if (base.length < 5) base = SPORT_RESULTS.slice();
 
-    // Слой 2: если хотят команду — приоритет командным
     if (flags.prefer_team) {
       var teamOnly = base.filter(function(s) { return isTeam(s.id); });
       if (teamOnly.length >= 5) base = teamOnly;
     }
 
-    // Слой 3: если хотят мягкое — убираем интенсивные
     if (flags.want_gentle) {
       var gentle = base.filter(function(s) { return !isIntense(s.id); });
       if (gentle.length >= 5) base = gentle;
     }
 
-    // Слой 4: косинус
     var ranked = base.map(function(s) {
       var dot = 0, magA = 0, magB = 0;
       SPORT_AXES.forEach(function(a) {
@@ -618,6 +612,7 @@
     scrollTop();
   }
 
+  /* ═════════ RADAR (6 лучей) ═════════ */
   function buildRadar(scores) {
     var size = 400, cx = 200, cy = 200, R = 130;
     var n = SPORT_AXES.length;
@@ -644,17 +639,8 @@
       var rad = a * Math.PI / 180;
       axes += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + R * Math.cos(rad)).toFixed(1) + '" y2="' + (cy + R * Math.sin(rad)).toFixed(1) + '" stroke="#ece3fa" stroke-width="1"/>';
     });
-    var sectors = '';
-    points.forEach(function(p, i) {
-      var prev = (i === 0) ? angles[n - 1] : angles[i - 1];
-      var next = (i === n - 1) ? angles[0] : angles[i + 1];
-      var mp = (prev + angles[i]) / 2, mn = (angles[i] + next) / 2;
-      var r = Math.max(8, R * ((scores[SPORT_AXES[i].id] || 0) / 100) * 0.85);
-      var rp = mp * Math.PI / 180, rn = mn * Math.PI / 180;
-      var x1 = cx + r * Math.cos(rp), y1 = cy + r * Math.sin(rp);
-      var x2 = cx + r * Math.cos(rn), y2 = cy + r * Math.sin(rn);
-      sectors += '<path d="M ' + cx + ' ' + cy + ' L ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' A ' + r.toFixed(1) + ' ' + r.toFixed(1) + ' 0 0 1 ' + x2.toFixed(1) + ' ' + y2.toFixed(1) + ' Z" fill="' + SPORT_AXES[i].color + '" opacity="0.22"/>';
-    });
+    // Мягкая заливка внутри полигона (вместо цветных секторов)
+    var fill = '<polygon points="' + poly + '" fill="#7c2fd4" fill-opacity="0.12"/>';
     var stroke = '<polygon points="' + poly + '" fill="none" stroke="#7c2fd4" stroke-width="2" stroke-linejoin="round" opacity="0.85"/>';
     var dots = '';
     points.forEach(function(p) { dots += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="5" fill="' + p.color + '" stroke="#fff" stroke-width="2"/>'; });
@@ -671,7 +657,7 @@
       labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="13" font-weight="800" fill="#7c2fd4">' + SPORT_AXES[i].name + '</text>';
       labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy + 15).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#a898c2">' + scores[SPORT_AXES[i].id] + '%</text>';
     });
-    return '<svg viewBox="-90 -40 580 480" xmlns="http://www.w3.org/2000/svg">' + grid + axes + sectors + stroke + dots + labels + '</svg>';
+    return '<svg viewBox="-90 -40 580 480" xmlns="http://www.w3.org/2000/svg">' + grid + axes + fill + stroke + dots + labels + '</svg>';
   }
 
   function renderResult() {
