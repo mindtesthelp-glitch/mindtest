@@ -284,12 +284,10 @@
 
   function scrollTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-  /* ═════════ ПОИСК ВЫБРАННЫХ ИСПОЛНИТЕЛЕЙ ═════════ */
   function collectArtistHits() {
     var hits = {};
     var selectedArtists = [];
 
-    // Вопрос №1 — «Выбери своих любимых исполнителей»
     var firstQ = MUSIC_ALL_QUESTIONS[0];
     var firstAnswers = state.answers[0] || [];
     firstAnswers.forEach(function(idx) {
@@ -297,7 +295,6 @@
       if (ans && ans.t) selectedArtists.push(norm(ans.t));
     });
 
-    // Вопрос №2 — «Какие направления тебе точно заходят»
     var secondQ = MUSIC_ALL_QUESTIONS[1];
     var secondAnswers = state.answers[1] || [];
     var DIRECTION_MAP = {
@@ -327,7 +324,6 @@
       }
     });
 
-    // Прямой матчинг по исполнителям
     MUSIC_RESULTS.forEach(function(genre) {
       if (!genre.matchKeys || !genre.matchKeys.length) return;
       var genreHits = 0;
@@ -412,7 +408,6 @@
       });
     });
 
-    // Язык (вопрос №3)
     var langQ = MUSIC_ALL_QUESTIONS[2];
     var langAnswers = state.answers[2] || [];
     if (langAnswers.length === 1) {
@@ -439,7 +434,6 @@
     function isText(id) { return TEXT_IDS.indexOf(id) !== -1; }
     function isAsia(id) { return ASIA_IDS.indexOf(id) !== -1; }
 
-    // Слой 1: жёсткие исключения
     var base = MUSIC_RESULTS.filter(function(g) {
       if (flags.no_heavy && isHeavy(g.id)) return false;
       if (flags.only_rus && isAsia(g.id)) return false;
@@ -449,19 +443,16 @@
     });
     if (base.length < 5) base = MUSIC_RESULTS.slice();
 
-    // Слой 2: no_text
     if (flags.no_text) {
       var withoutText = base.filter(function(g) { return !isText(g.id); });
       if (withoutText.length >= 5) base = withoutText;
     }
 
-    // Слой 3: want_heavy
     if (flags.want_heavy) {
       var onlyHeavy = base.filter(function(g) { return isHeavy(g.id); });
       if (onlyHeavy.length >= 3) base = onlyHeavy;
     }
 
-    // Слой 4: косинус + бонус по исполнителям
     var ranked = base.map(function(g) {
       var dot = 0, magA = 0, magB = 0;
       MUSIC_AXES.forEach(function(a) {
@@ -715,17 +706,8 @@
       var rad = a * Math.PI / 180;
       axes += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + R * Math.cos(rad)).toFixed(1) + '" y2="' + (cy + R * Math.sin(rad)).toFixed(1) + '" stroke="#ece3fa" stroke-width="1"/>';
     });
-    var sectors = '';
-    points.forEach(function(p, i) {
-      var prev = (i === 0) ? angles[n - 1] : angles[i - 1];
-      var next = (i === n - 1) ? angles[0] : angles[i + 1];
-      var mp = (prev + angles[i]) / 2, mn = (angles[i] + next) / 2;
-      var r = Math.max(8, R * ((scores[MUSIC_AXES[i].id] || 0) / 100) * 0.85);
-      var rp = mp * Math.PI / 180, rn = mn * Math.PI / 180;
-      var x1 = cx + r * Math.cos(rp), y1 = cy + r * Math.sin(rp);
-      var x2 = cx + r * Math.cos(rn), y2 = cy + r * Math.sin(rn);
-      sectors += '<path d="M ' + cx + ' ' + cy + ' L ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' A ' + r.toFixed(1) + ' ' + r.toFixed(1) + ' 0 0 1 ' + x2.toFixed(1) + ' ' + y2.toFixed(1) + ' Z" fill="' + MUSIC_AXES[i].color + '" opacity="0.22"/>';
-    });
+    // Мягкая заливка внутри полигона (вместо цветных секторов)
+    var fill = '<polygon points="' + poly + '" fill="#7c2fd4" fill-opacity="0.12"/>';
     var stroke = '<polygon points="' + poly + '" fill="none" stroke="#7c2fd4" stroke-width="2" stroke-linejoin="round" opacity="0.85"/>';
     var dots = '';
     points.forEach(function(p) { dots += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="5" fill="' + p.color + '" stroke="#fff" stroke-width="2"/>'; });
@@ -742,7 +724,7 @@
       labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="13" font-weight="800" fill="#7c2fd4">' + MUSIC_AXES[i].name + '</text>';
       labels += '<text x="' + lx.toFixed(1) + '" y="' + (ly + dy + 15).toFixed(1) + '" text-anchor="' + anchor + '" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#a898c2">' + scores[MUSIC_AXES[i].id] + '%</text>';
     });
-    return '<svg viewBox="-90 -40 580 480" xmlns="http://www.w3.org/2000/svg">' + grid + axes + sectors + stroke + dots + labels + '</svg>';
+    return '<svg viewBox="-90 -40 580 480" xmlns="http://www.w3.org/2000/svg">' + grid + axes + fill + stroke + dots + labels + '</svg>';
   }
 
   function renderResult() {
