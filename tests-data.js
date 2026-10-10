@@ -171,7 +171,7 @@ const TESTS = [
     type: 'result',
     age: '12+',
     badges: [],
-    href: '#'
+    href: 'test-society.html'
   },
   {
     id: 'mutual-feelings',
