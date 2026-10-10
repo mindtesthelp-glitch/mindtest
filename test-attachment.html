@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/header.css">
 <style>
-  * { box-sizing: border-box; padding: 0; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif; background: #faf7ff; color: #2e1a4d; line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100vh; }
   a { text-decoration: none; color: inherit; }
@@ -316,7 +316,6 @@
     return best;
   }
 
-  /* ═════════ INTRO ═════════ */
   function renderIntro() {
     state.screen = 'intro';
     state.current = 0;
@@ -373,7 +372,6 @@
     });
   }
 
-  /* ═════════ QUESTION ═════════ */
   function renderQuestion() {
     var q = ATTACHMENT_ALL_QUESTIONS[state.current];
     var total = ATTACHMENT_ALL_QUESTIONS.length;
@@ -588,21 +586,8 @@
       axesLines += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + R * Math.cos(rad)).toFixed(1) + '" y2="' + (cy + R * Math.sin(rad)).toFixed(1) + '" stroke="#ece3fa" stroke-width="1"/>';
     });
 
-    var sectors = '';
-    points.forEach(function(p, i) {
-      var prevAngle = (i === 0) ? angles[n - 1] : angles[i - 1];
-      var nextAngle = (i === n - 1) ? angles[0] : angles[i + 1];
-      var midPrev = (prevAngle + angles[i]) / 2;
-      var midNext = (angles[i] + nextAngle) / 2;
-      var r = Math.max(8, R * ((scores[ATTACHMENT_SCALES[i].id] || 0) / 100) * 0.85);
-      var radPrev = midPrev * Math.PI / 180;
-      var radNext = midNext * Math.PI / 180;
-      var x1 = cx + r * Math.cos(radPrev);
-      var y1 = cy + r * Math.sin(radPrev);
-      var x2 = cx + r * Math.cos(radNext);
-      var y2 = cy + r * Math.sin(radNext);
-      sectors += '<path d="M ' + cx + ' ' + cy + ' L ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' A ' + r.toFixed(1) + ' ' + r.toFixed(1) + ' 0 0 1 ' + x2.toFixed(1) + ' ' + y2.toFixed(1) + ' Z" fill="' + ATTACHMENT_SCALES[i].color + '" opacity="0.22"/>';
-    });
+    // Мягкая заливка внутри полигона (вместо цветных секторов)
+    var fill = '<polygon points="' + polyPoints + '" fill="#7c2fd4" fill-opacity="0.12"/>';
 
     var polyStroke = '<polygon points="' + polyPoints + '" fill="none" stroke="#7c2fd4" stroke-width="2" stroke-linejoin="round" opacity="0.85"/>';
     var dots = '';
@@ -624,12 +609,11 @@
 
     var svg = '';
     svg += '<svg viewBox="-90 -40 580 480" xmlns="http://www.w3.org/2000/svg">';
-    svg += gridLines + axesLines + sectors + polyStroke + dots + labels;
+    svg += gridLines + axesLines + fill + polyStroke + dots + labels;
     svg += '</svg>';
     return svg;
   }
 
-  /* ═════════ RESULT ═════════ */
   function renderResult() {
     var data = state.result;
     var scores = state.scores;
